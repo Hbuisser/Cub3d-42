@@ -6,14 +6,39 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/27 19:17:09 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/30 18:25:03 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "cube3d.h"
+
+/*int main ()
+{
+	t_state		*state;
+
+	mlx_hook(state->window_ptr, 2, (1L << 1), ft_close, (void*)state);
+	mlx_hook(state->window_ptr, 17L, 0, event_quit, (void*)state);
+	mlx_loop_hook(state->mlx_ptr, render_update, (void*)state);
+	mlx_loop(state->mlx_ptr);
+	return (0);
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////
 
 int	create_trgb(int t, int r, int g, int b)
 {
@@ -37,6 +62,21 @@ int ft_close(int keycode, t_struct *window)
     }
     return (0);
 }
+
+int verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
+{
+    int y;
+
+    y = drawStart;
+    while (y < drawEnd)
+    {
+        //my_mlx_pixel_put(img, drawEnd, drawStart, color);
+        mlx_pixel_put(window->mlx_ptr, window->mlx_win, i, y, color);
+        y++;
+    }
+    return (1);
+}
+
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -66,24 +106,16 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int screen(int screenW, int screenH, int donknowyet, char *title, t_struct *window)
-{
-    t_image  img;
-    
+/*int screen(int screenW, int screenH, int donknowyet, char *title, t_struct *window, t_image *img)
+{   
     donknowyet = 1;
     window->mlx_ptr = mlx_init();
-    window->mlx_win = mlx_new_window(window->mlx_ptr, screenW, screenH, title);
-    mlx_hook(window->mlx_win, 2, 1L<<0, ft_close, &window);
-    
-    img.img = mlx_new_image(window->mlx_ptr, screenW, screenH);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    my_mlx_pixel_put(&img, 50, 50, 0x00FF0000);
-    mlx_put_image_to_window(window->mlx_ptr, window->mlx_win, img.img, 100, 100);
-    img.relative_path = "./test.xpm";
-    img.img = mlx_xpm_file_to_image(window->mlx_ptr, img.relative_path, &img.img_width, &img.img_height);
-    
+    window->mlx_win = mlx_new_window(window->mlx_ptr, screenWidth, screenHeight, title);
+    mlx_hook(window->mlx_win, 2, 1, ft_close, &window);
+    img->img = mlx_new_image(window->mlx_ptr, screenWidth, screenHeight);
+    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
     return (0);
-}
+}*/
 
 int main()
 {
@@ -133,116 +165,105 @@ int main()
     int drawEnd;
     int color;
     t_struct  window;
+    t_image   img;
 
     posX = 22;
     posY = 12;
-    dirX = -1;
-    dirY = 0;
+    dirX = 0.5;
+    dirY = 1;
     planeX = 0;
     planeY = 0.66;
     time = 0;
     oldTime = 0;
     i = 0;
-    h = 8;
+    h = screenHeight;
     
-    screen(screenWidth, screenHeight, 0, WINDOW_TITLE, &window);
-    //The raycasting loop goes through every x, no calculation for every pixel of the screen, only for every vertical stripe
-    while(!mlx_loop(window.mlx_ptr))
-    {
-        while (i < screenWidth)
-        {
-            //calculate ray position and direction
-			cameraX = 2 * i / screenWidth - 1;//x-coordinate in camera space
-			rayDirX = dirX + planeX * cameraX;
-			rayDirY = dirY + planeY * cameraX;
-
-			hit = 0;
-			mapX = posX;
-			mapY = posY;
-			deltaDistX = fabs(1 / rayDirX);
-    		deltaDistY = fabs(1 / rayDirY);
-			hit = 0;
-            //calculate step and initial sideDist
-			if (rayDirX < 0)
-			{
-				stepX = -1;
-				sideDistX = (posX - mapX) * deltaDistX;
-			}
-			else
-			{
-				stepX = 1;
-				sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-			}
-			if (rayDirY < 0)
-			{
-				stepY = -1;
-				sideDistY = (posY - mapY) * deltaDistY;
-			}
-			else
-			{
-				stepY = 1;
-				sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-			}
-            //perform DDA
-            while (hit == 0)
-            {
-                //jump to next map square, OR in x-direction, OR in y-direction
-                if (sideDistX < sideDistY)
-                {
-                sideDistX += deltaDistX;
-                mapX += stepX;
-                side = 0;
-                }
-                else
-                {
-                sideDistY += deltaDistY;
-                mapY += stepY;
-                side = 1;
-                }
-                //Check if ray has hit a wall
-                if (worldMap[mapX][mapY] > 0) hit = 1;
-            }
-            //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
-            if (side == 0)
-                perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
-            else 
-                perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
-            //Calculate height of line to draw on screen
-            lineHeight = (int)(h / perpWallDist);
-            //calculate lowest and highest pixel to fill in current stripe
-            drawStart = -lineHeight / 2 + h / 2;
-            if(drawStart < 0)
-                drawStart = 0;
-            drawEnd = lineHeight / 2 + h / 2;
-            if(drawEnd >= h)
-                drawEnd = h - 1;
-            //give x and y sides different brightness
-            if (side == 1)
-                color = color / 2;
-
-            //draw the pixels of the stripe as a vertical line
-            //verLine(x, drawStart, drawEnd, color);
-			i++;
-        }
-    }
-}
-
-/*int main ()
-{
-    data_t  window;
-    t_data  img;
-
     window.mlx_ptr = mlx_init();
-    window.mlx_win = mlx_new_window(window.mlx_ptr, 1000, 500, WINDOW_TITLE);
-    img.img = mlx_new_image(window.mlx_ptr, 1000, 500);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    my_mlx_pixel_put(&img, 50, 50, 0x00FF0000);
-    mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 100, 100);
-    //mlx_key_hook(window.mlx_win, close, &window);
+    window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
     mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &window);
-    // looper avec un hook
-    //mlx_loop_hook(mlx, render_next_frame, YourStruct);
-    img.relative_path = "./test.xpm";
-    img.img = mlx_xpm_file_to_image(window.mlx_ptr, img.relative_path, &img.img_width, &img.img_height);
+    img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    
+    //screen(screenWidth, screenHeight, 0, WINDOW_TITLE, &window, &img);
+    //The raycasting loop goes through every x, no calculation for every pixel of the screen, only for every vertical stripe
+
+    while (i < screenWidth)
+    {
+        //calculate ray position and direction
+        cameraX = 2 * i / screenWidth - 1;//x-coordinate in camera space
+        rayDirX = dirX + planeX * cameraX;
+        rayDirY = dirY + planeY * cameraX;
+
+        hit = 0;
+        mapX = (int)posX;
+        mapY = (int)posY;
+        deltaDistX = fabs(1 / rayDirX);
+        deltaDistY = fabs(1 / rayDirY);
+        hit = 0;
+        //calculate step and initial sideDist
+        if (rayDirX < 0)
+        {
+            stepX = -1;
+            sideDistX = (posX - mapX) * deltaDistX;
+        }
+        else
+        {
+            stepX = 1;
+            sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        }
+        if (rayDirY < 0)
+        {
+            stepY = -1;
+            sideDistY = (posY - mapY) * deltaDistY;
+        }
+        else
+        {
+            stepY = 1;
+            sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+        }
+        //perform DDA
+        while (hit == 0)
+        {
+            //jump to next map square, OR in x-direction, OR in y-direction
+            if (sideDistX < sideDistY)
+            {
+            sideDistX += deltaDistX;
+            mapX += stepX;
+            side = 0;
+            }
+            else
+            {
+            sideDistY += deltaDistY;
+            mapY += stepY;
+            side = 1;
+            }
+            //Check if ray has hit a wall
+            if (worldMap[mapX][mapY] > 0) 
+				hit = 1;
+        }
+        //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
+        if (side == 0)
+            perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
+        else 
+            perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
+        //Calculate height of line to draw on screen
+        lineHeight = (int)(h / perpWallDist);
+        //calculate lowest and highest pixel to fill in current stripe
+        drawStart = -lineHeight / 2 + h / 2;
+        if(drawStart < 0)
+            drawStart = 0;
+        drawEnd = lineHeight / 2 + h / 2;
+        if(drawEnd >= h)
+            drawEnd = h - 1;
+        //give x and y sides different brightness
+        color = 0xff0000;
+		if (side == 1)
+            color = color / 2;
+        //draw the pixels of the stripe as a vertical line
+        verLine(i, drawStart, drawEnd, color, &window);
+        i++;
+    }
+    //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
     mlx_loop(window.mlx_ptr);
-}*/
+    return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/27 18:57:56 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/30 18:13:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@
 # define mapHeight 24
 # define screenWidth 640
 # define screenHeight 480
+
+/*typedef struct s_state
+{
+    void		*mlx_ptr;
+    void		*window_ptr;
+}               t_state;*/
 
 typedef struct		s_struct
 {
