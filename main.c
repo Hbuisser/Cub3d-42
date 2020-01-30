@@ -6,39 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/30 18:25:03 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/30 18:59:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
-
-/*int main ()
-{
-	t_state		*state;
-
-	mlx_hook(state->window_ptr, 2, (1L << 1), ft_close, (void*)state);
-	mlx_hook(state->window_ptr, 17L, 0, event_quit, (void*)state);
-	mlx_loop_hook(state->mlx_ptr, render_update, (void*)state);
-	mlx_loop(state->mlx_ptr);
-	return (0);
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////
 
 int	create_trgb(int t, int r, int g, int b)
 {
@@ -154,7 +126,7 @@ int main()
     double deltaDistY;
     // length of the ray
     double perpWallDist;
-    
+    // decallage case
 	int stepX;
     int stepY;
 	int hit; //was there a wall hit?
@@ -169,8 +141,8 @@ int main()
 
     posX = 22;
     posY = 12;
-    dirX = 0.5;
-    dirY = 1;
+    dirX = -1;
+    dirY = 0;
     planeX = 0;
     planeY = 0.66;
     time = 0;
@@ -190,7 +162,7 @@ int main()
     while (i < screenWidth)
     {
         //calculate ray position and direction
-        cameraX = 2 * i / screenWidth - 1;//x-coordinate in camera space
+        cameraX = 2 * i / (double)screenWidth - 1;//x-coordinate in camera space
         rayDirX = dirX + planeX * cameraX;
         rayDirY = dirY + planeY * cameraX;
 
@@ -199,7 +171,6 @@ int main()
         mapY = (int)posY;
         deltaDistX = fabs(1 / rayDirX);
         deltaDistY = fabs(1 / rayDirY);
-        hit = 0;
         //calculate step and initial sideDist
         if (rayDirX < 0)
         {
