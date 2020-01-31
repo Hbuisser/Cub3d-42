@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/30 18:59:50 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/31 11:33:46 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,6 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-/*int screen(int screenW, int screenH, int donknowyet, char *title, t_struct *window, t_image *img)
-{   
-    donknowyet = 1;
-    window->mlx_ptr = mlx_init();
-    window->mlx_win = mlx_new_window(window->mlx_ptr, screenWidth, screenHeight, title);
-    mlx_hook(window->mlx_win, 2, 1, ft_close, &window);
-    img->img = mlx_new_image(window->mlx_ptr, screenWidth, screenHeight);
-    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-    return (0);
-}*/
-
 int main()
 {
     //position vector of the player
@@ -156,9 +145,6 @@ int main()
     img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
     
-    //screen(screenWidth, screenHeight, 0, WINDOW_TITLE, &window, &img);
-    //The raycasting loop goes through every x, no calculation for every pixel of the screen, only for every vertical stripe
-
     while (i < screenWidth)
     {
         //calculate ray position and direction
