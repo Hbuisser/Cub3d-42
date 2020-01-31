@@ -17,6 +17,7 @@ int	create_trgb(int t, int r, int g, int b)
 	return(b << 24 | g << 16 | r << 8 | t);
 }
 
+
 void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
     char    *dst;
