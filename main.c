@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/31 11:33:46 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/31 12:17:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,14 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int ft_close(int keycode, t_struct *window)
+int ft_close(int keycode)
 {
     if (keycode == MLXK_ESC)
-    {
         exit(0);
-        window->mlx_win = "";
-    }
     return (0);
 }
 
-int verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
+void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
 {
     int y;
 
@@ -47,7 +44,6 @@ int verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
         mlx_pixel_put(window->mlx_ptr, window->mlx_win, i, y, color);
         y++;
     }
-    return (1);
 }
 
 
@@ -214,7 +210,7 @@ int main()
         if(drawEnd >= h)
             drawEnd = h - 1;
         //give x and y sides different brightness
-        color = 0xff0000;
+        color = 0xffffff;
 		if (side == 1)
             color = color / 2;
         //draw the pixels of the stripe as a vertical line
