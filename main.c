@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/31 12:36:21 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 12:23:18 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
         y++;
     }
 }
+
 
 
 int worldMap[mapWidth][mapHeight]=
