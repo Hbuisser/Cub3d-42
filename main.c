@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 16:32:24 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:46:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,6 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int ft_close(int keycode, t_index *idx)
-{
-    double move;
-
-    move = 0.6;
-    if (keycode == MLXK_ESC)
-        exit(0);
-    else if (keycode == MLXK_W)
-    {
-        idx->play->posX += idx->play->dirX * move;
-        idx->play->posY += idx->play->dirY * move;
-        printf("%f", idx->play->posX);
-    }
-    //clear_window
-    //create_algo
-    return (0);
-}
 
 void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
 {
@@ -189,6 +172,52 @@ void create_algo(t_player *play, t_struct *window)
     }
 }
 
+int ft_close(int keycode, t_index *idx)
+{
+    double moveSpeed;
+    double oldDirX;
+    double rotSpeed;
+    double oldPlaneX;
+
+    moveSpeed = 1;
+    rotSpeed = 0.3;
+    oldPlaneX = idx->play->planeX;
+    if (keycode == MLXK_ESC)
+        exit(0);
+    else if (keycode == MLXK_W)
+    {
+        idx->play->posX += idx->play->dirX * moveSpeed;
+        idx->play->posY += idx->play->dirY * moveSpeed;
+    }
+    else if (keycode == MLXK_S)
+    {
+        idx->play->posX -= idx->play->dirX * moveSpeed;
+        idx->play->posY -= idx->play->dirY * moveSpeed;
+    }
+    else if (keycode == MLXK_A)
+    {
+        //both camera direction and camera plane must be rotated
+        oldDirX = idx->play->dirX;
+        idx->play->dirX = idx->play->dirX * cos(rotSpeed) - idx->play->dirY * sin(rotSpeed);
+        idx->play->dirY = oldDirX * sin(rotSpeed) + idx->play->dirY * cos(rotSpeed);
+        oldPlaneX = idx->play->planeX;
+        idx->play->planeX = idx->play->planeX * cos(rotSpeed) - idx->play->planeY * sin(rotSpeed);
+        idx->play->planeY = oldPlaneX * sin(rotSpeed) + idx->play->planeY * cos(rotSpeed);
+    }
+    else if (keycode == MLXK_D)
+    {
+        oldDirX = idx->play->dirX;
+        idx->play->dirX = idx->play->dirX * cos(-rotSpeed) - idx->play->dirY * sin(-rotSpeed);
+        idx->play->dirY = oldDirX * sin(-rotSpeed) + idx->play->dirY * cos(-rotSpeed);
+        oldPlaneX = idx->play->planeX;
+        idx->play->planeX = idx->play->planeX * cos(-rotSpeed) - idx->play->planeY * sin(-rotSpeed);
+        idx->play->planeY = oldPlaneX * sin(-rotSpeed) + idx->play->planeY * cos(-rotSpeed);
+    }
+    mlx_clear_window(idx->window->mlx_ptr, idx->window->mlx_win);
+    create_algo(idx->play, idx->window);
+    return (0);
+}
+
 void create_settings(t_player *play)
 {
     play->posX = 22;
@@ -201,8 +230,6 @@ void create_settings(t_player *play)
 
 int main()
 {
-    double time;
-    double oldTime;
     t_index  idx;
     t_struct  window;
     t_image   img;
@@ -211,8 +238,6 @@ int main()
     idx.window = &window;
     idx.play = &play;
     idx.img = &img;
-    time = 0;
-    oldTime = 0;
     
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
