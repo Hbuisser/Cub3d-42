@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 15:02:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 16:32:24 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,21 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-int ft_close(int keycode)
+int ft_close(int keycode, t_index *idx)
 {
+    double move;
+
+    move = 0.6;
     if (keycode == MLXK_ESC)
         exit(0);
+    else if (keycode == MLXK_W)
+    {
+        idx->play->posX += idx->play->dirX * move;
+        idx->play->posY += idx->play->dirY * move;
+        printf("%f", idx->play->posX);
+    }
+    //clear_window
+    //create_algo
     return (0);
 }
 
@@ -45,8 +56,6 @@ void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
         y++;
     }
 }
-
-
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -194,16 +203,20 @@ int main()
 {
     double time;
     double oldTime;
+    t_index  idx;
     t_struct  window;
     t_image   img;
     t_player  play;
 
+    idx.window = &window;
+    idx.play = &play;
+    idx.img = &img;
     time = 0;
     oldTime = 0;
     
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
-    mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &window);
+    mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &idx);
     img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
     create_settings(&play);

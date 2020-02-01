@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 13:41:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:46:52 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,12 @@ typedef struct      s_player
 	int stepX;
     int stepY;
 }					t_player;
+
+typedef struct 		s_index
+{
+	t_struct *window;
+	t_image *img;
+	t_player *play;
+}					t_index;
 
 #endif
