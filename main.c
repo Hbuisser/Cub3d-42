@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/31 12:17:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/01/31 12:36:21 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main()
 
 	double rayDirX;
 	double rayDirY;
-    int i;
+    
     //current square of the map the ray is in (coordinates of that square)
 	int mapX;
 	int mapY;
@@ -115,10 +115,11 @@ int main()
     // decallage case
 	int stepX;
     int stepY;
+
+    int i;
 	int hit; //was there a wall hit?
     int side; //was a NS or a EW wall hit?
     int lineHeight;
-    int h;
     int drawStart;
     int drawEnd;
     int color;
@@ -134,7 +135,6 @@ int main()
     time = 0;
     oldTime = 0;
     i = 0;
-    h = screenHeight;
     
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
@@ -201,18 +201,18 @@ int main()
         else 
             perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
         //Calculate height of line to draw on screen
-        lineHeight = (int)(h / perpWallDist);
+        lineHeight = (int)(screenHeight / perpWallDist);
         //calculate lowest and highest pixel to fill in current stripe
-        drawStart = -lineHeight / 2 + h / 2;
-        if(drawStart < 0)
+        drawStart = -lineHeight / 2 + screenHeight / 2;
+        if (drawStart < 0)
             drawStart = 0;
-        drawEnd = lineHeight / 2 + h / 2;
-        if(drawEnd >= h)
-            drawEnd = h - 1;
+        drawEnd = lineHeight / 2 + screenHeight / 2;
+        if (drawEnd >= screenHeight)
+            drawEnd = screenHeight - 1;
         //give x and y sides different brightness
         color = 0xffffff;
 		if (side == 1)
-            color = color / 2;
+            color = 0x0000ff;
         //draw the pixels of the stripe as a vertical line
         verLine(i, drawStart, drawEnd, color, &window);
         i++;
