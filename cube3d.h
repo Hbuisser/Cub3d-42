@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/01/30 18:59:56 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 13:41:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,27 @@ typedef struct		s_image
     int         line_length;
     int         endian;
 }					t_image;
+
+typedef struct      s_player
+{
+    double posX;
+    double posY;
+    double dirX;
+    double dirY;
+    double planeX;
+    double planeY;
+    double cameraX;
+    double rayDirX;
+	double rayDirY;
+    int mapX;
+	int mapY;
+	double sideDistX;
+    double sideDistY;
+	double deltaDistX;
+    double deltaDistY;
+	double perpWallDist;
+	int stepX;
+    int stepY;
+}					t_player;
 
 #endif

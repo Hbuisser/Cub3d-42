@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 12:23:18 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:02:54 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,133 +76,93 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int main()
+int perform_dda(t_player *play, int hit)
 {
-    //position vector of the player
-    double posX;
-    double posY;
-    //direction of the player
-    double dirX;
-    double dirY;
-    //camera plane of the player
-    // plane is perpendicular to the direction
-    double planeX;
-    double planeY;
-    // store the time of the current and the previous frame
-    // the time difference between these two can be used to determinate how much you should move when a certain key is pressed
-    double time;
-    double oldTime;
-    // x-coordinate on the camera plane that the current x-coordinate of the screen represents
-    //the right side of the screen will get coordinate 1
-    //the center of the screen gets coordinate 0
-    //the left side of the screen gets coordinate -1
-    double cameraX;
+    int side; //was a NS or a EW wall hit?
 
-	double rayDirX;
-	double rayDirY;
-    
-    //current square of the map the ray is in (coordinates of that square)
-	int mapX;
-	int mapY;
-    //distance the ray has to travel from its start position to the first x-side
-    //Later in the code their meaning will slightly change.
-	double sideDistX;
-    double sideDistY;
-    //distance the ray has to travel to go from 1 x-side to the next x-side
-	double deltaDistX;
-    double deltaDistY;
-    // length of the ray
-    double perpWallDist;
-    // decallage case
-	int stepX;
-    int stepY;
+    while (hit == 0)
+    {
+        //jump to next map square, OR in x-direction, OR in y-direction
+        if (play->sideDistX < play->sideDistY)
+        {
+        play->sideDistX += play->deltaDistX;
+        play->mapX += play->stepX;
+        side = 0;
+        }
+        else
+        {
+        play->sideDistY += play->deltaDistY;
+        play->mapY += play->stepY;
+        side = 1;
+        }
+        //Check if ray has hit a wall
+        if (worldMap[play->mapX][play->mapY] > 0) 
+            hit = 1;
+    }
+    return (side);
+}
 
+void calculate_step_and_sideDist(t_player *play)
+{
+    if (play->rayDirX < 0)
+    {
+        play->stepX = -1;
+        play->sideDistX = (play->posX - play->mapX) * play->deltaDistX;
+    }
+    else
+    {
+        play->stepX = 1;
+        play->sideDistX = (play->mapX + 1.0 - play->posX) * play->deltaDistX;
+    }
+    if (play->rayDirY < 0)
+    {
+        play->stepY = -1;
+        play->sideDistY = (play->posY - play->mapY) * play->deltaDistY;
+    }
+    else
+    {
+        play->stepY = 1;
+        play->sideDistY = (play->mapY + 1.0 - play->posY) * play->deltaDistY;
+    }
+}
+
+void calculate_ray_and_deltaDist(t_player *play, int i)
+{
+    //calculate ray position and direction
+    play->cameraX = 2 * i / (double)screenWidth - 1;//x-coordinate in camera space
+    play->rayDirX = play->dirX + play->planeX * play->cameraX;
+    play->rayDirY = play->dirY + play->planeY * play->cameraX;
+    play->mapX = (int)play->posX;
+    play->mapY = (int)play->posY;
+    play->deltaDistX = fabs(1 / play->rayDirX);
+    play->deltaDistY = fabs(1 / play->rayDirY);
+}
+
+void create_algo(t_player *play, t_struct *window)
+{
     int i;
-	int hit; //was there a wall hit?
+    int hit; //was there a wall hit?
     int side; //was a NS or a EW wall hit?
     int lineHeight;
     int drawStart;
     int drawEnd;
     int color;
-    t_struct  window;
-    t_image   img;
 
-    posX = 22;
-    posY = 12;
-    dirX = -1;
-    dirY = 0;
-    planeX = 0;
-    planeY = 0.66;
-    time = 0;
-    oldTime = 0;
     i = 0;
-    
-    window.mlx_ptr = mlx_init();
-    window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
-    mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &window);
-    img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-    
+    hit = 0;
     while (i < screenWidth)
     {
-        //calculate ray position and direction
-        cameraX = 2 * i / (double)screenWidth - 1;//x-coordinate in camera space
-        rayDirX = dirX + planeX * cameraX;
-        rayDirY = dirY + planeY * cameraX;
-
         hit = 0;
-        mapX = (int)posX;
-        mapY = (int)posY;
-        deltaDistX = fabs(1 / rayDirX);
-        deltaDistY = fabs(1 / rayDirY);
-        //calculate step and initial sideDist
-        if (rayDirX < 0)
-        {
-            stepX = -1;
-            sideDistX = (posX - mapX) * deltaDistX;
-        }
-        else
-        {
-            stepX = 1;
-            sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-        }
-        if (rayDirY < 0)
-        {
-            stepY = -1;
-            sideDistY = (posY - mapY) * deltaDistY;
-        }
-        else
-        {
-            stepY = 1;
-            sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-        }
-        //perform DDA
-        while (hit == 0)
-        {
-            //jump to next map square, OR in x-direction, OR in y-direction
-            if (sideDistX < sideDistY)
-            {
-            sideDistX += deltaDistX;
-            mapX += stepX;
-            side = 0;
-            }
-            else
-            {
-            sideDistY += deltaDistY;
-            mapY += stepY;
-            side = 1;
-            }
-            //Check if ray has hit a wall
-            if (worldMap[mapX][mapY] > 0) 
-				hit = 1;
-        }
+        calculate_ray_and_deltaDist(play, i);
+        calculate_step_and_sideDist(play);
+        side = perform_dda(play, hit);
         //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
         if (side == 0)
-            perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
+            play->perpWallDist = (play->mapX - play->posX + (1 - play->stepX) / 2) / play->rayDirX;
         else 
-            perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
+            play->perpWallDist = (play->mapY - play->posY + (1 - play->stepY) / 2) / play->rayDirY;
         //Calculate height of line to draw on screen
-        lineHeight = (int)(screenHeight / perpWallDist);
+        lineHeight = (int)(screenHeight / play->perpWallDist);
         //calculate lowest and highest pixel to fill in current stripe
         drawStart = -lineHeight / 2 + screenHeight / 2;
         if (drawStart < 0)
@@ -215,9 +175,39 @@ int main()
 		if (side == 1)
             color = 0x0000ff;
         //draw the pixels of the stripe as a vertical line
-        verLine(i, drawStart, drawEnd, color, &window);
+        verLine(i, drawStart, drawEnd, color, window);
         i++;
     }
+}
+
+void create_settings(t_player *play)
+{
+    play->posX = 22;
+    play->posY = 12;
+    play->dirX = -1;
+    play->dirY = 0;
+    play->planeX = 0;
+    play->planeY = 0.66;
+}
+
+int main()
+{
+    double time;
+    double oldTime;
+    t_struct  window;
+    t_image   img;
+    t_player  play;
+
+    time = 0;
+    oldTime = 0;
+    
+    window.mlx_ptr = mlx_init();
+    window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
+    mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &window);
+    img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+    create_settings(&play);
+    create_algo(&play, &window);
     //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
     mlx_loop(window.mlx_ptr);
     return (0);
