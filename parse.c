@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 14:18:16 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 14:51:57 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ char	*get_first_line(char *str)
 	ret[i] = '\0';
 	return (ret);
 }
+
+
 
 char	*get_file(char *str)
 {
