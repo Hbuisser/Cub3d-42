@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 10:30:11 by hbuisser          #+#    #+#             */
-/*   Updated: 2019/11/26 16:10:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:55:33 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <fcntl.h>
 
 typedef struct	s_list
 {
@@ -69,5 +70,22 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 char			**ft_free(char **array, int size);
 char			*ft_strncpy(char *dst, const char *src, size_t len);
+
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# define BUFFER_SIZE 32
+
+int 			get_next_line(int fd, char **line);
+int 			ft_line_creation(char **stat, char **line, int idx);
+char			*ft_strnew(int end);
+int 			ft_strnbr(char *stat);
+int 			ft_free_stat(char **stat, int result);
+int 			ft_strlen_gnl(const char *str);
+char			*ft_substr_gnl(char const *s, int start, int len);
+char			*ft_strdup_gnl(char *s1);
+char			*ft_strnjoin_gnl(char *s1, char *s2, int ret);
+
+#endif
 
 #endif

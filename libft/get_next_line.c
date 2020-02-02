@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:32:32 by hbuisser          #+#    #+#             */
-/*   Updated: 2019/12/18 16:11:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:55:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "libft.h"
 
 int		ft_free_stat(char **stat, int result)
 {
@@ -75,25 +75,25 @@ int		get_next_line(const int fd, char **line)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*tmp;
-	static char	*stat[FOPEN_MAX];
+	static char	*stat;
 	int			ret;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
-		return (ft_free_stat(&stat[fd], -1));
+		return (ft_free_stat(&stat, -1));
 	while ((ret = read(fd, buff, BUFFER_SIZE)) > 0)
 	{
 		buff[ret] = '\0';
-		if (!(tmp = ft_strnjoin(stat[fd], buff, ret)))
-			return (ft_free_stat(&stat[fd], -1));
-		ft_free_stat(&stat[fd], 0);
-		stat[fd] = tmp;
-		if (ft_strnbr(stat[fd]) >= 0)
+		if (!(tmp = ft_strnjoin_gnl(stat, buff, ret)))
+			return (ft_free_stat(&stat, -1));
+		ft_free_stat(&stat, 0);
+		stat = tmp;
+		if (ft_strnbr(stat) >= 0)
 			break ;
 	}
 	if (ret < 0)
-		return (ft_free_stat(&stat[fd], -1));
-	if (ret == 0 && (!stat[fd] || *stat[fd] == '\0') &&
+		return (ft_free_stat(&stat, -1));
+	if (ret == 0 && (!stat || *stat == '\0') &&
 			(*line = ft_strnew('\0')))
-		return (ft_free_stat(&stat[fd], 0));
-	return (ft_line_creation(&stat[fd], line, ft_strnbr(stat[fd])));
+		return (ft_free_stat(&stat, 0));
+	return (ft_line_creation(&stat, line, ft_strnbr(stat)));
 }

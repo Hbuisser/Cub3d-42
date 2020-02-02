@@ -6,19 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 18:07:18 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 19:46:58 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
-
-int	create_trgb(int t, int r, int g, int b)
-{
-	return(b << 24 | g << 16 | r << 8 | t);
-}
-
 
 void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
@@ -238,8 +232,8 @@ int main(int ac, char **av)
     t_image		img;
     t_big		big;
 
-	/*if (ac < 2)
-		return (-1);*/
+	if (ac < 2)
+		return (-1);
 	ac = 1;
     idx.window = &window;
     idx.big = &big;
@@ -249,7 +243,7 @@ int main(int ac, char **av)
 
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
-    mlx_hook(window.mlx_win, 2, 1L<<0, ft_key, &idx);
+    mlx_hook(window.mlx_win, 2, 1, ft_key, &idx);
     img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 

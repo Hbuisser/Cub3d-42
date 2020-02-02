@@ -6,31 +6,77 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 18:19:57 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 21:12:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
+int parse_line()
+{
+	return (0);
+}
+
+int count_sprites(char *line)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '2' || line[i] == '3')
+			j++;
+		i++;
+	}
+	return (j);
+}
+
 int map_setup(t_big *big, char *filename)
 {
-	int fd;
-
+	int		fd;
+	int		ret;
+	char	*line;
+	
+	big->nbr_line = 0;
+	big->nbr_sprites = 0;
 	if ((fd = open(filename, O_RDONLY)) < 0)
-		retur (0);
+		return (0);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		
+		if (*line == '1')
+		{
+			big->nbr_line += 1;
+			big->nbr_sprites += count_sprites(line);
+		}
+		free(line);
 	}
+	if (*line == '1')
+	{
+		big->nbr_line += 1;
+		big->nbr_sprites += count_sprites(line);
+	}
+	free(line);
+	close(fd);
+	if (!(big->map = (int **)malloc(sizeof(int *) * big->nbr_line)))
+		return (0);
+	if (!(big->sprites = malloc(sizeof(t_sprites) * big->nbr_sprites)))
+		return (0);
+	return (0);
 }
 
 int parse(t_big *big, char *filename)
 {
-	big->posX = 1;
-	filename = "hello";
 	big->ceiling_color.hexcode = 0;
 	big->floor_color.hexcode = 0;
 	map_setup(big, filename);
+	while ((ret = get_next_line(fd, &line)) > 0)
+	{
+		parse_line(big, line);
+		free(line);
+		line = NULL;
+	}
 	return (1);
 }
 

@@ -6,13 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:32:52 by hbuisser          #+#    #+#             */
-/*   Updated: 2019/12/18 16:33:26 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:55:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int		ft_strlen(const char *str)
+int		ft_strlen_gnl(const char *str)
 {
 	size_t i;
 
@@ -24,14 +24,14 @@ int		ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_substr(char const *s, int start, int len)
+char	*ft_substr_gnl(char const *s, int start, int len)
 {
 	char	*dest;
 	int		i;
 
 	if (len < 0 || s == NULL)
 		return (NULL);
-	if (start > ft_strlen(s))
+	if (start > ft_strlen_gnl(s))
 	{
 		if (!(dest = (char *)malloc(sizeof(char))))
 			return (0);
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, int start, int len)
 	return (dest);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup_gnl(char *s1)
 {
 	char	*s2;
 	int		i;
@@ -68,7 +68,7 @@ char	*ft_strdup(char *s1)
 	return (s2);
 }
 
-char	*ft_strnjoin(char *s1, char *s2, int ret)
+char	*ft_strnjoin_gnl(char *s1, char *s2, int ret)
 {
 	int		len;
 	char	*result;
