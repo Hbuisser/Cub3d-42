@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 15:46:52 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:37:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ typedef struct		s_image
     int         endian;
 }					t_image;
 
+typedef struct      s_vector
+{
+    double x;
+    double y;
+}                   t_vector;
+
 typedef struct      s_player
 {
     double posX;
@@ -91,5 +97,16 @@ typedef struct 		s_index
 	t_image *img;
 	t_player *play;
 }					t_index;
+
+int	create_trgb(int t, int r, int g, int b);
+void my_mlx_pixel_put(t_image *img, int x, int y, int color);
+void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window);
+int perform_dda(t_player *play, int hit);
+void calculate_step_and_sideDist(t_player *play);
+void calculate_ray_and_deltaDist(t_player *play, int i);
+void calculate_dist(t_player *play, int side);
+void create_algo(t_player *play, t_struct *window);
+int ft_key(int keycode, t_index *idx);
+void create_settings(t_player *play);
 
 #endif

@@ -6,11 +6,16 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 14:51:57 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:13:16 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*get_next_line(char *str, t_info *info)
+
+
+
+///////////////// bsq parsing
+
+/*char	*get_next_line(char *str, t_info *info)
 {
 	int i;
 	char*ret;
@@ -238,4 +243,4 @@ char	**get_info_std(char **tab, t_info *info)
 	tab = read_and_store((buff + i + 1), tab, info);
 	free(buff);
 	return (tab);
-}
+}*/

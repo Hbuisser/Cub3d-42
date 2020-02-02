@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 14:15:34 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:29:53 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ int perform_dda(t_player *play, int hit)
         //jump to next map square, OR in x-direction, OR in y-direction
         if (play->sideDistX < play->sideDistY)
         {
-        play->sideDistX += play->deltaDistX;
-        play->mapX += play->stepX;
-        side = 0;
+            play->sideDistX += play->deltaDistX;
+            play->mapX += play->stepX;
+            side = 0;
         }
         else
         {
-        play->sideDistY += play->deltaDistY;
-        play->mapY += play->stepY;
-        side = 1;
+            play->sideDistY += play->deltaDistY;
+            play->mapY += play->stepY;
+            side = 1;
         }
         //Check if ray has hit a wall
         if (worldMap[play->mapX][play->mapY] > 0) 
@@ -231,14 +231,12 @@ void create_settings(t_player *play)
     play->planeY = 0.66;
 }
 
-int main(int argc, char **argv)
+int main()
 {
     t_index  idx;
     t_struct  window;
     t_image   img;
     t_player  play;
-
-    if ()
 
     idx.window = &window;
     idx.play = &play;
