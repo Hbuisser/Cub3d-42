@@ -6,11 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/01 17:46:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 14:15:34 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+// allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
 int	create_trgb(int t, int r, int g, int b)
 {
@@ -130,6 +132,14 @@ void calculate_ray_and_deltaDist(t_player *play, int i)
     play->deltaDistY = fabs(1 / play->rayDirY);
 }
 
+void calculate_dist(t_player *play, int side)
+{
+    if (side == 0)
+        play->perpWallDist = (play->mapX - play->posX + (1 - play->stepX) / 2) / play->rayDirX;
+    else 
+        play->perpWallDist = (play->mapY - play->posY + (1 - play->stepY) / 2) / play->rayDirY;
+}
+
 void create_algo(t_player *play, t_struct *window)
 {
     int i;
@@ -148,12 +158,7 @@ void create_algo(t_player *play, t_struct *window)
         calculate_ray_and_deltaDist(play, i);
         calculate_step_and_sideDist(play);
         side = perform_dda(play, hit);
-        //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
-        if (side == 0)
-            play->perpWallDist = (play->mapX - play->posX + (1 - play->stepX) / 2) / play->rayDirX;
-        else 
-            play->perpWallDist = (play->mapY - play->posY + (1 - play->stepY) / 2) / play->rayDirY;
-        //Calculate height of line to draw on screen
+        calculate_dist(play, side);
         lineHeight = (int)(screenHeight / play->perpWallDist);
         //calculate lowest and highest pixel to fill in current stripe
         drawStart = -lineHeight / 2 + screenHeight / 2;
@@ -166,13 +171,12 @@ void create_algo(t_player *play, t_struct *window)
         color = 0xffffff;
 		if (side == 1)
             color = 0x0000ff;
-        //draw the pixels of the stripe as a vertical line
         verLine(i, drawStart, drawEnd, color, window);
         i++;
     }
 }
 
-int ft_close(int keycode, t_index *idx)
+int ft_key(int keycode, t_index *idx)
 {
     double moveSpeed;
     double oldDirX;
@@ -180,7 +184,7 @@ int ft_close(int keycode, t_index *idx)
     double oldPlaneX;
 
     moveSpeed = 1;
-    rotSpeed = 0.3;
+    rotSpeed = 0.2;
     oldPlaneX = idx->play->planeX;
     if (keycode == MLXK_ESC)
         exit(0);
@@ -196,7 +200,6 @@ int ft_close(int keycode, t_index *idx)
     }
     else if (keycode == MLXK_A)
     {
-        //both camera direction and camera plane must be rotated
         oldDirX = idx->play->dirX;
         idx->play->dirX = idx->play->dirX * cos(rotSpeed) - idx->play->dirY * sin(rotSpeed);
         idx->play->dirY = oldDirX * sin(rotSpeed) + idx->play->dirY * cos(rotSpeed);
@@ -228,12 +231,14 @@ void create_settings(t_player *play)
     play->planeY = 0.66;
 }
 
-int main()
+int main(int argc, char **argv)
 {
     t_index  idx;
     t_struct  window;
     t_image   img;
     t_player  play;
+
+    if ()
 
     idx.window = &window;
     idx.play = &play;
@@ -241,9 +246,10 @@ int main()
     
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
-    mlx_hook(window.mlx_win, 2, 1L<<0, ft_close, &idx);
+    mlx_hook(window.mlx_win, 2, 1L<<0, ft_key, &idx);
     img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+
     create_settings(&play);
     create_algo(&play, &window);
     //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
