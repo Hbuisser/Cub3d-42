@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 15:37:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:08:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@
 # define screenWidth 640
 # define screenHeight 480
 
-typedef struct		s_struct
+typedef struct		s_window
 {
-    //t_bool		running;
     void		*mlx_ptr;
     void		*mlx_win;
     int			mlx_height;
     int			mlx_weight;
-}					t_struct;
+}					t_window;
 
 typedef struct		s_image
 {
@@ -69,44 +68,60 @@ typedef struct      s_vector
     double y;
 }                   t_vector;
 
-typedef struct      s_player
+typedef union 
 {
-    double posX;
-    double posY;
-    double dirX;
-    double dirY;
-    double planeX;
-    double planeY;
-    double cameraX;
-    double rayDirX;
-	double rayDirY;
-    int mapX;
-	int mapY;
-	double sideDistX;
-    double sideDistY;
-	double deltaDistX;
-    double deltaDistY;
-	double perpWallDist;
-	int stepX;
-    int stepY;
-}					t_player;
+	unsigned int 	hexcode;
+	struct
+	{
+		unsigned char	r;
+		unsigned char 	g;
+		unsigned char 	b;
+	}				rgb;
+}					t_color;
+
+typedef struct      s_big
+{
+    double		posX;
+    double		posY;
+    double		dirX;
+    double		dirY;
+    double		planeX;
+    double		planeY;
+    double		cameraX;
+    double		rayDirX;
+	double		rayDirY;
+    int			mapX;
+	int			mapY;
+	double		sideDistX;
+    double		sideDistY;
+	double		deltaDistX;
+    double		deltaDistY;
+	double		perpWallDist;
+	int			stepX;
+    int			stepY;
+	t_color		ceiling_color;
+	t_color 	floor_color;
+
+}					t_big;
 
 typedef struct 		s_index
 {
-	t_struct *window;
+	t_window *window;
 	t_image *img;
-	t_player *play;
+	t_big *big;
 }					t_index;
 
 int	create_trgb(int t, int r, int g, int b);
 void my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window);
-int perform_dda(t_player *play, int hit);
-void calculate_step_and_sideDist(t_player *play);
-void calculate_ray_and_deltaDist(t_player *play, int i);
-void calculate_dist(t_player *play, int side);
-void create_algo(t_player *play, t_struct *window);
+void verLine(int i, int drawStart, int drawEnd, int color, t_window *window);
+int perform_dda(t_big *play, int hit);
+void calculate_step_and_sideDist(t_big *big);
+void calculate_ray_and_deltaDist(t_big *big, int i);
+void calculate_dist(t_big *big, int side);
+void create_algo(t_big *big, t_window *window);
 int ft_key(int keycode, t_index *idx);
-void create_settings(t_player *play);
+void create_settings(t_big *big);
+
+int parse(t_big *big, char *filename);
 
 #endif

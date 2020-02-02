@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 15:29:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:07:18 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 }
 
 
-void verLine(int i, int drawStart, int drawEnd, int color, t_struct *window)
+void verLine(int i, int drawStart, int drawEnd, int color, t_window *window)
 {
     int y;
 
@@ -70,77 +70,77 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int perform_dda(t_player *play, int hit)
+int perform_dda(t_big *big, int hit)
 {
     int side; //was a NS or a EW wall hit?
 
     while (hit == 0)
     {
         //jump to next map square, OR in x-direction, OR in y-direction
-        if (play->sideDistX < play->sideDistY)
+        if (big->sideDistX < big->sideDistY)
         {
-            play->sideDistX += play->deltaDistX;
-            play->mapX += play->stepX;
+            big->sideDistX += big->deltaDistX;
+            big->mapX += big->stepX;
             side = 0;
         }
         else
         {
-            play->sideDistY += play->deltaDistY;
-            play->mapY += play->stepY;
+            big->sideDistY += big->deltaDistY;
+            big->mapY += big->stepY;
             side = 1;
         }
         //Check if ray has hit a wall
-        if (worldMap[play->mapX][play->mapY] > 0) 
+        if (worldMap[big->mapX][big->mapY] > 0) 
             hit = 1;
     }
     return (side);
 }
 
-void calculate_step_and_sideDist(t_player *play)
+void calculate_step_and_sideDist(t_big *big)
 {
-    if (play->rayDirX < 0)
+    if (big->rayDirX < 0)
     {
-        play->stepX = -1;
-        play->sideDistX = (play->posX - play->mapX) * play->deltaDistX;
+        big->stepX = -1;
+        big->sideDistX = (big->posX - big->mapX) * big->deltaDistX;
     }
     else
     {
-        play->stepX = 1;
-        play->sideDistX = (play->mapX + 1.0 - play->posX) * play->deltaDistX;
+        big->stepX = 1;
+        big->sideDistX = (big->mapX + 1.0 - big->posX) * big->deltaDistX;
     }
-    if (play->rayDirY < 0)
+    if (big->rayDirY < 0)
     {
-        play->stepY = -1;
-        play->sideDistY = (play->posY - play->mapY) * play->deltaDistY;
+        big->stepY = -1;
+        big->sideDistY = (big->posY - big->mapY) * big->deltaDistY;
     }
     else
     {
-        play->stepY = 1;
-        play->sideDistY = (play->mapY + 1.0 - play->posY) * play->deltaDistY;
+        big->stepY = 1;
+        big->sideDistY = (big->mapY + 1.0 - big->posY) * big->deltaDistY;
     }
 }
 
-void calculate_ray_and_deltaDist(t_player *play, int i)
+void calculate_ray_and_deltaDist(t_big *big, int i)
 {
     //calculate ray position and direction
-    play->cameraX = 2 * i / (double)screenWidth - 1;//x-coordinate in camera space
-    play->rayDirX = play->dirX + play->planeX * play->cameraX;
-    play->rayDirY = play->dirY + play->planeY * play->cameraX;
-    play->mapX = (int)play->posX;
-    play->mapY = (int)play->posY;
-    play->deltaDistX = fabs(1 / play->rayDirX);
-    play->deltaDistY = fabs(1 / play->rayDirY);
+    big->cameraX = 2 * i / (double)screenWidth - 1;//x-coordinate in camera space
+    big->rayDirX = big->dirX + big->planeX * big->cameraX;
+    big->rayDirY = big->dirY + big->planeY * big->cameraX;
+    big->mapX = (int)big->posX;
+    big->mapY = (int)big->posY;
+    big->deltaDistX = fabs(1 / big->rayDirX);
+    big->deltaDistY = fabs(1 / big->rayDirY);
 }
 
-void calculate_dist(t_player *play, int side)
+void calculate_dist(t_big *big, int side)
 {
     if (side == 0)
-        play->perpWallDist = (play->mapX - play->posX + (1 - play->stepX) / 2) / play->rayDirX;
+        big->perpWallDist = (big->mapX - big->posX + (1 - big->stepX) / 2) / big->rayDirX;
     else 
-        play->perpWallDist = (play->mapY - play->posY + (1 - play->stepY) / 2) / play->rayDirY;
+        big->perpWallDist = (big->mapY - big->posY + (1 - big->stepY) / 2) / big->rayDirY;
 }
 
-void create_algo(t_player *play, t_struct *window)
+void create_algo(t_big *big, t_window *window)
 {
     int i;
     int hit; //was there a wall hit?
@@ -155,11 +155,11 @@ void create_algo(t_player *play, t_struct *window)
     while (i < screenWidth)
     {
         hit = 0;
-        calculate_ray_and_deltaDist(play, i);
-        calculate_step_and_sideDist(play);
-        side = perform_dda(play, hit);
-        calculate_dist(play, side);
-        lineHeight = (int)(screenHeight / play->perpWallDist);
+        calculate_ray_and_deltaDist(big, i);
+        calculate_step_and_sideDist(big);
+        side = perform_dda(big, hit);
+        calculate_dist(big, side);
+        lineHeight = (int)(screenHeight / big->perpWallDist);
         //calculate lowest and highest pixel to fill in current stripe
         drawStart = -lineHeight / 2 + screenHeight / 2;
         if (drawStart < 0)
@@ -185,71 +185,76 @@ int ft_key(int keycode, t_index *idx)
 
     moveSpeed = 1;
     rotSpeed = 0.2;
-    oldPlaneX = idx->play->planeX;
+    oldPlaneX = idx->big->planeX;
     if (keycode == MLXK_ESC)
         exit(0);
     else if (keycode == MLXK_W)
     {
-        idx->play->posX += idx->play->dirX * moveSpeed;
-        idx->play->posY += idx->play->dirY * moveSpeed;
+        idx->big->posX += idx->big->dirX * moveSpeed;
+        idx->big->posY += idx->big->dirY * moveSpeed;
     }
     else if (keycode == MLXK_S)
     {
-        idx->play->posX -= idx->play->dirX * moveSpeed;
-        idx->play->posY -= idx->play->dirY * moveSpeed;
+        idx->big->posX -= idx->big->dirX * moveSpeed;
+        idx->big->posY -= idx->big->dirY * moveSpeed;
     }
     else if (keycode == MLXK_A)
     {
-        oldDirX = idx->play->dirX;
-        idx->play->dirX = idx->play->dirX * cos(rotSpeed) - idx->play->dirY * sin(rotSpeed);
-        idx->play->dirY = oldDirX * sin(rotSpeed) + idx->play->dirY * cos(rotSpeed);
-        oldPlaneX = idx->play->planeX;
-        idx->play->planeX = idx->play->planeX * cos(rotSpeed) - idx->play->planeY * sin(rotSpeed);
-        idx->play->planeY = oldPlaneX * sin(rotSpeed) + idx->play->planeY * cos(rotSpeed);
+        oldDirX = idx->big->dirX;
+        idx->big->dirX = idx->big->dirX * cos(rotSpeed) - idx->big->dirY * sin(rotSpeed);
+        idx->big->dirY = oldDirX * sin(rotSpeed) + idx->big->dirY * cos(rotSpeed);
+        oldPlaneX = idx->big->planeX;
+        idx->big->planeX = idx->big->planeX * cos(rotSpeed) - idx->big->planeY * sin(rotSpeed);
+        idx->big->planeY = oldPlaneX * sin(rotSpeed) + idx->big->planeY * cos(rotSpeed);
     }
     else if (keycode == MLXK_D)
     {
-        oldDirX = idx->play->dirX;
-        idx->play->dirX = idx->play->dirX * cos(-rotSpeed) - idx->play->dirY * sin(-rotSpeed);
-        idx->play->dirY = oldDirX * sin(-rotSpeed) + idx->play->dirY * cos(-rotSpeed);
-        oldPlaneX = idx->play->planeX;
-        idx->play->planeX = idx->play->planeX * cos(-rotSpeed) - idx->play->planeY * sin(-rotSpeed);
-        idx->play->planeY = oldPlaneX * sin(-rotSpeed) + idx->play->planeY * cos(-rotSpeed);
+        oldDirX = idx->big->dirX;
+        idx->big->dirX = idx->big->dirX * cos(-rotSpeed) - idx->big->dirY * sin(-rotSpeed);
+        idx->big->dirY = oldDirX * sin(-rotSpeed) + idx->big->dirY * cos(-rotSpeed);
+        oldPlaneX = idx->big->planeX;
+        idx->big->planeX = idx->big->planeX * cos(-rotSpeed) - idx->big->planeY * sin(-rotSpeed);
+        idx->big->planeY = oldPlaneX * sin(-rotSpeed) + idx->big->planeY * cos(-rotSpeed);
     }
     mlx_clear_window(idx->window->mlx_ptr, idx->window->mlx_win);
-    create_algo(idx->play, idx->window);
+    create_algo(idx->big, idx->window);
     return (0);
 }
 
-void create_settings(t_player *play)
+void create_settings(t_big *big)
 {
-    play->posX = 22;
-    play->posY = 12;
-    play->dirX = -1;
-    play->dirY = 0;
-    play->planeX = 0;
-    play->planeY = 0.66;
+    big->posX = 22;
+    big->posY = 12;
+    big->dirX = -1;
+    big->dirY = 0;
+    big->planeX = 0;
+    big->planeY = 0.66;
 }
 
-int main()
+int main(int ac, char **av)
 {
-    t_index  idx;
-    t_struct  window;
-    t_image   img;
-    t_player  play;
+    t_index		idx;
+    t_window	window;
+    t_image		img;
+    t_big		big;
 
+	/*if (ac < 2)
+		return (-1);*/
+	ac = 1;
     idx.window = &window;
-    idx.play = &play;
+    idx.big = &big;
     idx.img = &img;
     
+	parse(&big, av[1]);
+
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
     mlx_hook(window.mlx_win, 2, 1L<<0, ft_key, &idx);
     img.img = mlx_new_image(window.mlx_ptr, screenWidth, screenHeight);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
-    create_settings(&play);
-    create_algo(&play, &window);
+    create_settings(&big);
+    create_algo(&big, &window);
     //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
     mlx_loop(window.mlx_ptr);
     return (0);

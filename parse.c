@@ -6,11 +6,33 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 15:13:16 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:19:57 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "cube3d.h"
 
+int map_setup(t_big *big, char *filename)
+{
+	int fd;
+
+	if ((fd = open(filename, O_RDONLY)) < 0)
+		retur (0);
+	while ((ret = get_next_line(fd, &line)) > 0)
+	{
+		
+	}
+}
+
+int parse(t_big *big, char *filename)
+{
+	big->posX = 1;
+	filename = "hello";
+	big->ceiling_color.hexcode = 0;
+	big->floor_color.hexcode = 0;
+	map_setup(big, filename);
+	return (1);
+}
 
 
 ///////////////// bsq parsing
