@@ -6,16 +6,17 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 13:42:27 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:34:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-/*int parse_line()
+int parse_line(t_big *big, char *line)
 {
+	
 	return (0);
-}*/
+}
 
 int count_sprites(char *line)
 {
@@ -32,6 +33,11 @@ int count_sprites(char *line)
 	}
 	return (j);
 }
+
+/*
+** Get the number of lines and the number of sprites
+** Still problem with empty lines (ret = gnl stops)
+*/
 
 int map_setup(t_big *big, char *filename)
 {
@@ -63,20 +69,22 @@ int map_setup(t_big *big, char *filename)
 		return (0);
 	if (!(big->sprites = malloc(sizeof(t_sprites) * big->nbr_sprites)))
 		return (0);
-	return (0);
+	return (1);
 }
 
 int parse(t_big *big, char *filename)
 {
-	big->ceiling_color.hexcode = 0;
-	big->floor_color.hexcode = 0;
-	map_setup(big, filename);
-	/*while ((ret = get_next_line(fd, &line)) > 0)
+	//big->ceiling_color.hexcode = 0;
+	//big->floor_color.hexcode = 0;
+	if (!(map_setup(big, filename)) || (fd = open(filename, O_RDONLY) < 0))
+		return (0);
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		parse_line(big, line);
 		free(line);
 		line = NULL;
-	}*/
+	}
+	close(fd);
 	return (1);
 }
 
