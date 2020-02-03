@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 21:09:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 20:02:44 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@
 # define MLXK_D 2
 # define MLXK_LEFT 123
 # define MLXK_RIGHT 124
-
-# define TRUE 1
-# define FALSE 0
-
-//# define SQUARE(x) ((x) * (x))
 
 # define mapWidth 24
 # define mapHeight 24
@@ -79,13 +74,6 @@ typedef union
 	}				rgb;
 }					t_color;
 
-typedef struct		s_sprites
-{	
-	int		x;
-	int 	y;
-	int 	index;
-}					t_sprites;
-
 typedef struct      s_big
 {
     double		posX;
@@ -108,11 +96,7 @@ typedef struct      s_big
     int			stepY;
 	t_color		ceiling_color;
 	t_color 	floor_color;
-	int 		nbr_line;
-	int 		nbr_sprites;
-	int			**map;
-	t_sprites 	*sprites;
-
+	char		**map;
 }					t_big;
 
 typedef struct 		s_index
@@ -122,17 +106,29 @@ typedef struct 		s_index
 	t_big *big;
 }					t_index;
 
-void my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void verLine(int i, int drawStart, int drawEnd, int color, t_window *window);
-int perform_dda(t_big *play, int hit);
-void calculate_step_and_sideDist(t_big *big);
-void calculate_ray_and_deltaDist(t_big *big, int i);
-void calculate_dist(t_big *big, int side);
-void create_algo(t_big *big, t_window *window);
-int ft_key(int keycode, t_index *idx);
-void create_settings(t_big *big);
+/*
+** Main file
+*/
 
-int parse(t_big *big, char *filename);
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
+void	verLine(int i, int drawStart, int drawEnd, int color, t_window *window);
+int		perform_dda(t_big *play, int hit);
+void	calculate_step_and_sideDist(t_big *big);
+void	calculate_ray_and_deltaDist(t_big *big, int i);
+void	calculate_dist(t_big *big, int side);
+void	create_algo(t_big *big, t_window *window);
+int		ft_key(int keycode, t_index *idx);
+void	create_settings(t_big *big);
+
+/*
+** Parsing
+*/
+
+int		parse_data_and_map(t_index *idx, char *filename);
+
+/*
+** GNL
+*/
 
 int		get_next_line(const int fd, char **line);
 

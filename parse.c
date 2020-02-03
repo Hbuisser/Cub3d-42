@@ -6,89 +6,30 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 19:36:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 21:51:48 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-/*int count_sprites(char *line)
+int parse_data_and_map(t_index *idx, char *filename)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == '2' || line[i] == '3')
-			j++;
-		i++;
-	}
-	return (j);
-}*/
-
-/*
-** Get the number of lines and the number of sprites
-** Still problem with empty lines (ret = gnl stops)
-*/
-
-/*int map_setup(t_big *big, char *filename)
-{
-	int		fd;
-	int		ret;
-	char	*line;
-	
-	big->nbr_line = 0;
-	big->nbr_sprites = 0;
-	if ((fd = open(filename, O_RDONLY)) < 0)
-		return (0);
-	while ((ret = get_next_line(fd, &line)) > 0)
-	{
-		if (*line == '1')
-		{
-			big->nbr_line += 1;
-			big->nbr_sprites += count_sprites(line);
-		}
-		free(line);
-	}
-	if (*line == '1')
-	{
-		big->nbr_line += 1;
-		big->nbr_sprites += count_sprites(line);
-	}
-	free(line);
-	close(fd);
-	if (!(big->map = (int **)malloc(sizeof(int *) * big->nbr_line)))
-		return (0);
-	if (!(big->sprites = malloc(sizeof(t_sprites) * big->nbr_sprites)))
-		return (0);
-	return (1);
-}*/
-
-
-int parse(t_big *big, char *filename)
-{
-	char	*map;
+	char	*map_string;
 	char 	*data;
 	char 	*line;
 	int		fd;
-	int ret;
+	int 	i;
+	int 	j;
 	
 	//big->ceiling_color.hexcode = 0;
 	//big->floor_color.hexcode = 0;
-	/*if (!(map_setup(big, filename)) || (fd = open(filename, O_RDONLY) < 0))
-		return (1);*/
-	big->posX = 0;
-	map = "";
+	map_string = "";
 	data = "";
-	line = "";
 	fd = open(filename, O_RDONLY);
-	while ((ret = get_next_line(fd, &line)) > 0)
+	while (get_next_line(fd, &line))
 	{
 		if (line[0] == '\0')
 			get_next_line(fd, &line);
-		printf("%i", ret);
 		if (line[0] != '1')
 		{
 			data = ft_strjoin(data, line);
@@ -98,20 +39,47 @@ int parse(t_big *big, char *filename)
 		}
 		else
 		{
-			map = ft_strjoin(map, line);
-			map = ft_strjoin(map, "\n");
+			map_string = ft_strjoin(map_string, line);
+			map_string = ft_strjoin(map_string, "\n");
 			free(line);
 			line = NULL;
 		}
 	}
-	printf("%i", ret);
-	map = ft_strjoin(map, line);
-	map = ft_strjoin(map, "\n");
+	map_string = ft_strjoin(map_string, line);
+	map_string = ft_strjoin(map_string, "\0");
 	free(line);
 	line = NULL;
 	close(fd);
-	printf("%s", data);
-	printf("%s", map);
+	// A FAIRE : ft_strcpy sans les espaces
+	
+	idx->big->map = ft_split(map_string, '\n');
+	i = 0;
+	/*while (i < 14)
+	{
+		printf("%s\n", *idx->big->map);
+		idx->big->map++;
+		i++;
+	}*/
+	j = 0;
+	while (idx->big->map[i] != NULL)
+	{
+		j = 0;
+		while (idx->big->map[i][j] != '\0')
+		{
+			//printf("%i\n", j);
+			if ((ft_isalpha(idx->big->map[i][j])))
+			{
+				idx->big->posX = j;
+				idx->big->posY = i;
+				printf("%i%i", i, j);
+				printf("%s\n", idx->big->map[i]);
+				//printf("%f\n", idx->big->posX);
+			}
+			j++;
+		}
+		i++;
+	}
+	//printf("%f\n", idx->big->posX);
 	return (1);
 }
 
