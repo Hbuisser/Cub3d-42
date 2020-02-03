@@ -6,16 +6,16 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 21:12:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:42:27 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int parse_line()
+/*int parse_line()
 {
 	return (0);
-}
+}*/
 
 int count_sprites(char *line)
 {
@@ -71,12 +71,12 @@ int parse(t_big *big, char *filename)
 	big->ceiling_color.hexcode = 0;
 	big->floor_color.hexcode = 0;
 	map_setup(big, filename);
-	while ((ret = get_next_line(fd, &line)) > 0)
+	/*while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		parse_line(big, line);
 		free(line);
 		line = NULL;
-	}
+	}*/
 	return (1);
 }
 
