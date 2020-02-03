@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 14:34:00 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 15:48:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int map_setup(t_big *big, char *filename)
 		return (0);
 	return (1);
 }
+
 
 int parse(t_big *big, char *filename)
 {
