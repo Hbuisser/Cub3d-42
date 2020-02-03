@@ -6,19 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 15:48:42 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:36:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-int parse_line(t_big *big, char *line)
-{
-	
-	return (0);
-}
-
-int count_sprites(char *line)
+/*int count_sprites(char *line)
 {
 	int i;
 	int j;
@@ -32,14 +26,14 @@ int count_sprites(char *line)
 		i++;
 	}
 	return (j);
-}
+}*/
 
 /*
 ** Get the number of lines and the number of sprites
 ** Still problem with empty lines (ret = gnl stops)
 */
 
-int map_setup(t_big *big, char *filename)
+/*int map_setup(t_big *big, char *filename)
 {
 	int		fd;
 	int		ret;
@@ -70,24 +64,66 @@ int map_setup(t_big *big, char *filename)
 	if (!(big->sprites = malloc(sizeof(t_sprites) * big->nbr_sprites)))
 		return (0);
 	return (1);
-}
+}*/
 
 
 int parse(t_big *big, char *filename)
 {
+	char	*map;
+	char 	*data;
+	char 	*line;
+	int		fd;
+	int ret;
+	
 	//big->ceiling_color.hexcode = 0;
 	//big->floor_color.hexcode = 0;
-	if (!(map_setup(big, filename)) || (fd = open(filename, O_RDONLY) < 0))
-		return (0);
+	/*if (!(map_setup(big, filename)) || (fd = open(filename, O_RDONLY) < 0))
+		return (1);*/
+	big->posX = 0;
+	map = "";
+	data = "";
+	line = "";
+	fd = open(filename, O_RDONLY);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		parse_line(big, line);
-		free(line);
-		line = NULL;
+		if (line[0] == '\0')
+			get_next_line(fd, &line);
+		printf("%i", ret);
+		if (line[0] != '1')
+		{
+			data = ft_strjoin(data, line);
+			data = ft_strjoin(data, "\n");
+			free(line);
+			line = NULL;
+		}
+		else
+		{
+			map = ft_strjoin(map, line);
+			map = ft_strjoin(map, "\n");
+			free(line);
+			line = NULL;
+		}
 	}
+	printf("%i", ret);
+	map = ft_strjoin(map, line);
+	map = ft_strjoin(map, "\n");
+	free(line);
+	line = NULL;
 	close(fd);
+	printf("%s", data);
+	printf("%s", map);
 	return (1);
 }
+
+
+
+
+
+
+
+
+
+
 
 
 ///////////////// bsq parsing

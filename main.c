@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 14:25:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:35:48 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void create_settings(t_big *big)
     big->planeY = 0.66;
 }
 
-int main()
+int main(int ac, char **av)
 {
     t_index		idx;
     t_window	window;
@@ -234,7 +234,7 @@ int main()
 
 	if (ac < 2)
 		return (-1);
-	ac = 1;
+    ac = 0;
     idx.window = &window;
     idx.big = &big;
     idx.img = &img;

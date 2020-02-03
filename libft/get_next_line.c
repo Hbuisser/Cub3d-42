@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 08:32:32 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 18:55:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:35:24 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int		ft_line_creation(char **stat, char **line, int idx)
 
 	if (idx >= 0)
 	{
-		if (!(*line = ft_substr(*stat, 0, idx)))
+		if (!(*line = ft_substr_gnl(*stat, 0, idx)))
 			return (ft_free_stat(stat, -1));
-		if (!(tmp = ft_substr(*stat, idx + 1, (ft_strlen(*stat) - idx - 1))))
+		if (!(tmp = ft_substr_gnl(*stat, idx + 1, (ft_strlen(*stat) - idx - 1))))
 			return (ft_free_stat(stat, -1));
 		result = 1;
 	}
