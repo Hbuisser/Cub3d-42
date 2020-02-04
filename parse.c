@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 14:04:51 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:10:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	parse_data_and_map(int fd, t_index *idx)
 	{
 		if (line[0] == '\0')
 			get_next_line(fd, &line);
-		//if (line[0] != '1')
 		if (!ft_isdigit(line[0]))
 		{
 			idx->parse->data = ft_strjoin(idx->parse->data, line);

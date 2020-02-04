@@ -6,11 +6,23 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 13:55:13 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:20:25 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+int		check_dir_letter(t_index *idx)
+{
+	if (idx->parse->dir == 'N' || idx->parse->dir == 'S' ||
+		idx->parse->dir == 'E' || idx->parse->dir == 'W')
+		return (0);
+	return (-1);
+}
+
+/*
+** error for first column already checked in the parse_data_and_map function
+*/
 
 int		check_error(t_index *idx)
 {
@@ -37,13 +49,7 @@ int		check_error(t_index *idx)
 			return (-1);
 		j++;
 	}
-	j = 0;
-	// attention au parsing qui repere si c'est 1 ou pas plus tot dans le code
-	while (j < idx->parse->line_nbr)
-	{
-		if (idx->parse->map[j][0] != '1')
-			return (-1);
-		j++;
-	}
+	if (check_dir_letter(idx) < 0)
+		return (-1);
 	return (0);
 }
