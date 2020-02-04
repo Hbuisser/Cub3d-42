@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 14:31:44 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:35:25 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		check_dir_letter(t_index *idx)
 	return (-1);
 }
 
-int 	check_numbers(t_index *idx)
+int 	check_map_characters(t_index *idx)
 {
 	int i;
 
@@ -45,7 +45,7 @@ int 	check_numbers(t_index *idx)
 ** error for first column already checked in the parse_data_and_map function
 */
 
-int		check_error(t_index *idx)
+int		check_borders(t_index *idx)
 {
 	int j;
 
@@ -70,9 +70,16 @@ int		check_error(t_index *idx)
 			return (-1);
 		j++;
 	}
+	return (0);
+}
+
+int		check_errors(t_index *idx)
+{
+	if (check_borders(idx) < 0)
+		return (-1);
 	if (check_dir_letter(idx) < 0)
 		return (-1);
-	if (check_numbers(idx) < 0)
+	if (check_map_characters(idx) < 0)
 		return (-1);
 	return (0);
 }

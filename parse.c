@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 14:10:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:18:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	parse_data_and_map(int fd, t_index *idx)
 	}
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
+	idx->parse->data = ft_strjoin(idx->parse->data, "\0");
 	free(line);
 	line = NULL;
 	return (0);
@@ -111,14 +112,15 @@ int parse_cub(t_index *idx, char *filename)
 	close(fd);
 	count = count_no_spaces(idx);
 	create_map(idx, count);
-	if (check_error(idx) < 0)
+	create_elements(idx);
+	if (check_errors(idx) < 0)
 		return (-1);
 	i = 0;
-	while (i < 14)
+	/*while (i < 14)
 	{
 		printf("%s\n", *idx->parse->map);
 		idx->parse->map++;
 		i++;
-	}
+	}*/
 	return (1);
 }

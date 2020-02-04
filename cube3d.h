@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 13:01:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:04:51 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,21 @@ typedef struct      s_parse
     char    dir;
 }                   t_parse;
 
+typedef struct      s_elements
+{
+    char    **elem;
+    int		resolution_line;
+    int     resolution_x;
+    int     resolution_y;
+    char    north_line;
+    char    south_line;
+    char    west_line;
+    char    east_line;
+    char    sprite_line;
+    char    floor_line;
+    char    ceilling_line;
+}                   t_elements;
+
 typedef struct      s_big
 {
     double		posX;
@@ -115,6 +130,7 @@ typedef struct 		s_index
 	t_image     *img;
 	t_big       *big;
     t_parse     *parse;
+    t_elements  *elements;
 }					t_index;
 
 /*
@@ -141,7 +157,13 @@ int		parse_cub(t_index *idx, char *filename);
 ** Parse error
 */
 
-int		check_error(t_index *idx);
+int		check_errors(t_index *idx);
+
+/*
+** Parse elements
+*/
+
+void create_elements(t_index *idx);
 
 /*
 ** GNL
