@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 20:02:44 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 12:43:24 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ typedef union
 	}				rgb;
 }					t_color;
 
+typedef struct      s_parse
+{
+    char    *data;
+    char    *map_string;
+    char    *map_string_clean;
+    char	**map;
+    char    dir;
+}                   t_parse;
+
 typedef struct      s_big
 {
     double		posX;
@@ -96,14 +105,14 @@ typedef struct      s_big
     int			stepY;
 	t_color		ceiling_color;
 	t_color 	floor_color;
-	char		**map;
 }					t_big;
 
 typedef struct 		s_index
 {
-	t_window *window;
-	t_image *img;
-	t_big *big;
+	t_window    *window;
+	t_image     *img;
+	t_big       *big;
+    t_parse     *parse;
 }					t_index;
 
 /*
@@ -124,7 +133,7 @@ void	create_settings(t_big *big);
 ** Parsing
 */
 
-int		parse_data_and_map(t_index *idx, char *filename);
+int		parse_cub(t_index *idx, char *filename);
 
 /*
 ** GNL
