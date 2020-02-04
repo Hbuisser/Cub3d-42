@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/03 21:51:48 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 11:23:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 int parse_data_and_map(t_index *idx, char *filename)
 {
 	char	*map_string;
+	char 	*map_string_clean;
 	char 	*data;
 	char 	*line;
 	int		fd;
 	int 	i;
 	int 	j;
+	int 	count;
 	
 	//big->ceiling_color.hexcode = 0;
 	//big->floor_color.hexcode = 0;
@@ -50,9 +52,32 @@ int parse_data_and_map(t_index *idx, char *filename)
 	free(line);
 	line = NULL;
 	close(fd);
-	// A FAIRE : ft_strcpy sans les espaces
-	
-	idx->big->map = ft_split(map_string, '\n');
+	i = 0;
+	count = 0;
+	while (map_string[i] != '\0')
+	{
+		if (map_string[i] != ' ')
+			count++;
+		i++;
+	}
+	i = 0;
+	j = 0;
+	if (!(map_string_clean = malloc(sizeof(char) * count + 1)))
+		return (0);
+	while (map_string[i] != '\0')
+	{
+		if (map_string[i] != ' ')
+		{
+			map_string_clean[j] = map_string[i];
+			j++; 
+		}
+		i++;
+	}
+	map_string_clean[j] = '\0';
+	printf("%s\n", map_string_clean);
+
+
+	idx->big->map = ft_split(map_string_clean, '\n');
 	i = 0;
 	/*while (i < 14)
 	{
@@ -66,14 +91,11 @@ int parse_data_and_map(t_index *idx, char *filename)
 		j = 0;
 		while (idx->big->map[i][j] != '\0')
 		{
-			//printf("%i\n", j);
 			if ((ft_isalpha(idx->big->map[i][j])))
 			{
 				idx->big->posX = j;
 				idx->big->posY = i;
 				printf("%i%i", i, j);
-				printf("%s\n", idx->big->map[i]);
-				//printf("%f\n", idx->big->posX);
 			}
 			j++;
 		}
