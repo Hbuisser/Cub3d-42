@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 12:43:24 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:01:53 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct      s_parse
     char    *map_string;
     char    *map_string_clean;
     char	**map;
+    int     line_nbr;
+    int     column_nbr;
     char    dir;
 }                   t_parse;
 
@@ -134,6 +136,12 @@ void	create_settings(t_big *big);
 */
 
 int		parse_cub(t_index *idx, char *filename);
+
+/*
+** Parse error
+*/
+
+int		check_error(t_index *idx);
 
 /*
 ** GNL

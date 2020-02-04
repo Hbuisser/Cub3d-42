@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 11:56:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 13:14:43 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ int main(int ac, char **av)
     t_image		img;
     t_big		big;
     t_parse     parse;
+    int         i;
 
 	if (ac < 2)
 		return (-1);
@@ -240,8 +241,8 @@ int main(int ac, char **av)
     idx.img = &img;
     idx.parse = &parse;
     
-	parse_cub(&idx, av[1]);
-
+	i = parse_cub(&idx, av[1]);
+    printf("%i\n", i);
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
     mlx_hook(window.mlx_win, 2, 1, ft_key, &idx);

@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/02 18:53:43 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/04 13:03:52 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ MINILIBX_PATH   = ./miniLibX
 #SRCS_LIST 		= main.c
 #SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})
 SRCS 			= main.c \
-					parse.c
+					parse.c \
+					check_parse_errors.c
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 #FOLDER			= srcs

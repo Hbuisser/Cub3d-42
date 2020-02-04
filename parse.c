@@ -6,13 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 12:48:17 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:04:51 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-void	parse_data_and_map(int fd, t_index *idx)
+int	parse_data_and_map(int fd, t_index *idx)
 {
 	char 	*line;
 
@@ -22,7 +22,8 @@ void	parse_data_and_map(int fd, t_index *idx)
 	{
 		if (line[0] == '\0')
 			get_next_line(fd, &line);
-		if (line[0] != '1')
+		//if (line[0] != '1')
+		if (!ft_isdigit(line[0]))
 		{
 			idx->parse->data = ft_strjoin(idx->parse->data, line);
 			idx->parse->data = ft_strjoin(idx->parse->data, "\n");
@@ -31,16 +32,22 @@ void	parse_data_and_map(int fd, t_index *idx)
 		}
 		else
 		{
-			idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
-			idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
-			free(line);
-			line = NULL;
+			if (line[0] == '1')
+			{
+				idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
+				idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
+				free(line);
+				line = NULL;
+			}
+			else
+				return (-1);
 		}
 	}
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
 	free(line);
 	line = NULL;
+	return (0);
 }
 
 int count_no_spaces(t_index *idx)
@@ -88,6 +95,8 @@ char *create_map(t_index *idx, int count)
 		}
 		i++;
 	}
+	idx->parse->line_nbr = i;
+	idx->parse->column_nbr = j;
 	return (NULL);
 }
 
@@ -98,10 +107,13 @@ int parse_cub(t_index *idx, char *filename)
 	int 	count;
 	
 	fd = open(filename, O_RDONLY);
-	parse_data_and_map(fd, idx);
+	if (parse_data_and_map(fd, idx) < 0)
+		return (-1);
 	close(fd);
 	count = count_no_spaces(idx);
 	create_map(idx, count);
+	if (check_error(idx) < 0)
+		return (-1);
 	i = 0;
 	while (i < 14)
 	{
