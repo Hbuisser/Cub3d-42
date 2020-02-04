@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 14:20:25 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 14:31:44 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@ int		check_dir_letter(t_index *idx)
 		idx->parse->dir == 'E' || idx->parse->dir == 'W')
 		return (0);
 	return (-1);
+}
+
+int 	check_numbers(t_index *idx)
+{
+	int i;
+
+	i = 0;
+	while (idx->parse->map_string_clean[i] != '\0')
+	{
+		if (idx->parse->map_string_clean[i] != '1' &&
+				idx->parse->map_string_clean[i] != '2' &&
+				idx->parse->map_string_clean[i] != '0' &&
+				idx->parse->map_string_clean[i] != 'N' &&
+				idx->parse->map_string_clean[i] != 'S' &&
+				idx->parse->map_string_clean[i] != 'E' &&
+				idx->parse->map_string_clean[i] != 'W' &&
+				idx->parse->map_string_clean[i] != '\n')
+			return (-1);
+		i++;
+	}
+	return (0);
 }
 
 /*
@@ -50,6 +71,8 @@ int		check_error(t_index *idx)
 		j++;
 	}
 	if (check_dir_letter(idx) < 0)
+		return (-1);
+	if (check_numbers(idx) < 0)
 		return (-1);
 	return (0);
 }
