@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 16:45:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:16:18 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ typedef struct      s_elements
     int		resolution_line;
     int		resolution_x;
     int		resolution_y;
-    char	north_line;
-    char	south_line;
-    char	west_line;
-    char	east_line;
+    int 	north_line;
+    int 	south_line;
+    int 	west_line;
+    int 	east_line;
     char	sprite_line;
     int		floor_line;
     int		ceilling_line;
@@ -168,6 +168,15 @@ int		check_errors(t_index *idx);
 */
 
 void create_elements(t_index *idx);
+
+/*
+** Get textures elements
+*/
+
+char *get_east_texture(t_index *idx);
+char *get_west_texture(t_index *idx);
+char *get_south_texture(t_index *idx);
+char *get_north_texture(t_index *idx);
 
 /*
 ** GNL

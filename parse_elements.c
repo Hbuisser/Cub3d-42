@@ -6,36 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 16:46:00 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:21:39 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
-
-/*char *get_north_texture(t_index *idx)
-{
-    int	i;
-    int	j;
-    int	count;
-
-    i = 2;
-    count = 0;
-    while (idx->el->elem[idx->el->north_line][++i] == ' ')
-		i++;
-	j = i;
-    while (idx->el->elem[idx->el->north_line][i] != '\0')
-    {
-        count++;
-        i++;
-    }
-	i = j;
-    if (!(idx->el->n_path = malloc(sizeof(char) * count + 1)))
-        return (NULL);
-	while (idx->el->elem[idx->el->north_line][i] != '\0')
-	{
-		idx->el->n_path
-	}
-}*/
 
 void get_ceilling_color(t_index *idx)
 {
@@ -119,14 +94,13 @@ void get_resolution(t_index *idx)
     idx->el->resolution_y = digit;
 }
 
-void create_elements(t_index *idx)
+void create_elemets_lines(t_index *idx)
 {
     int i;
     int j;
 
     i = 0;
     j = 0;
-    idx->el->elem = ft_split(idx->parse->data, '\n');
     while (idx->el->elem[i] != NULL)
     {
         j = 0;
@@ -155,15 +129,21 @@ void create_elements(t_index *idx)
         }
         i++;
     }
+}
+
+void create_elements(t_index *idx)
+{
+    idx->el->elem = ft_split(idx->parse->data, '\n');
+    create_elemets_lines(idx);
     get_resolution(idx);
     get_floor_color(idx);
     get_ceilling_color(idx);
-    //get_north_texture(idx);
-    i = 0;
-    while (i < 8)
-	{
-		printf("%s\n", *idx->el->elem);
-		idx->el->elem++;
-		i++;
-	}
+    get_north_texture(idx);
+    get_south_texture(idx);
+    get_west_texture(idx);
+    get_east_texture(idx);
+    /*printf("%s\n", idx->el->n_path);
+    printf("%s\n", idx->el->s_path);
+    printf("%s\n", idx->el->e_path);
+    printf("%s\n", idx->el->w_path);*/
 }

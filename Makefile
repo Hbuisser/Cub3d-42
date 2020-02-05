@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/04 15:10:06 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/05 19:14:08 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ MINILIBX_PATH   = ./miniLibX
 SRCS 			= main.c \
 					parse.c \
 					check_parse_errors.c \
-					parse_elements.c
+					parse_elements.c \
+					get_textures_paths.c
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 #FOLDER			= srcs
