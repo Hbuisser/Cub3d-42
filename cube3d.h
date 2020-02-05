@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 17:04:51 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:54:54 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ typedef struct      s_elements
     char    west_line;
     char    east_line;
     char    sprite_line;
-    char    floor_line;
+    int    floor_line;
     char    ceilling_line;
+    t_color		ceiling_color;
+	t_color 	floor_color;
 }                   t_elements;
 
 typedef struct      s_big
@@ -120,8 +122,6 @@ typedef struct      s_big
 	double		perpWallDist;
 	int			stepX;
     int			stepY;
-	t_color		ceiling_color;
-	t_color 	floor_color;
 }					t_big;
 
 typedef struct 		s_index
@@ -130,7 +130,7 @@ typedef struct 		s_index
 	t_image     *img;
 	t_big       *big;
     t_parse     *parse;
-    t_elements  *elements;
+    t_elements  *el;
 }					t_index;
 
 /*

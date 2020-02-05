@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 17:33:11 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/04 17:37:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ int main(int ac, char **av)
     t_image		img;
     t_big		big;
     t_parse     parse;
-    t_elements  elements;
+    t_elements  el;
 
 	if (ac < 2)
 		return (-1);
@@ -240,7 +240,7 @@ int main(int ac, char **av)
     idx.big = &big;
     idx.img = &img;
     idx.parse = &parse;
-    idx.elements = &elements;
+    idx.el = &el;
     
 	if (parse_cub(&idx, av[1]) < 0)
     {
