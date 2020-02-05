@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 15:54:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:45:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,23 @@ typedef struct      s_parse
 
 typedef struct      s_elements
 {
-    char    **elem;
+    char	**elem;
     int		resolution_line;
-    int     resolution_x;
-    int     resolution_y;
-    char    north_line;
-    char    south_line;
-    char    west_line;
-    char    east_line;
-    char    sprite_line;
-    int    floor_line;
-    char    ceilling_line;
-    t_color		ceiling_color;
-	t_color 	floor_color;
+    int		resolution_x;
+    int		resolution_y;
+    char	north_line;
+    char	south_line;
+    char	west_line;
+    char	east_line;
+    char	sprite_line;
+    int		floor_line;
+    int		ceilling_line;
+    t_color	ceilling_color;
+	t_color	floor_color;
+	char 	*n_path;
+	char	*s_path;
+	char	*w_path;
+	char	*e_path;
 }                   t_elements;
 
 typedef struct      s_big

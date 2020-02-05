@@ -1,0 +1,19 @@
+R 1000 600
+
+NO ./north
+SO ./south
+WE ./west
+EA ./east
+S ./sprite
+
+
+F 220,100,0
+C 225,30,0
+
+
+
+1
+1
+1
+1
+1

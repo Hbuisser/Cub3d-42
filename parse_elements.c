@@ -6,11 +6,63 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 15:59:26 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:46:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+
+/*char *get_north_texture(t_index *idx)
+{
+    int	i;
+    int	j;
+    int	count;
+
+    i = 2;
+    count = 0;
+    while (idx->el->elem[idx->el->north_line][++i] == ' ')
+		i++;
+	j = i;
+    while (idx->el->elem[idx->el->north_line][i] != '\0')
+    {
+        count++;
+        i++;
+    }
+	i = j;
+    if (!(idx->el->n_path = malloc(sizeof(char) * count + 1)))
+        return (NULL);
+	while (idx->el->elem[idx->el->north_line][i] != '\0')
+	{
+		idx->el->n_path
+	}
+}*/
+
+void get_ceilling_color(t_index *idx)
+{
+    int i;
+    int digit;
+
+    i = 1;
+    digit = 0;
+    while (idx->el->elem[idx->el->ceilling_line][++i] == ' ')
+		i++;
+    while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
+            idx->el->elem[idx->el->ceilling_line][i] <= '9')
+        digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
+    idx->el->floor_color.rgb.r = digit;
+    i++;
+    digit = 0;
+    while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
+            idx->el->elem[idx->el->ceilling_line][i] <= '9')
+        digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
+    idx->el->ceilling_color.rgb.g = digit;
+    i++;
+    digit = 0;
+    while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
+            idx->el->elem[idx->el->ceilling_line][i] <= '9')
+        digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
+    idx->el->ceilling_color.rgb.b = digit;
+}
 
 void get_floor_color(t_index *idx)
 {
@@ -19,36 +71,24 @@ void get_floor_color(t_index *idx)
 
     i = 1;
     digit = 0;
-    while (idx->el->elem[idx->el->floor_line][i] == ' ')
+    while (idx->el->elem[idx->el->floor_line][++i] == ' ')
 		i++;
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
-    {
-        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i] - '0';
-        i++;
-    }
+        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.r = digit;
-    printf("%i\n", idx->el->floor_color.rgb.r);
     i++;
     digit = 0;
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
-    {
-        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i] - '0';
-        i++;
-    }
+        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.g = digit;
-    printf("%i\n", idx->el->floor_color.rgb.g);
     i++;
     digit = 0;
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
-    {
-        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i] - '0';
-        i++;
-    }
+        digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.b = digit;
-    printf("%i\n", idx->el->floor_color.rgb.b);
 }
 
 void get_resolution(t_index *idx)
@@ -117,6 +157,8 @@ void create_elements(t_index *idx)
     }
     get_resolution(idx);
     get_floor_color(idx);
+    get_ceilling_color(idx);
+    //get_north_texture(idx);
     i = 0;
     while (i < 8)
 	{
