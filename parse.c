@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 17:41:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:48:47 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 int	parse_data_and_map(int fd, t_index *idx)
 {
@@ -112,9 +112,10 @@ int parse_cub(t_index *idx, char *filename)
 	close(fd);
 	count = count_no_spaces(idx);
 	create_map(idx, count);
-	create_elements(idx);
-	if (check_errors(idx) < 0)
+	if (create_elements(idx) < 0)
 		return (-1);
+	/*if (check_elements_errors(idx) < 0)
+		return (-1);*/
 	i = 0;
 	/*while (i < 14)
 	{

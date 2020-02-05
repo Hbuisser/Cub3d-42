@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:12:28 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 19:18:11 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:35:54 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 char *get_east_texture(t_index *idx)
 {
@@ -129,5 +129,35 @@ char *get_north_texture(t_index *idx)
         j++;
 	}
     idx->el->n_path[i] = '\0';
+    return ("");
+}
+
+char *get_sprite_texture(t_index *idx)
+{
+    int	i;
+    int	j;
+    int	count;
+
+    i = 2;
+    count = 0;
+    while (idx->el->elem[idx->el->sprite_line][++i] == ' ')
+		i++;
+	j = i;
+    while (idx->el->elem[idx->el->sprite_line][i] != '\0')
+    {
+        count++;
+        i++;
+    }
+	i = j;
+    j = 0;
+    if (!(idx->el->spr_path = malloc(sizeof(char) * count + 1)))
+        return (NULL);
+	while (idx->el->elem[idx->el->sprite_line][i] != '\0')
+	{
+		idx->el->spr_path[j] = idx->el->elem[idx->el->sprite_line][i];
+        i++;
+        j++;
+	}
+    idx->el->spr_path[i] = '\0';
     return ("");
 }

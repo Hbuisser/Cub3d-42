@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 19:16:18 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:36:41 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUBE3D_H
-# define CUBE3D_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdlib.h>
 # include <string.h>
@@ -95,7 +95,7 @@ typedef struct      s_elements
     int 	south_line;
     int 	west_line;
     int 	east_line;
-    char	sprite_line;
+    int 	sprite_line;
     int		floor_line;
     int		ceilling_line;
     t_color	ceilling_color;
@@ -104,6 +104,7 @@ typedef struct      s_elements
 	char	*s_path;
 	char	*w_path;
 	char	*e_path;
+    char    *spr_path;
 }                   t_elements;
 
 typedef struct      s_big
@@ -158,16 +159,17 @@ void	create_settings(t_big *big);
 int		parse_cub(t_index *idx, char *filename);
 
 /*
-** Parse error
+** Map and elements errors
 */
 
 int		check_errors(t_index *idx);
+int     check_elements_errors(t_index *idx);
 
 /*
 ** Parse elements
 */
 
-void create_elements(t_index *idx);
+int     create_elements(t_index *idx);
 
 /*
 ** Get textures elements
@@ -177,6 +179,7 @@ char *get_east_texture(t_index *idx);
 char *get_west_texture(t_index *idx);
 char *get_south_texture(t_index *idx);
 char *get_north_texture(t_index *idx);
+char *get_sprite_texture(t_index *idx);
 
 /*
 ** GNL

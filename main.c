@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/04 17:37:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:45:38 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
@@ -243,10 +243,7 @@ int main(int ac, char **av)
     idx.el = &el;
     
 	if (parse_cub(&idx, av[1]) < 0)
-    {
-        printf("Error\n");
         return (-1);
-    }
     window.mlx_ptr = mlx_init();
     window.mlx_win = mlx_new_window(window.mlx_ptr, screenWidth, screenHeight, WINDOW_TITLE);
     mlx_hook(window.mlx_win, 2, 1, ft_key, &idx);

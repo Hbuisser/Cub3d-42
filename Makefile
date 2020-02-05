@@ -6,20 +6,21 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/05 19:14:08 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/05 19:39:19 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 			= cube3D
+NAME 			= cub3D
 LIBFT_PATH 		= ./libft
 MINILIBX_PATH   = ./miniLibX
 #SRCS_LIST 		= main.c
 #SRCS			= $(addprefix ${FOLDER}/, ${SRCS_LIST})
 SRCS 			= main.c \
 					parse.c \
-					check_parse_errors.c \
+					check_map_errors.c \
 					parse_elements.c \
-					get_textures_paths.c
+					get_textures_paths.c \
+					check_elements_errors.c
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 #FOLDER			= srcs

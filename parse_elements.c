@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 19:21:39 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/05 20:36:19 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void get_ceilling_color(t_index *idx)
 {
@@ -131,19 +131,22 @@ void create_elemets_lines(t_index *idx)
     }
 }
 
-void create_elements(t_index *idx)
+int create_elements(t_index *idx)
 {
     idx->el->elem = ft_split(idx->parse->data, '\n');
     create_elemets_lines(idx);
     get_resolution(idx);
     get_floor_color(idx);
     get_ceilling_color(idx);
+    get_sprite_texture(idx);
     get_north_texture(idx);
     get_south_texture(idx);
     get_west_texture(idx);
     get_east_texture(idx);
+    check_elements_errors(idx);
     /*printf("%s\n", idx->el->n_path);
     printf("%s\n", idx->el->s_path);
     printf("%s\n", idx->el->e_path);
     printf("%s\n", idx->el->w_path);*/
+    return (0);
 }
