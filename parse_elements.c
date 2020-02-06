@@ -6,13 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 20:36:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/06 12:41:25 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void get_ceilling_color(t_index *idx)
+int get_ceilling_color(t_index *idx)
 {
     int i;
     int digit;
@@ -24,22 +24,77 @@ void get_ceilling_color(t_index *idx)
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
-    idx->el->floor_color.rgb.r = digit;
-    i++;
+    idx->el->ceilling_color.rgb.r = digit;
+    while (idx->el->elem[idx->el->ceilling_line][i] != ',')
+    {
+        if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
+                idx->el->elem[idx->el->ceilling_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong ceilling arguments", 33);
+                return (-1);
+        }
+        i++; 
+    }
     digit = 0;
+    i++;
+    while (!ft_isdigit(idx->el->elem[idx->el->ceilling_line][i]))
+    {
+        if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
+                idx->el->elem[idx->el->ceilling_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong ceilling arguments", 33);
+                return (-1);
+        }
+        i++; 
+    }
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
     idx->el->ceilling_color.rgb.g = digit;
+    while (idx->el->elem[idx->el->ceilling_line][i] != ',')
+    {
+        if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
+                idx->el->elem[idx->el->ceilling_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong ceilling arguments", 33);
+                return (-1);
+        }
+        i++; 
+    }
     i++;
     digit = 0;
+    while (!ft_isdigit(idx->el->elem[idx->el->ceilling_line][i]))
+    {
+        if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
+                idx->el->elem[idx->el->ceilling_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong ceilling arguments", 33);
+                return (-1);
+        }
+        i++; 
+    }
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
     idx->el->ceilling_color.rgb.b = digit;
+    while (idx->el->elem[idx->el->ceilling_line][i] != '\0')
+    {
+        if (idx->el->elem[idx->el->ceilling_line][i] != ' ')
+        {
+            write(1, "Error\n", 6);
+            write(1, "--> Wrong ceilling arguments", 33);
+            return (-1);
+        }
+        i++;
+    }
+    return (0);
 }
 
-void get_floor_color(t_index *idx)
+int get_floor_color(t_index *idx)
 {
     int i;
     int digit;
@@ -52,21 +107,76 @@ void get_floor_color(t_index *idx)
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.r = digit;
-    i++;
+    while (idx->el->elem[idx->el->floor_line][i] != ',')
+    {
+        if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
+                idx->el->elem[idx->el->floor_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong floor arguments", 30);
+                return (-1);
+        }
+        i++; 
+    }
     digit = 0;
+    i++;
+    while (!ft_isdigit(idx->el->elem[idx->el->floor_line][i]))
+    {
+        if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
+                idx->el->elem[idx->el->floor_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong floor arguments", 30);
+                return (-1);
+        }
+        i++; 
+    }
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.g = digit;
+    while (idx->el->elem[idx->el->floor_line][i] != ',')
+    {
+        if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
+                idx->el->elem[idx->el->floor_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong floor arguments", 30);
+                return (-1);
+        }
+        i++; 
+    }
     i++;
     digit = 0;
+    while (!ft_isdigit(idx->el->elem[idx->el->floor_line][i]))
+    {
+        if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
+                idx->el->elem[idx->el->floor_line][i] != ' ')
+        {
+                write(1, "Error\n", 6);
+                write(1, "--> Wrong floor arguments", 30);
+                return (-1);
+        }
+        i++; 
+    }
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
     idx->el->floor_color.rgb.b = digit;
+    while (idx->el->elem[idx->el->floor_line][i] != '\0')
+    {
+        if (idx->el->elem[idx->el->floor_line][i] != ' ')
+        {
+            write(1, "Error\n", 6);
+            write(1, "--> Wrong resolution arguments", 30);
+            return (-1);
+        }
+        i++;
+    }
+    return (0);
 }
 
-void get_resolution(t_index *idx)
+int get_resolution(t_index *idx)
 {
     int	i;
 	int	digit;
@@ -85,6 +195,13 @@ void get_resolution(t_index *idx)
     digit = 0;
     while (idx->el->elem[idx->el->resolution_line][i] == ' ')
 		i++;
+    if (idx->el->elem[idx->el->resolution_line][i] == '\0' ||
+            !ft_isdigit(idx->el->elem[idx->el->resolution_line][i]))
+    {
+            write(1, "Error\n", 6);
+            write(1, "--> Wrong resolution arguments", 30);
+            return (-1);
+    }  
     while (idx->el->elem[idx->el->resolution_line][i] >= '0' &&
             idx->el->elem[idx->el->resolution_line][i] <= '9')
     {
@@ -92,9 +209,20 @@ void get_resolution(t_index *idx)
         i++;
     }
     idx->el->resolution_y = digit;
+    while (idx->el->elem[idx->el->resolution_line][i] != '\0')
+    {
+        if (idx->el->elem[idx->el->resolution_line][i] != ' ')
+        {
+            write(1, "Error\n", 6);
+            write(1, "--> Wrong resolution arguments", 30);
+            return (-1);
+        }
+        i++;
+    }
+    return (0);
 }
 
-void create_elemets_lines(t_index *idx)
+void create_elements_lines(t_index *idx)
 {
     int i;
     int j;
@@ -134,10 +262,13 @@ void create_elemets_lines(t_index *idx)
 int create_elements(t_index *idx)
 {
     idx->el->elem = ft_split(idx->parse->data, '\n');
-    create_elemets_lines(idx);
-    get_resolution(idx);
-    get_floor_color(idx);
-    get_ceilling_color(idx);
+    create_elements_lines(idx);
+    if (get_resolution(idx) < 0)
+        return (-1);
+    if (get_floor_color(idx) < 0)
+        return (-1);
+    if (get_ceilling_color(idx) < 0)
+        return (-1);
     get_sprite_texture(idx);
     get_north_texture(idx);
     get_south_texture(idx);

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 20:34:55 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:27:13 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,24 @@ int check_path(char *str)
 	return (0);
 }
 
+int check_resolution(t_index *idx)
+{
+	if (idx->el->elem[idx->el->resolution_line][0] != 'R')
+	{
+		write(1, "Error\n", 6);
+		write(1, "--> Wrong resolution letter", 27);
+		return (-1);
+	}
+	if (idx->el->elem[idx->el->resolution_line][1] != ' ' &&
+			!ft_isdigit(idx->el->elem[idx->el->resolution_line][1]))
+	{
+		write(1, "Error\n", 6);
+		write(1, "--> Wrong resolution details", 27);
+		return (-1);
+	}
+	return (0);
+}
+
 int	check_elements_errors(t_index *idx)
 {
 	if (check_north_and_south(idx) < 0)
@@ -105,6 +123,8 @@ int	check_elements_errors(t_index *idx)
 	if (check_path(idx->el->e_path) < 0)
 		return (-1);
 	if (check_path(idx->el->spr_path) < 0)
+		return (-1);
+	if (check_resolution(idx) < 0)
 		return (-1);
 	return (0);
 }
