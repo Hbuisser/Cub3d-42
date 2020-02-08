@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:12:28 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 20:35:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:15:09 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char *get_sprite_texture(t_index *idx)
 
     i = 2;
     count = 0;
-    while (idx->el->elem[idx->el->sprite_line][++i] == ' ')
+    while (idx->el->elem[idx->el->sprite_line][i] == ' ')
 		i++;
 	j = i;
     while (idx->el->elem[idx->el->sprite_line][i] != '\0')

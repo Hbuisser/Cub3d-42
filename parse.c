@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/06 11:52:48 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 17:16:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,24 @@ char *create_map(t_index *idx, int count)
 {
 	int i;
 	int j;
+	char *map_string_clean;
 
-	i = -1;
-	j = -1;
-	if (!(idx->parse->map_string_clean = malloc(sizeof(char) * count + 1)))
+	i = 0;
+	j = 0;
+	if (!(map_string_clean = malloc(sizeof(char) * count + 1)))
 		return (NULL);
-	while (idx->parse->map_string[++i] != '\0')
+	while (idx->parse->map_string[i] != '\0')
+	{
 		if (idx->parse->map_string[i] != ' ')
-			idx->parse->map_string_clean[++j] = idx->parse->map_string[i];
-	idx->parse->map_string_clean[++j] = '\0';
-	idx->parse->map = ft_split(idx->parse->map_string_clean, '\n');
+		{
+			map_string_clean[j] = idx->parse->map_string[i];
+			j++;
+		}
+		i++;
+	}
+	map_string_clean[j] = '\0';
+	if (!(idx->parse->map = ft_split(map_string_clean, '\n')))
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (idx->parse->map[i] != NULL)
@@ -86,8 +94,8 @@ char *create_map(t_index *idx, int count)
 		{
 			if ((ft_isalpha(idx->parse->map[i][j])))
 			{
-				idx->big->posX = j;
-				idx->big->posY = i;
+				idx->parse->posX = j;
+				idx->parse->posY = i;
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
 			}
@@ -114,8 +122,8 @@ int parse_cub(t_index *idx, char *filename)
 	create_map(idx, count);
 	if (create_elements(idx) < 0)
 		return (-1);
-	/*if (check_elements_errors(idx) < 0)
-		return (-1);*/
+	if (check_elements_errors(idx) < 0)
+		return (-1);
 	i = 0;
 	/*while (i < 14)
 	{

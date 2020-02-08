@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 10:51:37 by hbuisser          #+#    #+#             */
-/*   Updated: 2019/10/24 15:46:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:43:19 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		count_w(const char *str, char c)
 	count = 0;
 	while (str[i] != '\0')
 	{
-		if (is_word(str[i], str[i - 1], c) || i == 0)
+		if (i == 0 || is_word(str[i], str[i - 1], c))
 			count++;
 		i++;
 	}

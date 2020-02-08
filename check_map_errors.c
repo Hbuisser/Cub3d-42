@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/05 19:44:00 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 14:42:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ int		check_dir_letter(t_index *idx)
 	return (-1);
 }
 
-int 	check_map_characters(t_index *idx)
+int 	check_map_characters(char *map_string_clean)
 {
 	int i;
 
 	i = 0;
-	while (idx->parse->map_string_clean[i] != '\0')
+	while (map_string_clean[i] != '\0')
 	{
-		if (idx->parse->map_string_clean[i] != '1' &&
-				idx->parse->map_string_clean[i] != '2' &&
-				idx->parse->map_string_clean[i] != '0' &&
-				idx->parse->map_string_clean[i] != 'N' &&
-				idx->parse->map_string_clean[i] != 'S' &&
-				idx->parse->map_string_clean[i] != 'E' &&
-				idx->parse->map_string_clean[i] != 'W' &&
-				idx->parse->map_string_clean[i] != '\n')
+		if (map_string_clean[i] != '1' &&
+				map_string_clean[i] != '2' &&
+				map_string_clean[i] != '0' &&
+				map_string_clean[i] != 'N' &&
+				map_string_clean[i] != 'S' &&
+				map_string_clean[i] != 'E' &&
+				map_string_clean[i] != 'W' &&
+				map_string_clean[i] != '\n')
 			return (-1);
 		i++;
 	}
@@ -73,13 +73,13 @@ int		check_borders(t_index *idx)
 	return (0);
 }
 
-int		check_errors(t_index *idx)
+int		check_errors(t_index *idx, char *map_string_clean)
 {
 	if (check_borders(idx) < 0)
 		return (-1);
 	if (check_dir_letter(idx) < 0)
 		return (-1);
-	if (check_map_characters(idx) < 0)
+	if (check_map_characters(map_string_clean) < 0)
 		return (-1);
 	return (0);
 }
