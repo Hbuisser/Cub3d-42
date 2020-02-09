@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 17:09:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:20:43 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct      s_parse
 {
     char    *data;
     char    *map_string;
-    //char    *map_string_clean;
+    char    *map_string_clean;
     char	**map;
     int     line_nbr;
     int     column_nbr;
@@ -102,6 +102,8 @@ typedef struct      s_elements
     int		ceilling_line;
     t_color	ceilling_color;
 	t_color	floor_color;
+	int		c_color_hex;
+	int		f_color_hex;
 	char 	*n_path;
 	char	*s_path;
 	char	*w_path;
@@ -144,15 +146,8 @@ typedef struct 		s_index
 ** Main file
 */
 
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void	verLine(int i, int drawStart, int drawEnd, int color, t_window *window);
-int     perform_dda(t_big *big, int hit, t_index *idx);
-void	calculate_step_and_sideDist(t_big *big);
-void    calculate_ray_and_deltaDist(t_big *big, int i, t_index *idx);
-void	calculate_dist(t_big *big, int side);
-void    create_algo(t_big *big, t_index *idx);
-int		ft_key(int keycode, t_index *idx);
-void    create_settings(t_index *idx);
+
+int 	transform_to_hex(int r, int g, int b);
 
 /*
 ** Parsing
@@ -164,7 +159,7 @@ int		parse_cub(t_index *idx, char *filename);
 ** Map and elements errors
 */
 
-int		check_errors(t_index *idx, char *map_string_clean);
+int		check_map_errors(t_index *idx, char *map_string_clean);
 int     check_elements_errors(t_index *idx);
 
 /*
@@ -177,19 +172,16 @@ int     create_elements(t_index *idx);
 ** Get textures elements
 */
 
-char *get_east_texture(t_index *idx);
-char *get_west_texture(t_index *idx);
-char *get_south_texture(t_index *idx);
-char *get_north_texture(t_index *idx);
-char *get_sprite_texture(t_index *idx);
+char	*get_east_texture(t_index *idx);
+char	*get_west_texture(t_index *idx);
+char	*get_south_texture(t_index *idx);
+char	*get_north_texture(t_index *idx);
+char	*get_sprite_texture(t_index *idx);
 
 /*
 ** GNL
 */
 
 int		get_next_line(const int fd, char **line);
-
-
-char        **ft_strsplit(const char *s, char c);
 
 #endif

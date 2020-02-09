@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 17:19:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:22:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,117 +23,103 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 }
 
 
-void verLine(int i, int drawStart, int drawEnd, int color, t_window *window)
+void verLine(int i, int drawStart, int drawEnd, t_index *idx, int color)
 {
     int y;
+    int j;
 
     y = drawStart;
+    j = 0;
+    /*while (j > y)
+    {
+        mlx_pixel_put(window->mlx_ptr, window->mlx_win, i, y, idx->el->f_color_hex);
+        j++;
+    }*/
     while (y < drawEnd)
     {
         //my_mlx_pixel_put(img, drawEnd, drawStart, color);
-        mlx_pixel_put(window->mlx_ptr, window->mlx_win, i, y, color);
+        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, y, color);
         y++;
     }
 }
 
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
-
-void calculate_dist(t_big *big, int side)
+void calculate_dist(t_index *idx, int side)
 {
     if (side == 0)
-        big->perpWallDist = (big->mapX - big->posX + (1 - big->stepX) / 2) / big->rayDirX;
+        idx->big->perpWallDist = (idx->big->mapX - idx->big->posX + (1 - idx->big->stepX) / 2) / idx->big->rayDirX;
     else 
-        big->perpWallDist = (big->mapY - big->posY + (1 - big->stepY) / 2) / big->rayDirY;
+        idx->big->perpWallDist = (idx->big->mapY - idx->big->posY + (1 - idx->big->stepY) / 2) / idx->big->rayDirY;
 }
 
-int perform_dda(t_big *big, int hit, t_index *idx)
+int perform_dda(int hit, t_index *idx)
 {
     int side; //was a NS or a EW wall hit?
     
     while (hit == 0)
     {
         //jump to next map square, OR in x-direction, OR in y-direction
-        if (big->sideDistX < big->sideDistY)
+        if (idx->big->sideDistX < idx->big->sideDistY)
         {
-            big->sideDistX += big->deltaDistX;
-            big->mapX += big->stepX;
+            idx->big->sideDistX += idx->big->deltaDistX;
+            idx->big->mapX += idx->big->stepX;
             side = 0;
         }
         else
         {
-            big->sideDistY += big->deltaDistY;
-            big->mapY += big->stepY;
+            idx->big->sideDistY += idx->big->deltaDistY;
+            idx->big->mapY += idx->big->stepY;
             side = 1;
         }
-        if (idx->parse->map[big->mapY][big->mapX] > '0') 
+        if (idx->parse->map[idx->big->mapY][idx->big->mapX] > '0') 
             hit = 1;
     }
     return (side);
 }
 
-void calculate_step_and_sideDist(t_big *big)
+void calculate_step_and_sideDist(t_index *idx)
 {
-    if (big->rayDirX < 0)
+    if (idx->big->rayDirX < 0)
     {
-        big->stepX = -1;
-        big->sideDistX = (big->posX - big->mapX) * big->deltaDistX;
+        idx->big->stepX = -1;
+        idx->big->sideDistX = (idx->big->posX - idx->big->mapX) * idx->big->deltaDistX;
     }
     else
     {
-        big->stepX = 1;
-        big->sideDistX = (big->mapX + 1.0 - big->posX) * big->deltaDistX;
+        idx->big->stepX = 1;
+        idx->big->sideDistX = (idx->big->mapX + 1.0 - idx->big->posX) * idx->big->deltaDistX;
     }
-    if (big->rayDirY < 0)
+    if (idx->big->rayDirY < 0)
     {
-        big->stepY = -1;
-        big->sideDistY = (big->posY - big->mapY) * big->deltaDistY;
+        idx->big->stepY = -1;
+        idx->big->sideDistY = (idx->big->posY - idx->big->mapY) * idx->big->deltaDistY;
     }
     else
     {
-        big->stepY = 1;
-        big->sideDistY = (big->mapY + 1.0 - big->posY) * big->deltaDistY;
+        idx->big->stepY = 1;
+        idx->big->sideDistY = (idx->big->mapY + 1.0 - idx->big->posY) * idx->big->deltaDistY;
     }
 }
 
-void calculate_ray_and_deltaDist(t_big *big, int i, t_index *idx)
+void calculate_ray_and_deltaDist(int i, t_index *idx)
 {
-    //calculate ray position and direction
-    big->cameraX = 2 * i / (double)idx->el->resolution_x - 1;//x-coordinate in camera space
-    big->rayDirX = big->dirX + big->planeX * big->cameraX;
-    big->rayDirY = big->dirY + big->planeY * big->cameraX;
-    big->mapX = (int)big->posX;
-    big->mapY = (int)big->posY;
-    big->deltaDistX = fabs(1 / big->rayDirX);
-    big->deltaDistY = fabs(1 / big->rayDirY);
+    // x-coordinate in camera space
+    idx->big->cameraX = 2 * i / (double)idx->el->resolution_x - 1;
+    idx->big->rayDirX = idx->big->dirX + idx->big->planeX * idx->big->cameraX;
+    idx->big->rayDirY = idx->big->dirY + idx->big->planeY * idx->big->cameraX;
+    // mapX and mapY represent the current square of the map the ray is in
+    idx->big->mapX = (int)idx->big->posX;
+    idx->big->mapY = (int)idx->big->posY;
+    // deltaDistX is the distance the ray has to travel to go from 1 x-side to the next x-side
+    idx->big->deltaDistX = fabs(1 / idx->big->rayDirX);
+    idx->big->deltaDistY = fabs(1 / idx->big->rayDirY);
 }
 
-void create_algo(t_big *big, t_index *idx)
+int transform_to_hex(int r, int g, int b)
+{
+    return (r<<16 | g<<8 | b);
+}
+
+void create_algo(t_index *idx)
 {
     int i;
     int hit; //was there a wall hit?
@@ -145,14 +131,18 @@ void create_algo(t_big *big, t_index *idx)
 
     i = 0;
     hit = 0;
+    color = 0x0000ff;
+
     while (i < idx->el->resolution_x)
     {
         hit = 0;
-        calculate_ray_and_deltaDist(big, i, idx);
-        calculate_step_and_sideDist(big);
-        side = perform_dda(big, hit, idx);
-        calculate_dist(big, side);
-        lineHeight = (int)(idx->el->resolution_y / big->perpWallDist);
+        calculate_ray_and_deltaDist(i, idx);
+        calculate_step_and_sideDist(idx);
+        side = perform_dda(hit, idx);
+        calculate_dist(idx, side);
+        //calculate_height_wall(idx);
+
+        lineHeight = (int)(idx->el->resolution_y / idx->big->perpWallDist);
         //calculate lowest and highest pixel to fill in current stripe
         drawStart = -lineHeight / 2 + idx->el->resolution_y / 2;
         if (drawStart < 0)
@@ -161,10 +151,9 @@ void create_algo(t_big *big, t_index *idx)
         if (drawEnd >= idx->el->resolution_y)
             drawEnd = idx->el->resolution_y - 1;
         //give x and y sides different brightness
-        color = 0xffffff;
 		if (side == 1)
-            color = 0x0000ff;
-        verLine(i, drawStart, drawEnd, color, idx->window);
+            color = 0xffffff;
+        verLine(i, drawStart, drawEnd, idx, color);
         i++;
     }
 }
@@ -211,7 +200,7 @@ int ft_key(int keycode, t_index *idx)
         idx->big->planeY = oldPlaneX * sin(-rotSpeed) + idx->big->planeY * cos(-rotSpeed);
     }
     mlx_clear_window(idx->window->mlx_ptr, idx->window->mlx_win);
-    create_algo(idx->big, idx);
+    create_algo(idx);
     return (0);
 }
 
@@ -219,26 +208,6 @@ void create_settings(t_index *idx)
 {
     idx->big->posX = idx->parse->posX;
     idx->big->posY = idx->parse->posY;
-    /*if (idx->parse->dir == 'N')
-    {
-        idx->big->dirX = 0;
-        idx->big->dirY = 1;
-    }
-    else if (idx->parse->dir == 'S')
-    {
-        idx->big->dirX = 0;
-        idx->big->dirY = -1;
-    }
-    else if (idx->parse->dir == 'W')
-    {
-        idx->big->dirX = -1;
-        idx->big->dirY = 0;
-    }
-    else if (idx->parse->dir == 'E')
-    {
-        idx->big->dirX = 1;
-        idx->big->dirY = 0;
-    }*/
     idx->big->dirX = -1;
     idx->big->dirY = 0;
     idx->big->planeX = 0;
@@ -274,7 +243,7 @@ int main(int ac, char **av)
     //img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
     create_settings(idx);
-    create_algo(big, idx);
+    create_algo(idx);
     //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
     mlx_loop(window->mlx_ptr);
     return (0);

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 17:16:42 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 18:52:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	parse_data_and_map(int fd, t_index *idx)
 				line = NULL;
 			}
 			else
+			{
+				write(1, "map not surrounded by 1", 23);
 				return (-1);
+			}
 		}
 	}
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
@@ -105,31 +108,26 @@ char *create_map(t_index *idx, int count)
 	}
 	idx->parse->line_nbr = i;
 	idx->parse->column_nbr = j;
-	return (NULL);
+	return (map_string_clean);
 }
 
 int parse_cub(t_index *idx, char *filename)
 {
 	int		fd;
-	int 	i;
 	int 	count;
+	char 	*map_string_clean;
 	
 	fd = open(filename, O_RDONLY);
 	if (parse_data_and_map(fd, idx) < 0)
 		return (-1);
 	close(fd);
 	count = count_no_spaces(idx);
-	create_map(idx, count);
+	map_string_clean = create_map(idx, count);
 	if (create_elements(idx) < 0)
 		return (-1);
 	if (check_elements_errors(idx) < 0)
 		return (-1);
-	i = 0;
-	/*while (i < 14)
-	{
-		printf("%s\n", *idx->parse->map);
-		idx->parse->map++;
-		i++;
-	}*/
+	if (check_map_errors(idx, map_string_clean) < 0)
+		return (-1);
 	return (1);
 }

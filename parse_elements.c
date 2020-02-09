@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 17:16:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 19:07:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,10 +259,20 @@ void create_elements_lines(t_index *idx)
     }
 }
 
+void create_hex(t_index *idx)
+{
+    idx->el->c_color_hex = transform_to_hex(idx->el->floor_color.rgb.r,
+        idx->el->floor_color.rgb.g, idx->el->floor_color.rgb.b);
+    idx->el->f_color_hex = transform_to_hex(idx->el->floor_color.rgb.r, 
+        idx->el->floor_color.rgb.g, idx->el->floor_color.rgb.b);
+    printf("%i\n", idx->el->f_color_hex);
+}
+
 int create_elements(t_index *idx)
 {
     idx->el->elem = ft_split(idx->parse->data, '\n');
     create_elements_lines(idx);
+    create_hex(idx);
     if (get_resolution(idx) < 0)
         return (-1);
     if (get_floor_color(idx) < 0)
@@ -275,9 +285,5 @@ int create_elements(t_index *idx)
     get_west_texture(idx);
     get_east_texture(idx);
     check_elements_errors(idx);
-    /*printf("%s\n", idx->el->n_path);
-    printf("%s\n", idx->el->s_path);
-    printf("%s\n", idx->el->e_path);
-    printf("%s\n", idx->el->w_path);*/
     return (0);
 }

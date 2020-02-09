@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 14:42:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/08 18:06:55 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int 	check_map_characters(char *map_string_clean)
 				map_string_clean[i] != 'E' &&
 				map_string_clean[i] != 'W' &&
 				map_string_clean[i] != '\n')
+		{
+			write(1, "map countains wrong things", 26);
 			return (-1);
+		}
 		i++;
 	}
 	return (0);
@@ -53,27 +56,36 @@ int		check_borders(t_index *idx)
 	while (idx->parse->map[0][j] != '\0')
 	{
 		if (idx->parse->map[0][j] != '1')
+		{
+			write(1, "map not surrounded by 1", 23);
 			return (-1);
+		}
 		j++;
 	}
 	j = 0;
 	while (idx->parse->map[idx->parse->line_nbr - 1][j] != '\0')
 	{
 		if (idx->parse->map[idx->parse->line_nbr - 1][j] != '1')
+		{
+			write(1, "map not surrounded by 1", 23);
 			return (-1);
+		}
 		j++;
 	}
 	j = 0;
 	while (j < idx->parse->line_nbr)
 	{
 		if (idx->parse->map[j][idx->parse->column_nbr - 1] != '1')
+		{
+			write(1, "map not surrounded by 1", 23);
 			return (-1);
+		}
 		j++;
 	}
 	return (0);
 }
 
-int		check_errors(t_index *idx, char *map_string_clean)
+int		check_map_errors(t_index *idx, char *map_string_clean)
 {
 	if (check_borders(idx) < 0)
 		return (-1);
