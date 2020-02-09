@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:12:28 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 17:15:09 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:08:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *get_east_texture(t_index *idx)
     }
 	i = j;
     j = 0;
-    if (!(idx->el->e_path = malloc(sizeof(char) * count + 1)))
+    if (!(idx->el->e_path = malloc(sizeof(char) * count + 4)))
         return (NULL);
 	while (idx->el->elem[idx->el->east_line][i] != '\0')
 	{
@@ -60,7 +60,7 @@ char *get_west_texture(t_index *idx)
     }
 	i = j;
     j = 0;
-    if (!(idx->el->w_path = malloc(sizeof(char) * count + 1)))
+    if (!(idx->el->w_path = malloc(sizeof(char) * count + 4)))
         return (NULL);
 	while (idx->el->elem[idx->el->west_line][i] != '\0')
 	{
@@ -90,7 +90,7 @@ char *get_south_texture(t_index *idx)
     }
 	i = j;
     j = 0;
-    if (!(idx->el->s_path = malloc(sizeof(char) * count + 1)))
+    if (!(idx->el->s_path = malloc(sizeof(char) * count + 4)))
         return (NULL);
 	while (idx->el->elem[idx->el->south_line][i] != '\0')
 	{
@@ -120,7 +120,7 @@ char *get_north_texture(t_index *idx)
     }
 	i = j;
     j = 0;
-    if (!(idx->el->n_path = malloc(sizeof(char) * count + 1)))
+    if (!(idx->el->n_path = malloc(sizeof(char) * count + 4)))
         return (NULL);
 	while (idx->el->elem[idx->el->north_line][i] != '\0')
 	{
@@ -150,7 +150,7 @@ char *get_sprite_texture(t_index *idx)
     }
 	i = j;
     j = 0;
-    if (!(idx->el->spr_path = malloc(sizeof(char) * count + 1)))
+    if (!(idx->el->spr_path = malloc(sizeof(char) * count + 3)))
         return (NULL);
 	while (idx->el->elem[idx->el->sprite_line][i] != '\0')
 	{

@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/08 17:39:48 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/09 20:06:33 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,14 @@ SRCS 			= main.c \
 					check_map_errors.c \
 					parse_elements.c \
 					get_textures_paths.c \
-					check_elements_errors.c 
+					check_elements_errors.c \
+					split2.c
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 #FOLDER			= srcs
 LIBFT 			= libft
 MINILIBX 		= miniLibX
-CC				= gcc -g -Wall -Wextra -Werror
+CC				= gcc -g -Wall -Wextra -Werror -fsanitize=address
 RM				= rm -f
 MLXFLAGS 		= -I ./miniLibX -L ./miniLibX -lmlx -framework OpenGl -framework Appkit
 LIBFLAGS 		= -I ./libft -L ./libft -L . ./libft/*.c 

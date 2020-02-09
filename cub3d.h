@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 18:36:51 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:27:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,6 @@ typedef struct		s_image
     int         endian;
 }					t_image;
 
-typedef struct      s_vector
-{
-    double x;
-    double y;
-}                   t_vector;
-
-typedef union 
-{
-	unsigned int 	hexcode;
-	struct
-	{
-		unsigned char	r;
-		unsigned char 	g;
-		unsigned char 	b;
-	}				rgb;
-}					t_color;
-
 typedef struct      s_parse
 {
     char    *data;
@@ -100,8 +83,12 @@ typedef struct      s_elements
     int 	sprite_line;
     int		floor_line;
     int		ceilling_line;
-    t_color	ceilling_color;
-	t_color	floor_color;
+    int 	ceilling_color_r;
+    int 	ceilling_color_g;
+    int 	ceilling_color_b;
+	int 	floor_color_r;
+    int 	floor_color_g;
+    char	floor_color_b;
 	int		c_color_hex;
 	int		f_color_hex;
 	char 	*n_path;
@@ -142,7 +129,6 @@ typedef struct 		s_index
 	t_big       *big;
     t_parse     *parse;
     t_elements  *el;
-    t_color     *color;
 }					t_index;
 
 /*
@@ -186,5 +172,6 @@ char	*get_sprite_texture(t_index *idx);
 */
 
 int		get_next_line(const int fd, char **line);
+char		**ft_strsplit(const char *s, char c);
 
 #endif

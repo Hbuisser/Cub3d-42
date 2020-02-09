@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 19:05:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:19:32 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char *create_map(t_index *idx, int count)
 		i++;
 	}
 	map_string_clean[j] = '\0';
-	if (!(idx->parse->map = ft_split(map_string_clean, '\n')))
+	if (!(idx->parse->map = ft_strsplit(map_string_clean, '\n')))
 		return (NULL);
 	i = 0;
 	j = 0;

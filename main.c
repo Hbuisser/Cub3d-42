@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 19:36:37 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:22:35 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ void create_algo(t_index *idx)
 
     i = 0;
     hit = 0;
-
     while (i < idx->el->resolution_x)
     {
         hit = 0;
@@ -232,7 +231,6 @@ int main(int ac, char **av)
     t_big		*big = malloc(sizeof(t_big));
     t_parse     *parse = malloc(sizeof(t_parse));
     t_elements  *el = malloc(sizeof(t_elements));
-    t_color     *color = malloc(sizeof(t_color));
 
 	if (ac < 2)
 		return (-1);
@@ -242,7 +240,6 @@ int main(int ac, char **av)
     idx->parse = parse;
     idx->el = el;
     idx->window = window;
-    idx->color = color;
 
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);

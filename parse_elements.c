@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 19:37:35 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:28:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int get_ceilling_color(t_index *idx)
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
-    idx->el->ceilling_color.rgb.r = digit;
+    idx->el->ceilling_color_r = digit;
     while (idx->el->elem[idx->el->ceilling_line][i] != ',')
     {
         if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
@@ -52,7 +52,7 @@ int get_ceilling_color(t_index *idx)
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
-    idx->el->ceilling_color.rgb.g = digit;
+    idx->el->ceilling_color_g = digit;
     while (idx->el->elem[idx->el->ceilling_line][i] != ',')
     {
         if (idx->el->elem[idx->el->ceilling_line][i] == '\0' ||
@@ -80,7 +80,7 @@ int get_ceilling_color(t_index *idx)
     while (idx->el->elem[idx->el->ceilling_line][i] >= '0' &&
             idx->el->elem[idx->el->ceilling_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->ceilling_line][i++] - '0';
-    idx->el->ceilling_color.rgb.b = digit;
+    idx->el->ceilling_color_b = digit;
     while (idx->el->elem[idx->el->ceilling_line][i] != '\0')
     {
         if (idx->el->elem[idx->el->ceilling_line][i] != ' ')
@@ -106,7 +106,7 @@ int get_floor_color(t_index *idx)
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
-    idx->el->floor_color.rgb.r = digit;
+    idx->el->floor_color_r = digit;
     while (idx->el->elem[idx->el->floor_line][i] != ',')
     {
         if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
@@ -134,7 +134,7 @@ int get_floor_color(t_index *idx)
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
-    idx->el->floor_color.rgb.g = digit;
+    idx->el->floor_color_g = digit;
     while (idx->el->elem[idx->el->floor_line][i] != ',')
     {
         if (idx->el->elem[idx->el->floor_line][i] == '\0' ||
@@ -162,7 +162,7 @@ int get_floor_color(t_index *idx)
     while (idx->el->elem[idx->el->floor_line][i] >= '0' &&
             idx->el->elem[idx->el->floor_line][i] <= '9')
         digit = (digit * 10) + idx->el->elem[idx->el->floor_line][i++] - '0';
-    idx->el->floor_color.rgb.b = digit;
+    idx->el->floor_color_b = digit;
     while (idx->el->elem[idx->el->floor_line][i] != '\0')
     {
         if (idx->el->elem[idx->el->floor_line][i] != ' ')
@@ -261,15 +261,15 @@ void create_elements_lines(t_index *idx)
 
 void create_hex_color(t_index *idx)
 {
-    idx->el->c_color_hex = transform_to_hex(idx->el->floor_color.rgb.r,
-        idx->el->ceilling_color.rgb.g, idx->el->ceilling_color.rgb.b);
-    idx->el->f_color_hex = transform_to_hex(idx->el->floor_color.rgb.r, 
-        idx->el->floor_color.rgb.g, idx->el->floor_color.rgb.b);
+    idx->el->c_color_hex = transform_to_hex(idx->el->floor_color_r,
+        idx->el->ceilling_color_g, idx->el->ceilling_color_b);
+    idx->el->f_color_hex = transform_to_hex(idx->el->floor_color_r, 
+        idx->el->floor_color_g, idx->el->floor_color_b);
 }
 
 int create_elements(t_index *idx)
 {
-    idx->el->elem = ft_split(idx->parse->data, '\n');
+    idx->el->elem = ft_strsplit(idx->parse->data, '\n');
     create_elements_lines(idx);
     if (get_resolution(idx) < 0)
         return (-1);
