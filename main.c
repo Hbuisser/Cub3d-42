@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 20:22:35 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 20:34:33 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int ft_key(int keycode, t_index *idx)
     }
     else if (keycode == MLXK_S)
     {
-        idx->big->posX -= idx->big->posY * moveSpeed;
+        idx->big->posX -= idx->big->dirX * moveSpeed;
         idx->big->posY -= idx->big->dirY * moveSpeed;
     }
     else if (keycode == MLXK_A)
