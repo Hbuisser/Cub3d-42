@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 19:07:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:37:35 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,26 +259,25 @@ void create_elements_lines(t_index *idx)
     }
 }
 
-void create_hex(t_index *idx)
+void create_hex_color(t_index *idx)
 {
     idx->el->c_color_hex = transform_to_hex(idx->el->floor_color.rgb.r,
-        idx->el->floor_color.rgb.g, idx->el->floor_color.rgb.b);
+        idx->el->ceilling_color.rgb.g, idx->el->ceilling_color.rgb.b);
     idx->el->f_color_hex = transform_to_hex(idx->el->floor_color.rgb.r, 
         idx->el->floor_color.rgb.g, idx->el->floor_color.rgb.b);
-    printf("%i\n", idx->el->f_color_hex);
 }
 
 int create_elements(t_index *idx)
 {
     idx->el->elem = ft_split(idx->parse->data, '\n');
     create_elements_lines(idx);
-    create_hex(idx);
     if (get_resolution(idx) < 0)
         return (-1);
     if (get_floor_color(idx) < 0)
         return (-1);
     if (get_ceilling_color(idx) < 0)
         return (-1);
+    create_hex_color(idx);
     get_sprite_texture(idx);
     get_north_texture(idx);
     get_south_texture(idx);

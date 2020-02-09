@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 18:52:50 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:05:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	parse_data_and_map(int fd, t_index *idx)
 			}
 			else
 			{
+				write(1, "Error\n", 6);
 				write(1, "map not surrounded by 1", 23);
 				return (-1);
 			}

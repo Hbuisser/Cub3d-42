@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 18:20:43 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:36:51 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ typedef struct      s_big
 	double		perpWallDist;
 	int			stepX;
     int			stepY;
+    int         drawStart;
+    int         drawEnd;
 }					t_big;
 
 typedef struct 		s_index
@@ -140,6 +142,7 @@ typedef struct 		s_index
 	t_big       *big;
     t_parse     *parse;
     t_elements  *el;
+    t_color     *color;
 }					t_index;
 
 /*

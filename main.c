@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 18:22:10 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:36:37 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,64 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 }
 
 
-void verLine(int i, int drawStart, int drawEnd, t_index *idx, int color)
+void verLine(int i, t_index *idx, int side)
 {
-    int y;
+    int color;
     int j;
+    int k;
 
-    y = drawStart;
     j = 0;
-    /*while (j > y)
+    if (side == 1)
+        color = 0xffffff;
+    else 
+        color = 0x0000ff;
+    while (j < idx->big->drawStart)
     {
-        mlx_pixel_put(window->mlx_ptr, window->mlx_win, i, y, idx->el->f_color_hex);
+        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, j, idx->el->c_color_hex);
         j++;
-    }*/
-    while (y < drawEnd)
+    }
+    while (idx->big->drawStart < idx->big->drawEnd)
     {
         //my_mlx_pixel_put(img, drawEnd, drawStart, color);
-        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, y, color);
-        y++;
+        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, idx->big->drawStart, color);
+        idx->big->drawStart++;
     }
+    k = idx->big->drawStart + 1;
+    while (k < idx->el->resolution_y)
+    {
+        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, k, idx->el->f_color_hex);
+        k++;
+    }
+}
+
+void calculate_height_wall(t_index *idx)
+{
+    int lineHeight;
+    int wallHeight;
+    
+    wallHeight = idx->el->resolution_y * 0.6;
+    lineHeight = (int)(wallHeight / idx->big->perpWallDist);
+    idx->big->drawStart = -lineHeight / 2 + idx->el->resolution_y / 2;
+    if (idx->big->drawStart < 0)
+        idx->big->drawStart = 0;
+    idx->big->drawEnd = lineHeight / 2 + idx->el->resolution_y / 2;
+    if (idx->big->drawEnd >= idx->el->resolution_y)
+        idx->big->drawEnd = idx->el->resolution_y - 1;
 }
 
 void calculate_dist(t_index *idx, int side)
 {
     if (side == 0)
-        idx->big->perpWallDist = (idx->big->mapX - idx->big->posX + (1 - idx->big->stepX) / 2) / idx->big->rayDirX;
+        idx->big->perpWallDist = (idx->big->mapX - idx->big->posX +
+        (1 - idx->big->stepX) / 2) / idx->big->rayDirX;
     else 
-        idx->big->perpWallDist = (idx->big->mapY - idx->big->posY + (1 - idx->big->stepY) / 2) / idx->big->rayDirY;
+        idx->big->perpWallDist = (idx->big->mapY - idx->big->posY +
+        (1 - idx->big->stepY) / 2) / idx->big->rayDirY;
 }
 
 int perform_dda(int hit, t_index *idx)
 {
-    int side; //was a NS or a EW wall hit?
+    int side;
     
     while (hit == 0)
     {
@@ -122,16 +149,11 @@ int transform_to_hex(int r, int g, int b)
 void create_algo(t_index *idx)
 {
     int i;
-    int hit; //was there a wall hit?
-    int side; //was a NS or a EW wall hit?
-    int lineHeight;
-    int drawStart;
-    int drawEnd;
-    int color;
+    int hit;
+    int side;
 
     i = 0;
     hit = 0;
-    color = 0x0000ff;
 
     while (i < idx->el->resolution_x)
     {
@@ -140,20 +162,8 @@ void create_algo(t_index *idx)
         calculate_step_and_sideDist(idx);
         side = perform_dda(hit, idx);
         calculate_dist(idx, side);
-        //calculate_height_wall(idx);
-
-        lineHeight = (int)(idx->el->resolution_y / idx->big->perpWallDist);
-        //calculate lowest and highest pixel to fill in current stripe
-        drawStart = -lineHeight / 2 + idx->el->resolution_y / 2;
-        if (drawStart < 0)
-            drawStart = 0;
-        drawEnd = lineHeight / 2 + idx->el->resolution_y / 2;
-        if (drawEnd >= idx->el->resolution_y)
-            drawEnd = idx->el->resolution_y - 1;
-        //give x and y sides different brightness
-		if (side == 1)
-            color = 0xffffff;
-        verLine(i, drawStart, drawEnd, idx, color);
+        calculate_height_wall(idx);
+        verLine(i, idx, side);
         i++;
     }
 }
@@ -232,10 +242,11 @@ int main(int ac, char **av)
     idx->parse = parse;
     idx->el = el;
     idx->window = window;
-    color->rgb.r = 1;
+    idx->color = color;
 
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
+        
     window->mlx_ptr = mlx_init();
     window->mlx_win = mlx_new_window(window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
     mlx_hook(window->mlx_win, 2, 1L<<1, ft_key, idx);
