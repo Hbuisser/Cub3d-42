@@ -1,8 +1,8 @@
 
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./textures/bluestone.xpm
+SO ./textures/wood.xpm
+WE ./textures/redbrick.xpm
+EA ./textures/greystone.xpm
 
 R 1920 1080
 

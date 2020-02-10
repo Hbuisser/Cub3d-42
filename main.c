@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 17:10:57 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 21:15:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
-void verLine(int i, t_index *idx, int side)
+void verLine(int i, t_index *idx, int color)
 {
-    int color;
+    //int color;
     int j;
     int k;
     int y;
 
     j = 0;
     y = idx->big->drawStart;
-    if (side == 1)
+    /*if (side == 1)
         color = 0xffffff;
     else 
-        color = 0x0000ff;
+        color = 0x0000ff;*/
     while (j < y)
     {
         idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
@@ -34,6 +34,7 @@ void verLine(int i, t_index *idx, int side)
     }
     while (y < idx->big->drawEnd)
     {
+
         idx->img->addr[y * idx->el->resolution_x + i] = color;
         y++;
     }
@@ -45,17 +46,62 @@ void verLine(int i, t_index *idx, int side)
     }
 }
 
+char	calculate_textures(t_index *idx, int side)
+{
+    int		texNum;
+    double	wallX;//where exactly the wall was hit
+    int		texX;
+	int 	texY;
+	double	step;
+	double 	texPos;
+	int 	y;
+	int 	color;
+    
+    texNum = idx->parse->map[idx->big->mapY][idx->big->mapX] - 1; //1 subtracted from it so that texture 0 can be used!
+    //calculate value of wallX
+    if (side == 0) 
+        wallX = idx->big->posY + idx->big->perpWallDist * idx->big->rayDirY;
+    else           
+        wallX = idx->big->posX + idx->big->perpWallDist * idx->big->rayDirX;
+    wallX -= floor((wallX));
+
+    //x coordinate on the texture
+    texX = (int)(wallX * (double)(idx->big->texWidth));
+    if (side == 0 && idx->big->rayDirX > 0) 
+		texX = idx->big->texWidth - texX - 1;
+    if (side == 1 && idx->big->rayDirY < 0) 
+		texX = idx->big->texWidth - texX - 1;
+	
+	// How much to increase the texture coordinate per screen pixel
+	step = 1.0 * idx->big->texHeight / idx->big->lineHeight;
+	// Starting texture coordinate
+	texPos = (idx->big->drawStart - idx->el->resolution_y / 2 + idx->big->lineHeight / 2) * step;
+
+	//printf("hello");
+	y = idx->big->drawStart;
+	while (y < idx->big->drawEnd)
+	{
+		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+		texY = (int)texPos & (idx->big->texHeight - 1);
+		texPos += step;
+		//Uint32 color = texture[texNum][texHeight * texY + texX];
+		color = idx->big->color_n[texY * 64 + texX];
+		//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+		/*if (side == 1) 
+			color = idx->big->color_s[texY * 64 + texX];*/
+		y++;
+	}
+	return (color);
+}
+
 void calculate_height_wall(t_index *idx)
 {
-    int lineHeight;
-    int wallHeight;
-    
-    wallHeight = idx->el->resolution_y * 0.6;
-    lineHeight = (int)(wallHeight / idx->big->perpWallDist);
-    idx->big->drawStart = -lineHeight / 2 + idx->el->resolution_y / 2;
+    idx->big->wallHeight = idx->el->resolution_y * 0.6;
+    idx->big->lineHeight = (int)(idx->big->wallHeight / idx->big->perpWallDist);
+    idx->big->drawStart = -idx->big->lineHeight / 2 + idx->el->resolution_y / 2;
     if (idx->big->drawStart < 0)
         idx->big->drawStart = 0;
-    idx->big->drawEnd = lineHeight / 2 + idx->el->resolution_y / 2;
+    idx->big->drawEnd = idx->big->lineHeight / 2 + idx->el->resolution_y / 2;
     if (idx->big->drawEnd >= idx->el->resolution_y)
         idx->big->drawEnd = idx->el->resolution_y - 1;
 }
@@ -92,6 +138,7 @@ int perform_dda(int hit, t_index *idx)
         if (idx->parse->map[idx->big->mapY][idx->big->mapX] > '0') 
             hit = 1;
     }
+    // if side blabla 4 coins
     return (side);
 }
 
@@ -138,9 +185,17 @@ int transform_to_hex(int r, int g, int b)
     return (r<<16 | g<<8 | b);
 }
 
-void generate_textures(t_index *idx)
+int generate_textures(t_index *idx)
 {
-    mlx_xpm_file_to_image(idx->window->mlx_ptr, "texture/bluestone.png", &idx->big->texWidth, &idx->big->texHeight);
+    if (!(idx->big->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->big->texWidth, &idx->big->texHeight)))
+    {
+        write (1, "wrong path texture", 25);
+        return (-1);
+    }
+	idx->big->color_s = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->s_path, &idx->big->texWidth, &idx->big->texHeight);
+	idx->big->color_w = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->w_path, &idx->big->texWidth, &idx->big->texHeight);
+	idx->big->color_e = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->e_path, &idx->big->texWidth, &idx->big->texHeight);
+    return (0);
 }
 
 void create_algo(t_index *idx)
@@ -148,6 +203,7 @@ void create_algo(t_index *idx)
     int             i;
     int             hit;
     int             side;
+	int 			color;
     //unsigned int    buffer[idx->big->mapY][idx->big->mapX];
     //int             *texture[8];
 
@@ -156,13 +212,14 @@ void create_algo(t_index *idx)
     while (i < idx->el->resolution_x)
     {
         hit = 0;
-        generate_textures(idx);
         calculate_ray_and_deltaDist(i, idx);
         calculate_step_and_sideDist(idx);
         side = perform_dda(hit, idx);
         calculate_dist(idx, side);
         calculate_height_wall(idx);
-        verLine(i, idx, side);
+        generate_textures(idx);
+        color = calculate_textures(idx, side);
+        verLine(i, idx, color);
         i++;
     }
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
@@ -200,19 +257,13 @@ int main(int ac, char **av)
 
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
-        
     if (!(idx->window->mlx_ptr = mlx_init()))
         return (-1);
     idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
-    
     create_settings(idx);
-
     idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
     idx->img->addr = (int*)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    
-
     create_algo(idx);
-
     mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
     mlx_loop(idx->window->mlx_ptr);
     return (0);

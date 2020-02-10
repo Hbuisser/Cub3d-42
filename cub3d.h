@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 15:58:17 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 17:57:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,12 @@ typedef struct      s_big
     int         drawEnd;
     int         texWidth;
     int         texHeight;
+    int         lineHeight;
+    int         wallHeight;
+    int         *color_n;
+    int         *color_s;
+    int         *color_e;
+    int         *color_w;
 }					t_big;
 
 typedef struct 		s_index
