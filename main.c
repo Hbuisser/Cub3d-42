@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 15:22:30 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 17:10:57 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,33 @@
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
-void my_mlx_pixel_put(t_image *img, int x, int y, int color)
-{
-    char    *dst;
-
-    dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
-}
-
 void verLine(int i, t_index *idx, int side)
 {
     int color;
     int j;
     int k;
+    int y;
 
     j = 0;
+    y = idx->big->drawStart;
     if (side == 1)
         color = 0xffffff;
     else 
         color = 0x0000ff;
-    while (j < idx->big->drawStart)
+    while (j < y)
     {
-        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, j, idx->el->c_color_hex);
+        idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
         j++;
     }
-    while (idx->big->drawStart < idx->big->drawEnd)
+    while (y < idx->big->drawEnd)
     {
-        //my_mlx_pixel_put(img, drawEnd, drawStart, color);
-        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, idx->big->drawStart, color);
-        idx->big->drawStart++;
+        idx->img->addr[y * idx->el->resolution_x + i] = color;
+        y++;
     }
-    k = idx->big->drawStart + 1;
+    k = y + 1;
     while (k < idx->el->resolution_y)
     {
-        mlx_pixel_put(idx->window->mlx_ptr, idx->window->mlx_win, i, k, idx->el->f_color_hex);
+        idx->img->addr[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
         k++;
     }
 }
@@ -172,6 +165,7 @@ void create_algo(t_index *idx)
         verLine(i, idx, side);
         i++;
     }
+    mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
 
 void create_settings(t_index *idx)
@@ -207,16 +201,19 @@ int main(int ac, char **av)
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
         
-    if (!(window->mlx_ptr = mlx_init()))
+    if (!(idx->window->mlx_ptr = mlx_init()))
         return (-1);
-    window->mlx_win = mlx_new_window(window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
-    mlx_hook(window->mlx_win, 2, 1L<<1, ft_key, idx);
-    //img.img = mlx_new_image(window.mlx_ptr, idx.el->resolution_x, idx.el->resolution_y);
-    //img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-
+    idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
+    
     create_settings(idx);
+
+    idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
+    idx->img->addr = (int*)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    
+
     create_algo(idx);
-    //mlx_put_image_to_window(window.mlx_ptr, window.mlx_win, img.img, 0, 0);
-    mlx_loop(window->mlx_ptr);
+
+    mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
+    mlx_loop(idx->window->mlx_ptr);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 15:24:00 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:58:17 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_window
 typedef struct		s_image
 {
     void        *img;
-    char        *addr;
+    int         *addr;
     char        *relative_path;
     int         img_width;
     int         img_height;
