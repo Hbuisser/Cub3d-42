@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 20:34:33 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:22:30 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
     dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
     *(unsigned int*)dst = color;
 }
-
 
 void verLine(int i, t_index *idx, int side)
 {
@@ -146,17 +145,25 @@ int transform_to_hex(int r, int g, int b)
     return (r<<16 | g<<8 | b);
 }
 
+void generate_textures(t_index *idx)
+{
+    mlx_xpm_file_to_image(idx->window->mlx_ptr, "texture/bluestone.png", &idx->big->texWidth, &idx->big->texHeight);
+}
+
 void create_algo(t_index *idx)
 {
-    int i;
-    int hit;
-    int side;
+    int             i;
+    int             hit;
+    int             side;
+    //unsigned int    buffer[idx->big->mapY][idx->big->mapX];
+    //int             *texture[8];
 
     i = 0;
     hit = 0;
     while (i < idx->el->resolution_x)
     {
         hit = 0;
+        generate_textures(idx);
         calculate_ray_and_deltaDist(i, idx);
         calculate_step_and_sideDist(idx);
         side = perform_dda(hit, idx);
@@ -167,52 +174,6 @@ void create_algo(t_index *idx)
     }
 }
 
-int ft_key(int keycode, t_index *idx)
-{
-    double moveSpeed;
-    double oldDirX;
-    double rotSpeed;
-    double oldPlaneX;
-
-    moveSpeed = 1;
-    rotSpeed = 0.3;
-    oldPlaneX = idx->big->planeX;
-
-    if (keycode == MLXK_ESC)
-        exit(0);
-    else if (keycode == MLXK_W)
-    {
-        idx->big->posX += idx->big->dirX * moveSpeed;
-        idx->big->posY += idx->big->dirY * moveSpeed;
-    }
-    else if (keycode == MLXK_S)
-    {
-        idx->big->posX -= idx->big->dirX * moveSpeed;
-        idx->big->posY -= idx->big->dirY * moveSpeed;
-    }
-    else if (keycode == MLXK_A)
-    {
-        oldDirX = idx->big->dirX;
-        idx->big->dirX = idx->big->dirX * cos(rotSpeed) - idx->big->dirY * sin(rotSpeed);
-        idx->big->dirY = oldDirX * sin(rotSpeed) + idx->big->dirY * cos(rotSpeed);
-        oldPlaneX = idx->big->planeX;
-        idx->big->planeX = idx->big->planeX * cos(rotSpeed) - idx->big->planeY * sin(rotSpeed);
-        idx->big->planeY = oldPlaneX * sin(rotSpeed) + idx->big->planeY * cos(rotSpeed);
-    }
-    else if (keycode == MLXK_D)
-    {
-        oldDirX = idx->big->dirX;
-        idx->big->dirX = idx->big->dirX * cos(-rotSpeed) - idx->big->dirY * sin(-rotSpeed);
-        idx->big->dirY = oldDirX * sin(-rotSpeed) + idx->big->dirY * cos(-rotSpeed);
-        oldPlaneX = idx->big->planeX;
-        idx->big->planeX = idx->big->planeX * cos(-rotSpeed) - idx->big->planeY * sin(-rotSpeed);
-        idx->big->planeY = oldPlaneX * sin(-rotSpeed) + idx->big->planeY * cos(-rotSpeed);
-    }
-    mlx_clear_window(idx->window->mlx_ptr, idx->window->mlx_win);
-    create_algo(idx);
-    return (0);
-}
-
 void create_settings(t_index *idx)
 {
     idx->big->posX = idx->parse->posX;
@@ -221,6 +182,8 @@ void create_settings(t_index *idx)
     idx->big->dirY = 0;
     idx->big->planeX = 0;
     idx->big->planeY = 0.66;
+    idx->big->texWidth = 64;
+    idx->big->texHeight = 64;
 }
 
 int main(int ac, char **av)
@@ -244,7 +207,8 @@ int main(int ac, char **av)
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
         
-    window->mlx_ptr = mlx_init();
+    if (!(window->mlx_ptr = mlx_init()))
+        return (-1);
     window->mlx_win = mlx_new_window(window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
     mlx_hook(window->mlx_win, 2, 1L<<1, ft_key, idx);
     //img.img = mlx_new_image(window.mlx_ptr, idx.el->resolution_x, idx.el->resolution_y);

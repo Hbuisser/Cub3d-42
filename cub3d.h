@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 20:27:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/10 15:24:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define WINDOW_TITLE "cube3D"
 # define MLXK_ESC 53
+# define MLXK_X 17
 # define MLXK_W 13
 # define MLXK_A 0
 # define MLXK_S 1
@@ -48,10 +49,10 @@ typedef struct		s_window
 typedef struct		s_image
 {
     void        *img;
+    char        *addr;
     char        *relative_path;
     int         img_width;
     int         img_height;
-    char        *addr;
     int         bits_per_pixel;
     int         line_length;
     int         endian;
@@ -120,6 +121,8 @@ typedef struct      s_big
     int			stepY;
     int         drawStart;
     int         drawEnd;
+    int         texWidth;
+    int         texHeight;
 }					t_big;
 
 typedef struct 		s_index
@@ -135,7 +138,7 @@ typedef struct 		s_index
 ** Main file
 */
 
-
+void    create_algo(t_index *idx);
 int 	transform_to_hex(int r, int g, int b);
 
 /*
@@ -166,6 +169,12 @@ char	*get_west_texture(t_index *idx);
 char	*get_south_texture(t_index *idx);
 char	*get_north_texture(t_index *idx);
 char	*get_sprite_texture(t_index *idx);
+
+/*
+** Keycode
+*/
+
+int ft_key(int keycode, t_index *idx);
 
 /*
 ** GNL
