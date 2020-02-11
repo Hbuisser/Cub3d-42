@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 20:28:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/11 12:53:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 30);
+                write(1, "--> Wrong floor arguments", 33);
                 return (-1);
         }
         i++; 
@@ -126,7 +126,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 30);
+                write(1, "--> Wrong floor arguments", 33);
                 return (-1);
         }
         i++; 
@@ -141,7 +141,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 30);
+                write(1, "--> Wrong floor arguments", 33);
                 return (-1);
         }
         i++; 
@@ -154,7 +154,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 30);
+                write(1, "--> Wrong floor arguments", 33);
                 return (-1);
         }
         i++; 
@@ -168,7 +168,7 @@ int get_floor_color(t_index *idx)
         if (idx->el->elem[idx->el->floor_line][i] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "--> Wrong resolution arguments", 30);
+            write(1, "--> Wrong floor arguments", 33);
             return (-1);
         }
         i++;
@@ -261,7 +261,7 @@ void create_elements_lines(t_index *idx)
 
 void create_hex_color(t_index *idx)
 {
-    idx->el->c_color_hex = transform_to_hex(idx->el->floor_color_r,
+    idx->el->c_color_hex = transform_to_hex(idx->el->ceilling_color_r,
         idx->el->ceilling_color_g, idx->el->ceilling_color_b);
     idx->el->f_color_hex = transform_to_hex(idx->el->floor_color_r, 
         idx->el->floor_color_g, idx->el->floor_color_b);
@@ -277,6 +277,10 @@ int create_elements(t_index *idx)
         return (-1);
     if (get_ceilling_color(idx) < 0)
         return (-1);
+
+    //printf("%i\n%i\n%i\n", idx->el->ceilling_color_r, idx->el->ceilling_color_g, idx->el->ceilling_color_b);
+    //printf("%i\n%i\n%i\n", idx->el->floor_color_r, idx->el->floor_color_g, idx->el->floor_color_b);
+
     create_hex_color(idx);
     get_sprite_texture(idx);
     get_north_texture(idx);

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 17:57:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/11 13:41:32 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_window
 typedef struct		s_image
 {
     void        *img;
-    int         *addr;
+    void        *addr;
     char        *relative_path;
     int         img_width;
     int         img_height;
@@ -89,7 +89,7 @@ typedef struct      s_elements
     int 	ceilling_color_b;
 	int 	floor_color_r;
     int 	floor_color_g;
-    char	floor_color_b;
+    int 	floor_color_b;
 	int		c_color_hex;
 	int		f_color_hex;
 	char 	*n_path;
@@ -129,6 +129,9 @@ typedef struct      s_big
     int         *color_s;
     int         *color_e;
     int         *color_w;
+    int		    texX;
+	int 	    texY;
+    int         side;
 }					t_big;
 
 typedef struct 		s_index

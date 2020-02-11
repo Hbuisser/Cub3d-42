@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/10 18:17:32 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/11 13:30:50 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LIBFLAGS 		= -I ./libft -L ./libft -L . ./libft/*.c
 
 all:			libft_all minilibx_all ${NAME}
 $(NAME):		${OBJS} 
-				$(CC) $(MLXFLAGS) $(LIBFLAGS) libft.a libmlx.a -I./ $(OBJS) -o $@ 
+				@$(CC) $(MLXFLAGS) $(LIBFLAGS) libft.a libmlx.a -I./ $(OBJS) -o $@ 
 #				$(CC) -Lmlx/ -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 #%.o: %.c 		$(INCLUDE)
 #				$(CC) $(CCFLAGS) -Imlx -Iinc -Ilibft -c -o $@ $<

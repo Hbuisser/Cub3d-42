@@ -1,5 +1,5 @@
 
-NO ./textures/bluestone.xpm
+NO ./textures/north.xpm
 SO ./textures/wood.xpm
 WE ./textures/redbrick.xpm
 EA ./textures/greystone.xpm
@@ -7,8 +7,8 @@ EA ./textures/greystone.xpm
 R 1920 1080
 
 S ./path_to_the_sprite_texture
-F 220,100,0  
-C 225,30,0
+F 255,248,220
+C 135,206,250
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 1 0 1 1 0 0 0 0 0 1 1 1 0 0 0 0 0 0 2 0 0 0 0 0 1 0 0 0 1

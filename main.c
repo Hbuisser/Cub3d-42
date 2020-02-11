@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/10 21:15:05 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/11 14:07:59 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,84 +14,70 @@
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
-void verLine(int i, t_index *idx, int color)
+void verLine(int i, t_index *idx, int *data)
 {
-    //int color;
     int j;
     int k;
     int y;
 
     j = 0;
     y = idx->big->drawStart;
-    /*if (side == 1)
-        color = 0xffffff;
-    else 
-        color = 0x0000ff;*/
     while (j < y)
     {
-        idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
+        data[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
         j++;
     }
     while (y < idx->big->drawEnd)
     {
-
-        idx->img->addr[y * idx->el->resolution_x + i] = color;
+        data[y * idx->el->resolution_x + i] = idx->big->color_n[idx->big->texY * 64 + idx->big->texX];
         y++;
     }
     k = y + 1;
     while (k < idx->el->resolution_y)
     {
-        idx->img->addr[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
+        data[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
         k++;
     }
 }
 
-char	calculate_textures(t_index *idx, int side)
+void	calculate_textures(t_index *idx)
 {
     int		texNum;
-    double	wallX;//where exactly the wall was hit
-    int		texX;
-	int 	texY;
+    double	wallX;
 	double	step;
 	double 	texPos;
 	int 	y;
-	int 	color;
-    
-    texNum = idx->parse->map[idx->big->mapY][idx->big->mapX] - 1; //1 subtracted from it so that texture 0 can be used!
-    //calculate value of wallX
-    if (side == 0) 
+
+    //the value of the current map square minus 1, 
+    //the reason is that there exists a texture 0, but map tile 0 has no texture since it represents an empty space
+    texNum = idx->parse->map[idx->big->mapY][idx->big->mapX] - 1;
+    //wallX represents the exact value where the wall was hit
+    if (idx->big->side == 0) 
         wallX = idx->big->posY + idx->big->perpWallDist * idx->big->rayDirY;
-    else           
+    else
         wallX = idx->big->posX + idx->big->perpWallDist * idx->big->rayDirX;
     wallX -= floor((wallX));
 
     //x coordinate on the texture
-    texX = (int)(wallX * (double)(idx->big->texWidth));
-    if (side == 0 && idx->big->rayDirX > 0) 
-		texX = idx->big->texWidth - texX - 1;
-    if (side == 1 && idx->big->rayDirY < 0) 
-		texX = idx->big->texWidth - texX - 1;
+    idx->big->texX = (int)(wallX * (double)(idx->big->texWidth));
+    if (idx->big->side == 0 && idx->big->rayDirX > 0) 
+		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
+    if (idx->big->side == 1 && idx->big->rayDirY < 0) 
+		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
 	
 	// How much to increase the texture coordinate per screen pixel
 	step = 1.0 * idx->big->texHeight / idx->big->lineHeight;
 	// Starting texture coordinate
 	texPos = (idx->big->drawStart - idx->el->resolution_y / 2 + idx->big->lineHeight / 2) * step;
 
-	//printf("hello");
 	y = idx->big->drawStart;
 	while (y < idx->big->drawEnd)
 	{
 		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-		texY = (int)texPos & (idx->big->texHeight - 1);
+		idx->big->texY = (int)texPos & (idx->big->texHeight - 1);
 		texPos += step;
-		//Uint32 color = texture[texNum][texHeight * texY + texX];
-		color = idx->big->color_n[texY * 64 + texX];
-		//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-		/*if (side == 1) 
-			color = idx->big->color_s[texY * 64 + texX];*/
 		y++;
 	}
-	return (color);
 }
 
 void calculate_height_wall(t_index *idx)
@@ -106,9 +92,9 @@ void calculate_height_wall(t_index *idx)
         idx->big->drawEnd = idx->el->resolution_y - 1;
 }
 
-void calculate_dist(t_index *idx, int side)
+void calculate_dist(t_index *idx)
 {
-    if (side == 0)
+    if (idx->big->side == 0)
         idx->big->perpWallDist = (idx->big->mapX - idx->big->posX +
         (1 - idx->big->stepX) / 2) / idx->big->rayDirX;
     else 
@@ -116,10 +102,8 @@ void calculate_dist(t_index *idx, int side)
         (1 - idx->big->stepY) / 2) / idx->big->rayDirY;
 }
 
-int perform_dda(int hit, t_index *idx)
+void perform_dda(int hit, t_index *idx)
 {
-    int side;
-    
     while (hit == 0)
     {
         //jump to next map square, OR in x-direction, OR in y-direction
@@ -127,19 +111,18 @@ int perform_dda(int hit, t_index *idx)
         {
             idx->big->sideDistX += idx->big->deltaDistX;
             idx->big->mapX += idx->big->stepX;
-            side = 0;
+            idx->big->side = 0;
         }
         else
         {
             idx->big->sideDistY += idx->big->deltaDistY;
             idx->big->mapY += idx->big->stepY;
-            side = 1;
+            idx->big->side = 1;
         }
         if (idx->parse->map[idx->big->mapY][idx->big->mapX] > '0') 
             hit = 1;
     }
     // if side blabla 4 coins
-    return (side);
 }
 
 void calculate_step_and_sideDist(t_index *idx)
@@ -187,25 +170,34 @@ int transform_to_hex(int r, int g, int b)
 
 int generate_textures(t_index *idx)
 {
+    //printf("%s\n", idx->el->n_path);
     if (!(idx->big->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->big->texWidth, &idx->big->texHeight)))
     {
-        write (1, "wrong path texture", 25);
+        write (1, "nwrong path texture", 18);
         return (-1);
     }
-	idx->big->color_s = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->s_path, &idx->big->texWidth, &idx->big->texHeight);
-	idx->big->color_w = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->w_path, &idx->big->texWidth, &idx->big->texHeight);
-	idx->big->color_e = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->e_path, &idx->big->texWidth, &idx->big->texHeight);
+	if (!(idx->big->color_s = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->s_path, &idx->big->texWidth, &idx->big->texHeight)))
+    {
+        write (1, "swrong path texture", 18);
+        return (-1);
+    }
+	if (!(idx->big->color_w = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->w_path, &idx->big->texWidth, &idx->big->texHeight)))
+    {
+        write (1, "wwrong path texture", 18);
+        return (-1);
+    }
+	if (!(idx->big->color_e = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->e_path, &idx->big->texWidth, &idx->big->texHeight)))
+    {
+        write (1, "ewrong path texture", 18);
+        return (-1);
+    }
     return (0);
 }
 
 void create_algo(t_index *idx)
 {
-    int             i;
-    int             hit;
-    int             side;
-	int 			color;
-    //unsigned int    buffer[idx->big->mapY][idx->big->mapX];
-    //int             *texture[8];
+    int		i;
+    int		hit;
 
     i = 0;
     hit = 0;
@@ -214,12 +206,12 @@ void create_algo(t_index *idx)
         hit = 0;
         calculate_ray_and_deltaDist(i, idx);
         calculate_step_and_sideDist(idx);
-        side = perform_dda(hit, idx);
-        calculate_dist(idx, side);
+        perform_dda(hit, idx);
+        calculate_dist(idx);
         calculate_height_wall(idx);
         generate_textures(idx);
-        color = calculate_textures(idx, side);
-        verLine(i, idx, color);
+        calculate_textures(idx);
+        verLine(i, idx, idx->img->addr);
         i++;
     }
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
