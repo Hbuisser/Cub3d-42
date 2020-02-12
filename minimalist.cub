@@ -1,8 +1,8 @@
 
 NO ./textures/redbrick.xpm
-SO ./textures/wood.xpm
-WE ./textures/redbrick.xpm
-EA ./textures/greystone.xpm
+SO ./textures/bluestone.xpm
+WE ./textures/greystone.xpm
+EA ./textures/wood.xpm
 
 R 640 480
 

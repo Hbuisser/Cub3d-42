@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 18:36:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 18:45:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ void verLine(int i, t_index *idx)
     idx->big->color_s = mlx_get_data_addr(idx->big->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     idx->big->color_w = mlx_get_data_addr(idx->big->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     idx->big->color_e = mlx_get_data_addr(idx->big->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    if (idx->big->side == 1)
+    
+    if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
         color = (int *)idx->big->color_n;
-    else 
+    else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
+        color = (int *)idx->big->color_w;
+    else if (idx->big->side == 0 && (idx->big->mapX > idx->big->posX))
         color = (int *)idx->big->color_s;
+    else
+        color = (int *)idx->big->color_e;
     while (j < y)
     {
         idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
@@ -116,7 +121,6 @@ void perform_dda(int hit, t_index *idx)
         if (idx->parse->map[idx->big->mapY][idx->big->mapX] > '0') 
             hit = 1;
     }
-    // if side blabla 4 coins
 }
 
 void calculate_step_and_sideDist(t_index *idx)
