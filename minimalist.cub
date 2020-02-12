@@ -1,10 +1,10 @@
 
-NO ./textures/north.xpm
+NO ./textures/redbrick.xpm
 SO ./textures/wood.xpm
 WE ./textures/redbrick.xpm
 EA ./textures/greystone.xpm
 
-R 1920 1080
+R 640 480
 
 S ./path_to_the_sprite_texture
 F 255,248,220

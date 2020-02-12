@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/11 12:53:05 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:17:32 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,10 +277,6 @@ int create_elements(t_index *idx)
         return (-1);
     if (get_ceilling_color(idx) < 0)
         return (-1);
-
-    //printf("%i\n%i\n%i\n", idx->el->ceilling_color_r, idx->el->ceilling_color_g, idx->el->ceilling_color_b);
-    //printf("%i\n%i\n%i\n", idx->el->floor_color_r, idx->el->floor_color_g, idx->el->floor_color_b);
-
     create_hex_color(idx);
     get_sprite_texture(idx);
     get_north_texture(idx);

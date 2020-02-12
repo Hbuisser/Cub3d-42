@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 16:25:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 18:36:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // allowed fct : open, close, read, write, malloc, free, perror, strerror, exit
 
-void verLine(int i, t_index *idx, int *data)
+void verLine(int i, t_index *idx)
 {
     int j;
     int k;
@@ -23,25 +23,30 @@ void verLine(int i, t_index *idx, int *data)
 
     j = 0;
     y = idx->big->drawStart;
-    data = idx->img->addr;
-    color = (int *)idx->big->color_n;
+    idx->big->color_n = mlx_get_data_addr(idx->big->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->big->color_s = mlx_get_data_addr(idx->big->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->big->color_w = mlx_get_data_addr(idx->big->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->big->color_e = mlx_get_data_addr(idx->big->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    if (idx->big->side == 1)
+        color = (int *)idx->big->color_n;
+    else 
+        color = (int *)idx->big->color_s;
     while (j < y)
     {
-        data[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
+        idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
         j++;
     }
     while (y < idx->big->drawEnd)
     {
         idx->big->texY = (int)idx->big->texPos & (idx->big->texHeight - 1);
 		idx->big->texPos += idx->big->step;
-        
-        data[y * idx->el->resolution_x + i] = color[idx->big->texY * 64 + idx->big->texX];
+        idx->img->addr[y * idx->el->resolution_x + i] = color[idx->big->texY * 64 + idx->big->texX];
         y++;
     }
     k = y + 1;
     while (k < idx->el->resolution_y)
     {
-        data[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
+        idx->img->addr[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
         k++;
     }
 }
@@ -57,11 +62,11 @@ void	calculate_textures(t_index *idx)
     wallX -= floor((wallX));
 
     //x coordinate on the texture
-    idx->big->texX = (int)(wallX * 64.0);
+    idx->big->texX = (int)(wallX * 64);
     
-    if (idx->big->side == 0 && idx->big->rayDirX > 0) 
+    if (idx->big->side == 0 && idx->big->rayDirX > 0)
 		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
-    if (idx->big->side == 1 && idx->big->rayDirY < 0) 
+    if (idx->big->side == 1 && idx->big->rayDirY < 0)
 		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
 	
 	// How much to increase the texture coordinate per screen pixel
@@ -158,25 +163,25 @@ int transform_to_hex(int r, int g, int b)
 }
 
 int generate_textures(t_index *idx)
-{   
-    if (!(idx->big->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->big->texWidth, &idx->big->texHeight)))
+{
+    if (!(idx->big->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->big->texWidth, &idx->big->texWidth)))
     {
-        write (1, "nwrong path texture", 18);
+        write (1, "wrong path texture", 18);
         return (-1);
     }
 	if (!(idx->big->color_s = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->s_path, &idx->big->texWidth, &idx->big->texHeight)))
     {
-        write (1, "swrong path texture", 18);
+        write (1, "wrong path texture", 18);
         return (-1);
     }
 	if (!(idx->big->color_w = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->w_path, &idx->big->texWidth, &idx->big->texHeight)))
     {
-        write (1, "wwrong path texture", 18);
+        write (1, "wrong path texture", 18);
         return (-1);
     }
 	if (!(idx->big->color_e = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->e_path, &idx->big->texWidth, &idx->big->texHeight)))
     {
-        write (1, "ewrong path texture", 18);
+        write (1, "wrong path texture", 18);
         return (-1);
     }
     return (0);
@@ -199,7 +204,7 @@ void create_algo(t_index *idx)
         calculate_height_wall(idx);
         generate_textures(idx);
         calculate_textures(idx);
-        verLine(i, idx, idx->img->addr);
+        verLine(i, idx);
         i++;
     }
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
