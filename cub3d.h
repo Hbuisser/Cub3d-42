@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/11 13:41:32 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:09:01 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define MLXK_D 2
 # define MLXK_LEFT 123
 # define MLXK_RIGHT 124
+# define MLXK_UP 126
+# define MLXK_DOWN 125
 
 # define mapWidth 24
 # define mapHeight 24
@@ -49,7 +51,7 @@ typedef struct		s_window
 typedef struct		s_image
 {
     void        *img;
-    void        *addr;
+    int         *addr;
     char        *relative_path;
     int         img_width;
     int         img_height;
@@ -125,13 +127,16 @@ typedef struct      s_big
     int         texHeight;
     int         lineHeight;
     int         wallHeight;
-    int         *color_n;
-    int         *color_s;
-    int         *color_e;
-    int         *color_w;
+    void        *color_n;
+    void        *color_s;
+    void        *color_e;
+    void        *color_w;
     int		    texX;
 	int 	    texY;
     int         side;
+    int		    texNum;
+    double	    step;
+	double 	    texPos;
 }					t_big;
 
 typedef struct 		s_index

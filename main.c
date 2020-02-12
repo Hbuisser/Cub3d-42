@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/11 14:07:59 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:15:01 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void verLine(int i, t_index *idx, int *data)
     int j;
     int k;
     int y;
+    int *color;
 
     j = 0;
     y = idx->big->drawStart;
+    data = idx->img->addr;
+    color = (int *)idx->big->color_n;
     while (j < y)
     {
         data[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
@@ -29,7 +32,10 @@ void verLine(int i, t_index *idx, int *data)
     }
     while (y < idx->big->drawEnd)
     {
-        data[y * idx->el->resolution_x + i] = idx->big->color_n[idx->big->texY * 64 + idx->big->texX];
+        idx->big->texY = (int)idx->big->texPos & (idx->big->texHeight - 1);
+		idx->big->texPos += idx->big->step;
+        
+        data[y * idx->el->resolution_x + i] = color[idx->big->texY * 64 + idx->big->texX];
         y++;
     }
     k = y + 1;
@@ -42,16 +48,8 @@ void verLine(int i, t_index *idx, int *data)
 
 void	calculate_textures(t_index *idx)
 {
-    int		texNum;
     double	wallX;
-	double	step;
-	double 	texPos;
-	int 	y;
 
-    //the value of the current map square minus 1, 
-    //the reason is that there exists a texture 0, but map tile 0 has no texture since it represents an empty space
-    texNum = idx->parse->map[idx->big->mapY][idx->big->mapX] - 1;
-    //wallX represents the exact value where the wall was hit
     if (idx->big->side == 0) 
         wallX = idx->big->posY + idx->big->perpWallDist * idx->big->rayDirY;
     else
@@ -60,24 +58,16 @@ void	calculate_textures(t_index *idx)
 
     //x coordinate on the texture
     idx->big->texX = (int)(wallX * (double)(idx->big->texWidth));
+    
     if (idx->big->side == 0 && idx->big->rayDirX > 0) 
 		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
     if (idx->big->side == 1 && idx->big->rayDirY < 0) 
 		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
 	
 	// How much to increase the texture coordinate per screen pixel
-	step = 1.0 * idx->big->texHeight / idx->big->lineHeight;
+	idx->big->step = 1.0 * idx->big->texHeight / idx->big->lineHeight;
 	// Starting texture coordinate
-	texPos = (idx->big->drawStart - idx->el->resolution_y / 2 + idx->big->lineHeight / 2) * step;
-
-	y = idx->big->drawStart;
-	while (y < idx->big->drawEnd)
-	{
-		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-		idx->big->texY = (int)texPos & (idx->big->texHeight - 1);
-		texPos += step;
-		y++;
-	}
+	idx->big->texPos = (idx->big->drawStart - idx->el->resolution_y / 2 + idx->big->lineHeight / 2) * idx->big->step;
 }
 
 void calculate_height_wall(t_index *idx)
@@ -106,7 +96,6 @@ void perform_dda(int hit, t_index *idx)
 {
     while (hit == 0)
     {
-        //jump to next map square, OR in x-direction, OR in y-direction
         if (idx->big->sideDistX < idx->big->sideDistY)
         {
             idx->big->sideDistX += idx->big->deltaDistX;
@@ -169,8 +158,7 @@ int transform_to_hex(int r, int g, int b)
 }
 
 int generate_textures(t_index *idx)
-{
-    //printf("%s\n", idx->el->n_path);
+{   
     if (!(idx->big->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->big->texWidth, &idx->big->texHeight)))
     {
         write (1, "nwrong path texture", 18);
@@ -227,6 +215,36 @@ void create_settings(t_index *idx)
     idx->big->planeY = 0.66;
     idx->big->texWidth = 64;
     idx->big->texHeight = 64;
+    idx->big->cameraX = 0;
+    idx->big->mapX = 0;
+    idx->big->rayDirY = 0;
+    idx->big->rayDirX = 0;
+	idx->big->rayDirY = 0;
+    idx->big->mapX = 0;
+	idx->big->mapY = 0;
+	idx->big->sideDistX = 0;
+    idx->big->sideDistY = 0;
+	idx->big->deltaDistX = 0;
+    idx->big->deltaDistY = 0;
+	idx->big->perpWallDist = 0;
+	idx->big->stepX = 0;
+    idx->big->stepY = 0;
+    idx->big->drawStart = 0;
+    idx->big->drawEnd = 0;
+    idx->big->texWidth = 0;
+    idx->big->texHeight = 0;
+    idx->big->lineHeight = 0;
+    idx->big->wallHeight = 0;
+    idx->big->color_n = NULL;
+    idx->big->color_s = NULL;
+    idx->big->color_e = NULL;
+    idx->big->color_w = NULL;
+    idx->big->texX = 0;
+	idx->big->texY = 0;
+    idx->big->side = 0;
+    idx->big->texNum = 0;
+    idx->big->step = 0;
+	idx->big->texPos = 0;
 }
 
 int main(int ac, char **av)
@@ -254,7 +272,7 @@ int main(int ac, char **av)
     idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
     create_settings(idx);
     idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
-    idx->img->addr = (int*)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     create_algo(idx);
     mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
     mlx_loop(idx->window->mlx_ptr);
