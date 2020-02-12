@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 15:09:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:26:47 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ typedef struct		s_window
 {
     void		*mlx_ptr;
     void		*mlx_win;
-    int			mlx_height;
-    int			mlx_weight;
 }					t_window;
 
 typedef struct		s_image
@@ -154,6 +152,12 @@ typedef struct 		s_index
 
 void    create_algo(t_index *idx);
 int 	transform_to_hex(int r, int g, int b);
+
+/*
+** Initialisation
+*/
+
+void create_init(t_index *idx);
 
 /*
 ** Parsing

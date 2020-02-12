@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 15:15:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:25:54 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	calculate_textures(t_index *idx)
     wallX -= floor((wallX));
 
     //x coordinate on the texture
-    idx->big->texX = (int)(wallX * (double)(idx->big->texWidth));
+    idx->big->texX = (int)(wallX * 64.0);
     
     if (idx->big->side == 0 && idx->big->rayDirX > 0) 
 		idx->big->texX = idx->big->texWidth - idx->big->texX - 1;
@@ -205,7 +205,7 @@ void create_algo(t_index *idx)
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
 
-void create_settings(t_index *idx)
+void create_data(t_index *idx)
 {
     idx->big->posX = idx->parse->posX;
     idx->big->posY = idx->parse->posY;
@@ -215,36 +215,6 @@ void create_settings(t_index *idx)
     idx->big->planeY = 0.66;
     idx->big->texWidth = 64;
     idx->big->texHeight = 64;
-    idx->big->cameraX = 0;
-    idx->big->mapX = 0;
-    idx->big->rayDirY = 0;
-    idx->big->rayDirX = 0;
-	idx->big->rayDirY = 0;
-    idx->big->mapX = 0;
-	idx->big->mapY = 0;
-	idx->big->sideDistX = 0;
-    idx->big->sideDistY = 0;
-	idx->big->deltaDistX = 0;
-    idx->big->deltaDistY = 0;
-	idx->big->perpWallDist = 0;
-	idx->big->stepX = 0;
-    idx->big->stepY = 0;
-    idx->big->drawStart = 0;
-    idx->big->drawEnd = 0;
-    idx->big->texWidth = 0;
-    idx->big->texHeight = 0;
-    idx->big->lineHeight = 0;
-    idx->big->wallHeight = 0;
-    idx->big->color_n = NULL;
-    idx->big->color_s = NULL;
-    idx->big->color_e = NULL;
-    idx->big->color_w = NULL;
-    idx->big->texX = 0;
-	idx->big->texY = 0;
-    idx->big->side = 0;
-    idx->big->texNum = 0;
-    idx->big->step = 0;
-	idx->big->texPos = 0;
 }
 
 int main(int ac, char **av)
@@ -265,12 +235,13 @@ int main(int ac, char **av)
     idx->el = el;
     idx->window = window;
 
+    create_init(idx);
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
     if (!(idx->window->mlx_ptr = mlx_init()))
         return (-1);
     idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
-    create_settings(idx);
+    create_data(idx);
     idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
     idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     create_algo(idx);
