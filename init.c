@@ -6,13 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 16:25:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:22:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void create_init(t_index *idx)
+void init_1(t_index *idx)
 {
     idx->big->cameraX = 0;
     idx->big->mapX = 0;
@@ -32,16 +32,19 @@ void create_init(t_index *idx)
     idx->big->drawEnd = 0;
     idx->big->lineHeight = 0;
     idx->big->wallHeight = 0;
-    idx->big->color_n = NULL;
-    idx->big->color_s = NULL;
-    idx->big->color_e = NULL;
-    idx->big->color_w = NULL;
-    idx->big->texX = 0;
-	idx->big->texY = 0;
+    idx->tex->color_n = NULL;
+    idx->tex->color_s = NULL;
+    idx->tex->color_e = NULL;
+}
+
+void init_2(t_index *idx)
+{
+    idx->tex->color_w = NULL;
+    idx->tex->texX = 0;
+	idx->tex->texY = 0;
     idx->big->side = 0;
-    idx->big->texNum = 0;
-    idx->big->step = 0;
-	idx->big->texPos = 0;
+    idx->tex->step = 0;
+	idx->tex->texPos = 0;
     idx->el->elem = NULL;
     idx->el->resolution_line = 0;
     idx->el->resolution_x = 0;
@@ -57,6 +60,10 @@ void create_init(t_index *idx)
     idx->el->ceilling_color_g = 0;
     idx->el->ceilling_color_b = 0;
 	idx->el->floor_color_r = 0;
+}
+
+void init_3(t_index *idx)
+{
     idx->el->floor_color_g = 0;
     idx->el->floor_color_b = 0;
 	idx->el->c_color_hex = 0;
@@ -78,6 +85,10 @@ void create_init(t_index *idx)
     idx->img->img = NULL;
     idx->img->addr = NULL;
     idx->img->relative_path = NULL;
+}
+
+void init_4(t_index *idx)
+{
     idx->img->img_width = 0;
     idx->img->img_height = 0;
     idx->img->bits_per_pixel = 0;
@@ -85,4 +96,13 @@ void create_init(t_index *idx)
     idx->img->endian = 0;
     idx->window->mlx_ptr = NULL;
     idx->window->mlx_win = NULL;
+    idx->tex->color = NULL;
+}
+
+void create_init(t_index *idx)
+{
+    init_1(idx);
+    init_2(idx);
+    init_3(idx);
+    init_4(idx);
 }

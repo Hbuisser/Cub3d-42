@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 18:34:35 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:20:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,21 +121,25 @@ typedef struct      s_big
     int			stepY;
     int         drawStart;
     int         drawEnd;
+    int         wallHeight;
+    int         lineHeight;
+    int         side;
+}					t_big;
+
+typedef struct      s_tex
+{
     int         texWidth;
     int         texHeight;
-    int         lineHeight;
-    int         wallHeight;
     void        *color_n;
     void        *color_s;
     void        *color_e;
     void        *color_w;
     int		    texX;
 	int 	    texY;
-    int         side;
-    int		    texNum;
     double	    step;
 	double 	    texPos;
-}					t_big;
+    int         *color;
+}                   t_tex;
 
 typedef struct 		s_index
 {
@@ -144,6 +148,7 @@ typedef struct 		s_index
 	t_big       *big;
     t_parse     *parse;
     t_elements  *el;
+    t_tex       *tex;
 }					t_index;
 
 /*
