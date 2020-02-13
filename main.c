@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 19:21:28 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/12 19:26:16 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,9 @@ void verLine(int i, t_index *idx)
     int j;
     int k;
     int y;
-    //int *color;
 
     j = 0;
     y = idx->big->drawStart;
-    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    
-    if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
-        idx->tex->color = (int *)idx->tex->color_n;
-    else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
-        idx->tex->color = (int *)idx->tex->color_w;
-    else if (idx->big->side == 0 && (idx->big->mapX > idx->big->posX))
-        idx->tex->color = (int *)idx->tex->color_s;
-    else
-        idx->tex->color = (int *)idx->tex->color_e;
-        
     while (j < y)
     {
         idx->img->addr[j * idx->el->resolution_x + i] = idx->el->c_color_hex;
@@ -46,7 +31,7 @@ void verLine(int i, t_index *idx)
     {
         idx->tex->texY = (int)idx->tex->texPos & (idx->tex->texHeight - 1);
 		idx->tex->texPos += idx->tex->step;
-        idx->img->addr[y * idx->el->resolution_x + i] = idx->tex->color[idx->tex->texY * 64 + idx->tex->texX];
+        idx->img->addr[y * idx->el->resolution_x + i] = idx->tex->color[idx->tex->texY * idx->tex->texHeight + idx->tex->texX];
         y++;
     }
     k = y + 1;
@@ -55,6 +40,22 @@ void verLine(int i, t_index *idx)
         idx->img->addr[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
         k++;
     }
+}
+
+void    calculate_colors(t_index *idx)
+{
+    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
+        idx->tex->color = (int *)idx->tex->color_n;
+    else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
+        idx->tex->color = (int *)idx->tex->color_w;
+    else if (idx->big->side == 0 && (idx->big->mapX > idx->big->posX))
+        idx->tex->color = (int *)idx->tex->color_s;
+    else
+        idx->tex->color = (int *)idx->tex->color_e;
 }
 
 void	calculate_textures(t_index *idx)
@@ -66,7 +67,7 @@ void	calculate_textures(t_index *idx)
     else
         wallX = idx->big->posX + idx->big->perpWallDist * idx->big->rayDirX;
     wallX -= floor((wallX));
-    idx->tex->texX = (int)(wallX * 64);
+    idx->tex->texX = (int)(wallX * idx->tex->texHeight);
     if (idx->big->side == 0 && idx->big->rayDirX > 0)
 		idx->tex->texX = idx->tex->texWidth - idx->tex->texX - 1;
     if (idx->big->side == 1 && idx->big->rayDirY < 0)
@@ -205,6 +206,7 @@ void create_algo(t_index *idx)
         calculate_height_wall(idx);
         generate_textures(idx);
         calculate_textures(idx);
+        calculate_colors(idx);
         verLine(i, idx);
         i++;
     }
