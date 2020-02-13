@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 16:45:03 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:51:44 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,66 +49,84 @@ int transform_to_hex(int r, int g, int b)
 
 /*void sprites_raycasting(t_index *idx)
 {
-    //after sorting the sprites, do the projection and draw them
-    for(int i = 0; i < numSprites; i++)
+    int i;
+    int y;
+    
+    i = 0;
+    y = 0;
+    while (i < numSprites)
     {
-      //translate sprite position to relative to camera
-      double spriteX = sprite[spriteOrder[i]].x - posX;
-      double spriteY = sprite[spriteOrder[i]].y - posY;
+        //translate sprite position to relative to camera
+        idx->spr->spriteX = sprite[spriteOrder[i]].x - idx->parse->posX;
+        idx->spr->spriteY = sprite[spriteOrder[i]].y - idx->parse->posY;
+        //transform sprite with the inverse camera matrix
+        // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
+        // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
+        // [ planeY   dirY ]                                          [ -planeY  planeX ]
 
-      //transform sprite with the inverse camera matrix
-      // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-      // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-      // [ planeY   dirY ]                                          [ -planeY  planeX ]
+        //required for correct matrix multiplication
+        idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
+        idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
+        //this is actually the depth inside the screen, that what Z is in 3D
+        idx->spr->transformY = idx->spr->invDet * (-idx->big->planeY * idx->spr->spriteX + idx->big->planeX * idx->spr->spriteY);
+        idx->spr->spriteScreenX = (int)((w / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
 
-      double invDet = 1.0 / (planeX * dirY - dirX * planeY); //required for correct matrix multiplication
+        //parameters for scaling and moving the sprites
+        idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
 
-      double transformX = invDet * (dirY * spriteX - dirX * spriteY);
-      double transformY = invDet * (-planeY * spriteX + planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+        //calculate height of the sprite on screen
+        idx->spr->spriteHeight = abs(int(h / (idx->spr->transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
+        //calculate lowest and highest pixel to fill in current stripe
+        idx->spr->drawStartY = -idx->spr->sprHeight / 2 + h / 2 + idx->spr->vMoveScreen;
+        if(idx->spr->drawStartY < 0) 
+            idx->spr->drawStartY = 0;
+        idx->spr->drawEndY = idx->spr->sprHeight / 2 + h / 2 + idx->spr->vMoveScreen;
+        if(idx->spr->drawEndY >= h) 
+            idx->spr->drawEndY = h - 1;
 
-      int spriteScreenX = int((w / 2) * (1 + transformX / transformY));
+        //calculate width of the sprite
+        idx->spr->sprWidth = abs( int (h / (idx->spr->transformY))) / uDiv;
+        idx->spr->drawStartX = -idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
+        if(idx->spr->drawStartX < 0) 
+            idx->spr->drawStartX = 0;
+        idx->spr->drawEndX = idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
+        if(idx->spr->drawEndX >= w) 
+            idx->spr->drawEndX = w - 1;
 
-      //parameters for scaling and moving the sprites
-      #define uDiv 1
-      #define vDiv 1
-      #define vMove 0.0
-      int vMoveScreen = int(vMove / transformY);
-
-      //calculate height of the sprite on screen
-      int spriteHeight = abs(int(h / (transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
-      if(drawStartY < 0) drawStartY = 0;
-      int drawEndY = spriteHeight / 2 + h / 2 + vMoveScreen;
-      if(drawEndY >= h) drawEndY = h - 1;
-
-      //calculate width of the sprite
-      int spriteWidth = abs( int (h / (transformY))) / uDiv;
-      int drawStartX = -spriteWidth / 2 + spriteScreenX;
-      if(drawStartX < 0) drawStartX = 0;
-      int drawEndX = spriteWidth / 2 + spriteScreenX;
-      if(drawEndX >= w) drawEndX = w - 1;
-
-      //loop through every vertical stripe of the sprite on screen
-      for(int stripe = drawStartX; stripe < drawEndX; stripe++)
-      {
-        int texX = int(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 256;
-        //the conditions in the if are:
-        //1) it's in front of camera plane so you don't see things behind you
-        //2) it's on the screen (left)
-        //3) it's on the screen (right)
-        //4) ZBuffer, with perpendicular distance
-        if(transformY > 0 && stripe > 0 && stripe < w && transformY < ZBuffer[stripe])
-        for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+        //loop through every vertical stripe of the sprite on screen
+        idx->spr->stripe = idx->spr->drawStartX;
+        while (idx->spr->stripe < idx->spr->drawEndX)
         {
-          int d = (y-vMoveScreen) * 256 - h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-          int texY = ((d * texHeight) / spriteHeight) / 256;
-          Uint32 color = texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
-          if((color & 0x00FFFFFF) != 0) buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
+            idx->spr->texX = (int)(128 * (idx->spr->stripe - (-idx->spr->spriteWidth / 2 + idx->spr->spriteScreenX)) * idx->spr->texWidth / idx->spr->spriteWidth) / 128;
+            //the conditions in the if are:
+            //1) it's in front of camera plane so you don't see things behind you
+            //2) it's on the screen (left)
+            //3) it's on the screen (right)
+            //4) ZBuffer, with perpendicular distance
+            if(idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < w && idx->spr->transformY < ZBuffer[idx->spr->stripe])
+            {
+                y = idx->spr->drawStartY;
+                //for every pixel of the current stripe
+                while (y < idx->spr->drawEndY)
+                {
+                    int d = (y - idx->spr->vMoveScreen) * 128 - h * 64 + idx->spr->sprHeight * 64; //256 and 128 factors to avoid floats
+                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
+                    
+                    Uint32 color = texture[sprite[spriteOrder[i]].texture][idx->tex->texWidth * idx->tex->texY + idx->tex->texX]; //get current color from the texture
+                    if((color & 0x00FFFFFF) != 0) 
+                        buffer[y][idx->spr->stripe] = color; //paint pixel if it isn't black, black is the invisible color
+                    y++;
+                }
+            }
+            idx->spr->stripe++
         }
-}
+        i++;
+    }
+    drawBuffer(buffer[0]);
+    for(int y = 0; y < h; y++) for(int x = 0; x < w; x++) buffer[y][x] = 0; //clear the buffer instead of cls()
+}*/
 
-void sortSprites(int* spriteOrder, double* spriteDistance, int numSprites)
+/*void sortSprites(int* spriteOrder, double* spriteDistance, int numSprites)
 {
     int i;
 
@@ -153,8 +171,8 @@ void create_algo(t_index *idx)
                 (idx->parse->posY - idx->spr->spr_tex.idx->el->resolution_y) * (idx->parse->posY - idx->spr->spr_tex.idx->el->resolution_y));
         i++;
     }
-    sortSprites(spriteOrder, spriteDistance, numSprites);
-    sprites_raycasting(idx);*/
+    sortSprites(spriteOrder, spriteDistance, numSprites);*/
+    //sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
 
@@ -168,8 +186,8 @@ void create_data(t_index *idx)
     idx->big->planeY = 0.66;
     idx->tex->texWidth = 64;
     idx->tex->texHeight = 64;
-    idx->spr->sprWidth = 24;
-    idx->spr->sprHeight = 24;
+    idx->spr->sprWidth = 0;
+    idx->spr->sprHeight = 0;
 }
 
 int main(int ac, char **av)
