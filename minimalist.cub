@@ -6,7 +6,7 @@ EA ./textures/wood.xpm
 
 R 640 480
 
-S ./path_to_the_sprite_texture
+S ./textures/barrel.xpm
 F 255,248,220
 C 135,206,250
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1

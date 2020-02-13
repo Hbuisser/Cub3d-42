@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 19:20:36 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:16:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct      s_parse
     char	**map;
     int     line_nbr;
     int     column_nbr;
-    double  posX;
-    double  posY;
+    float  posX;
+    float  posY;
     char    dir;
 }                   t_parse;
 
@@ -101,22 +101,22 @@ typedef struct      s_elements
 
 typedef struct      s_big
 {
-    double		posX;
-    double		posY;
-    double		dirX;
-    double		dirY;
-    double		planeX;
-    double		planeY;
-    double		cameraX;
-    double		rayDirX;
-	double		rayDirY;
+    float		posX;
+    float		posY;
+    float		dirX;
+    float		dirY;
+    float		planeX;
+    float		planeY;
+    float		cameraX;
+    float		rayDirX;
+	float		rayDirY;
     int			mapX;
 	int			mapY;
-	double		sideDistX;
-    double		sideDistY;
-	double		deltaDistX;
-    double		deltaDistY;
-	double		perpWallDist;
+	float		sideDistX;
+    float		sideDistY;
+	float		deltaDistX;
+    float		deltaDistY;
+	float		perpWallDist;
 	int			stepX;
     int			stepY;
     int         drawStart;
@@ -136,10 +136,17 @@ typedef struct      s_tex
     void        *color_w;
     int		    texX;
 	int 	    texY;
-    double	    step;
-	double 	    texPos;
+    float	    step;
+	float 	    texPos;
     int         *color;
 }                   t_tex;
+
+typedef struct      s_sprite
+{
+    float      x;
+    float      y;
+    int         text;
+}                   t_sprite;
 
 typedef struct 		s_index
 {
@@ -149,6 +156,7 @@ typedef struct 		s_index
     t_parse     *parse;
     t_elements  *el;
     t_tex       *tex;
+    t_sprite    *spr;
 }					t_index;
 
 /*

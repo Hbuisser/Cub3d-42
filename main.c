@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/12 19:26:16 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:16:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void calculate_step_and_sideDist(t_index *idx)
 void calculate_ray_and_deltaDist(int i, t_index *idx)
 {
     // x-coordinate in camera space
-    idx->big->cameraX = 2 * i / (double)idx->el->resolution_x - 1;
+    idx->big->cameraX = 2 * i / (float)idx->el->resolution_x - 1;
     idx->big->rayDirX = idx->big->dirX + idx->big->planeX * idx->big->cameraX;
     idx->big->rayDirY = idx->big->dirY + idx->big->planeY * idx->big->cameraX;
     // mapX and mapY represent the current square of the map the ray is in
@@ -234,6 +234,7 @@ int main(int ac, char **av)
     t_parse     *parse = malloc(sizeof(t_parse));
     t_elements  *el = malloc(sizeof(t_elements));
     t_tex       *tex = malloc(sizeof(t_tex));
+    t_sprite    *spr = malloc(sizeof(t_sprite));
 
 	if (ac < 2)
 		return (-1);
@@ -244,6 +245,7 @@ int main(int ac, char **av)
     idx->el = el;
     idx->window = window;
     idx->tex = tex;
+    idx->spr = spr;
 
     create_init(idx);
 	if (parse_cub(idx, av[1]) < 0)
