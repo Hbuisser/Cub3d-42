@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 15:16:00 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:43:44 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "./libft/libft.h"
 # include "./miniLibX/mlx.h"
 
-# define WINDOW_TITLE "cube3D"
+# define WINDOW_TITLE "cub3D"
 # define MLXK_ESC 53
 # define MLXK_X 17
 # define MLXK_W 13
@@ -34,11 +34,7 @@
 # define MLXK_RIGHT 124
 # define MLXK_UP 126
 # define MLXK_DOWN 125
-
-# define mapWidth 24
-# define mapHeight 24
-# define screenWidth 640
-# define screenHeight 480
+# define numSprites 9
 
 typedef struct		s_window
 {
@@ -50,9 +46,6 @@ typedef struct		s_image
 {
     void        *img;
     int         *addr;
-    char        *relative_path;
-    int         img_width;
-    int         img_height;
     int         bits_per_pixel;
     int         line_length;
     int         endian;
@@ -60,15 +53,15 @@ typedef struct		s_image
 
 typedef struct      s_parse
 {
-    char    *data;
-    char    *map_string;
-    char    *map_string_clean;
-    char	**map;
-    int     line_nbr;
-    int     column_nbr;
-    float  posX;
-    float  posY;
-    char    dir;
+    char	*data;
+    char	*map_string;
+    char	*map_string_clean;
+    char 	**map;
+    int		line_nbr;
+    int		column_nbr;
+    float	posX;
+    float	posY;
+    char	dir;
 }                   t_parse;
 
 typedef struct      s_elements
@@ -143,9 +136,12 @@ typedef struct      s_tex
 
 typedef struct      s_sprite
 {
-    float      x;
-    float      y;
+    float		x;
+    float		y;
     int         text;
+	void		*spr_tex;
+	int 		sprWidth;
+	int 		sprHeight;
 }                   t_sprite;
 
 typedef struct 		s_index
@@ -202,10 +198,28 @@ char	*get_north_texture(t_index *idx);
 char	*get_sprite_texture(t_index *idx);
 
 /*
+** Main algo
+*/
+
+void calculate_ray_and_deltaDist(int i, t_index *idx);
+void calculate_step_and_sideDist(t_index *idx);
+void perform_dda(int hit, t_index *idx);
+void calculate_dist(t_index *idx);
+void calculate_height_wall(t_index *idx);
+
+/*
 ** Keycode
 */
 
 int ft_key(int keycode, t_index *idx);
+
+/*
+** Textures
+*/
+
+int generate_textures(t_index *idx);
+void	calculate_textures(t_index *idx);
+void    calculate_colors(t_index *idx);
 
 /*
 ** GNL
