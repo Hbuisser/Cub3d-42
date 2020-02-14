@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 17:51:44 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/14 17:43:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int transform_to_hex(int r, int g, int b)
         idx->spr->stripe = idx->spr->drawStartX;
         while (idx->spr->stripe < idx->spr->drawEndX)
         {
-            idx->spr->texX = (int)(128 * (idx->spr->stripe - (-idx->spr->spriteWidth / 2 + idx->spr->spriteScreenX)) * idx->spr->texWidth / idx->spr->spriteWidth) / 128;
+            idx->spr->texX = (int)(128 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->spr->texWidth / idx->spr->spriteWidth) / 128;
             //the conditions in the if are:
             //1) it's in front of camera plane so you don't see things behind you
             //2) it's on the screen (left)
@@ -126,14 +126,24 @@ int transform_to_hex(int r, int g, int b)
     for(int y = 0; y < h; y++) for(int x = 0; x < w; x++) buffer[y][x] = 0; //clear the buffer instead of cls()
 }*/
 
-/*void sortSprites(int* spriteOrder, double* spriteDistance, int numSprites)
+/*void sortSprites(int* spriteOrder, float spriteDistance, t_index *idx)
 {
     int i;
 
     i = 0;
-    while (i < numSprites)
+    while (i < idx->spr->numSprites)
     {
-        
+        if (spriteDistance[i] > spriteDistance[i + 1])
+        {
+            spriteOrder[i] = spriteOrder[i + 1];
+            spriteOrder[i + 1] = spriteOrder[i];
+        }
+        i++;
+    }
+    i = 0;
+    while (i < 5)
+    {
+        printf("%d\n", spriteOrder[i]);
         i++;
     }
 }*/
@@ -143,8 +153,8 @@ void create_algo(t_index *idx)
     int		i;
     int		hit;
     float   ZBuffer[idx->el->resolution_x];
-    //int     spriteOrder[numSprites];
-    //float   spriteDistance[numSprites];
+    //int     spriteOrder[idx->spr->numSprites];
+    //float   spriteDistance[idx->spr->numSprites];
 
     i = 0;
     hit = 0;
@@ -163,15 +173,15 @@ void create_algo(t_index *idx)
         verLine(i, idx);
         i++;
     }
-    /*i = 0;
-    while (i < numSprites)
+    i = 0;
+    /*while (i < numSprites)
     {
         spriteOrder[i] = i;
-        spriteDistance[i] = ((idx->parse->posX - idx->spr->spr_tex.idx->el->resolution_x) * (idx->parse->posX - idx->spr->spr_tex.idx->el->resolution_x) +
-                (idx->parse->posY - idx->spr->spr_tex.idx->el->resolution_y) * (idx->parse->posY - idx->spr->spr_tex.idx->el->resolution_y));
+        spriteDistance[i] = ((idx->parse->posX - sprite[i].x) * (idx->parse->posX - sprite[i].x) +
+                (idx->parse->posY - sprite[i].y) * (idx->parse->posY - sprite[i].y));
         i++;
-    }
-    sortSprites(spriteOrder, spriteDistance, numSprites);*/
+    }*/
+    //sortSprites(spriteOrder, spriteDistance, idx);
     //sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
@@ -199,7 +209,8 @@ int main(int ac, char **av)
     t_parse     *parse = malloc(sizeof(t_parse));
     t_elements  *el = malloc(sizeof(t_elements));
     t_tex       *tex = malloc(sizeof(t_tex));
-    t_sprite    *spr = malloc(sizeof(t_sprite));
+    t_spr       *spr = malloc(sizeof(t_spr));
+    t_pos       *pos = malloc(sizeof(t_pos));
 
 	if (ac < 2)
 		return (-1);
@@ -211,6 +222,7 @@ int main(int ac, char **av)
     idx->window = window;
     idx->tex = tex;
     idx->spr = spr;
+    idx->pos = pos;
 
     create_init(idx);
 	if (parse_cub(idx, av[1]) < 0)

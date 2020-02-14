@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 15:36:07 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/14 17:36:53 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void init_4(t_index *idx)
     idx->window->mlx_ptr = NULL;
     idx->window->mlx_win = NULL;
     idx->tex->color = NULL;
+    idx->spr->numSprites = 0;
 }
 
 void create_init(t_index *idx)

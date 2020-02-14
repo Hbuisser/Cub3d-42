@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 17:35:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/14 18:11:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define MLXK_RIGHT 124
 # define MLXK_UP 126
 # define MLXK_DOWN 125
-# define numSprites 9
 
 #define uDiv 1
 #define vDiv 1
@@ -138,11 +137,16 @@ typedef struct      s_tex
     int         *color;
 }                   t_tex;
 
-typedef struct      s_sprite
+typedef struct  s_pos
 {
-    float		x;
-    float		y;
-    int         text;
+    float      x;
+    float      y;
+}               t_pos;
+
+typedef struct      s_spr
+{
+    int         numSprites;
+    t_pos       **spr_pos;
 	void		*spr_tex;
 	int 		sprWidth;
 	int 		sprHeight;
@@ -161,7 +165,7 @@ typedef struct      s_sprite
 	int 		stripe;
 	int 		texX;
 	int 		texY;
-}                   t_sprite;
+}                   t_spr;
 
 typedef struct 		s_index
 {
@@ -171,7 +175,8 @@ typedef struct 		s_index
     t_parse     *parse;
     t_elements  *el;
     t_tex       *tex;
-    t_sprite    *spr;
+    t_spr       *spr;
+    t_pos       *pos;
 }					t_index;
 
 /*
@@ -236,7 +241,7 @@ int ft_key(int keycode, t_index *idx);
 ** Textures
 */
 
-int generate_textures(t_index *idx);
+int     generate_textures(t_index *idx);
 void	calculate_textures(t_index *idx);
 void    calculate_colors(t_index *idx);
 

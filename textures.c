@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 16:44:04 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:14:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 void    calculate_colors(t_index *idx)
 {
+    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->spr->spr_tex = mlx_get_data_addr(idx->spr->spr_tex, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+
     if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
         idx->tex->color = (int *)idx->tex->color_n;
     else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
@@ -48,33 +54,28 @@ int generate_textures(t_index *idx)
 {
     if (!(idx->tex->color_n = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->n_path, &idx->tex->texWidth, &idx->tex->texWidth)))
     {
-        write (1, "wrong path texture", 18);
+        write (1, "n wrong path texture\n", 20);
         return (-1);
     }
-    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
 	if (!(idx->tex->color_s = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->s_path, &idx->tex->texWidth, &idx->tex->texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
 	if (!(idx->tex->color_w = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->w_path, &idx->tex->texWidth, &idx->tex->texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
 	if (!(idx->tex->color_e = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->e_path, &idx->tex->texWidth, &idx->tex->texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     if (!(idx->spr->spr_tex = mlx_xpm_file_to_image(idx->window->mlx_ptr, idx->el->spr_path, &idx->spr->sprWidth, &idx->spr->sprHeight)))
     {
-        write (1, "wrong path texture", 18);
+        write (1, "texture of the sprite is wrong", 30);
         return (-1);
     }
-    idx->spr->spr_tex = mlx_get_data_addr(idx->spr->spr_tex, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     return (0);
 }
