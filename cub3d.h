@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/14 18:11:05 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:13:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,15 +146,18 @@ typedef struct  s_pos
 typedef struct      s_spr
 {
     int         numSprites;
+    int         x;
+    int         y;
     t_pos       **spr_pos;
 	void		*spr_tex;
+    int         *color;
 	int 		sprWidth;
 	int 		sprHeight;
-	float 		spriteX;
-	float		spriteY;
-	float 		invDet;
-	float 		transformX;
-	float		transformY;
+	double 		spriteX;
+	double		spriteY;
+    double		invDet;
+	double		transformX;
+	double		transformY;
 	int 		spriteScreenX;
 	int 		vMoveScreen;
 	int 		spriteHeight;
@@ -244,6 +247,12 @@ int ft_key(int keycode, t_index *idx);
 int     generate_textures(t_index *idx);
 void	calculate_textures(t_index *idx);
 void    calculate_colors(t_index *idx);
+
+/*
+**  Sprites
+*/
+
+void    sprites_raycasting(t_index *idx);
 
 /*
 ** GNL

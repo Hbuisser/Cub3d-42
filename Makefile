@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/02/14 16:03:25 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/02/15 14:32:02 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRCS 			= main.c \
 					keycode.c \
 					init.c \
 					textures.c \
-					main_algo.c
+					main_algo.c \
+					sprites.c
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 #FOLDER			= srcs

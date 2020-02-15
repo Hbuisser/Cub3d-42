@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/14 17:36:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/15 13:25:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,31 @@ void init_4(t_index *idx)
     idx->window->mlx_win = NULL;
     idx->tex->color = NULL;
     idx->spr->numSprites = 0;
+    idx->spr->numSprites = 0;
+    idx->spr->x = 0;
+    idx->spr->y = 0;
+    idx->spr->spr_tex = NULL;
+	idx->spr->sprWidth = 0;
+	idx->spr->sprHeight = 0;
+	idx->spr->spriteX = 0;
+	idx->spr->spriteY = 0;
+	idx->spr->invDet = 0;
+	idx->spr->transformX = 0;
+	idx->spr->transformY = 0;
+	idx->spr->spriteScreenX = 0;
+	idx->spr->vMoveScreen = 0;
+	idx->spr->spriteHeight = 0;
+	idx->spr->drawStartY = 0;
+}
+
+void init_5(t_index *idx)
+{
+    idx->spr->drawEndY = 0;
+	idx->spr->drawStartX = 0;
+	idx->spr->drawEndX = 0;
+	idx->spr->stripe = 0;
+	idx->spr->texX = 0;
+	idx->spr->texY = 0;
 }
 
 void create_init(t_index *idx)
@@ -103,4 +128,5 @@ void create_init(t_index *idx)
     init_2(idx);
     init_3(idx);
     init_4(idx);
+    init_5(idx);
 }

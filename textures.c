@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/14 15:14:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/15 14:44:53 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void    calculate_colors(t_index *idx)
     idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     idx->spr->spr_tex = mlx_get_data_addr(idx->spr->spr_tex, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
 
+    // color in textures
     if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
         idx->tex->color = (int *)idx->tex->color_n;
     else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
@@ -28,6 +29,9 @@ void    calculate_colors(t_index *idx)
         idx->tex->color = (int *)idx->tex->color_s;
     else
         idx->tex->color = (int *)idx->tex->color_e;
+    
+    // color in sprite
+    idx->spr->color = (int *)idx->spr->spr_tex;
 }
 
 void	calculate_textures(t_index *idx)

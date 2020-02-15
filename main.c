@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/14 17:43:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:03:35 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,112 +47,11 @@ int transform_to_hex(int r, int g, int b)
     return (r<<16 | g<<8 | b);
 }
 
-/*void sprites_raycasting(t_index *idx)
-{
-    int i;
-    int y;
-    
-    i = 0;
-    y = 0;
-    while (i < numSprites)
-    {
-        //translate sprite position to relative to camera
-        idx->spr->spriteX = sprite[spriteOrder[i]].x - idx->parse->posX;
-        idx->spr->spriteY = sprite[spriteOrder[i]].y - idx->parse->posY;
-        //transform sprite with the inverse camera matrix
-        // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-        // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-        // [ planeY   dirY ]                                          [ -planeY  planeX ]
-
-        //required for correct matrix multiplication
-        idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
-        idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
-        //this is actually the depth inside the screen, that what Z is in 3D
-        idx->spr->transformY = idx->spr->invDet * (-idx->big->planeY * idx->spr->spriteX + idx->big->planeX * idx->spr->spriteY);
-        idx->spr->spriteScreenX = (int)((w / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
-
-        //parameters for scaling and moving the sprites
-        idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
-
-        //calculate height of the sprite on screen
-        idx->spr->spriteHeight = abs(int(h / (idx->spr->transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
-        //calculate lowest and highest pixel to fill in current stripe
-        idx->spr->drawStartY = -idx->spr->sprHeight / 2 + h / 2 + idx->spr->vMoveScreen;
-        if(idx->spr->drawStartY < 0) 
-            idx->spr->drawStartY = 0;
-        idx->spr->drawEndY = idx->spr->sprHeight / 2 + h / 2 + idx->spr->vMoveScreen;
-        if(idx->spr->drawEndY >= h) 
-            idx->spr->drawEndY = h - 1;
-
-        //calculate width of the sprite
-        idx->spr->sprWidth = abs( int (h / (idx->spr->transformY))) / uDiv;
-        idx->spr->drawStartX = -idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
-        if(idx->spr->drawStartX < 0) 
-            idx->spr->drawStartX = 0;
-        idx->spr->drawEndX = idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
-        if(idx->spr->drawEndX >= w) 
-            idx->spr->drawEndX = w - 1;
-
-        //loop through every vertical stripe of the sprite on screen
-        idx->spr->stripe = idx->spr->drawStartX;
-        while (idx->spr->stripe < idx->spr->drawEndX)
-        {
-            idx->spr->texX = (int)(128 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->spr->texWidth / idx->spr->spriteWidth) / 128;
-            //the conditions in the if are:
-            //1) it's in front of camera plane so you don't see things behind you
-            //2) it's on the screen (left)
-            //3) it's on the screen (right)
-            //4) ZBuffer, with perpendicular distance
-            if(idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < w && idx->spr->transformY < ZBuffer[idx->spr->stripe])
-            {
-                y = idx->spr->drawStartY;
-                //for every pixel of the current stripe
-                while (y < idx->spr->drawEndY)
-                {
-                    int d = (y - idx->spr->vMoveScreen) * 128 - h * 64 + idx->spr->sprHeight * 64; //256 and 128 factors to avoid floats
-                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
-                    
-                    Uint32 color = texture[sprite[spriteOrder[i]].texture][idx->tex->texWidth * idx->tex->texY + idx->tex->texX]; //get current color from the texture
-                    if((color & 0x00FFFFFF) != 0) 
-                        buffer[y][idx->spr->stripe] = color; //paint pixel if it isn't black, black is the invisible color
-                    y++;
-                }
-            }
-            idx->spr->stripe++
-        }
-        i++;
-    }
-    drawBuffer(buffer[0]);
-    for(int y = 0; y < h; y++) for(int x = 0; x < w; x++) buffer[y][x] = 0; //clear the buffer instead of cls()
-}*/
-
-/*void sortSprites(int* spriteOrder, float spriteDistance, t_index *idx)
-{
-    int i;
-
-    i = 0;
-    while (i < idx->spr->numSprites)
-    {
-        if (spriteDistance[i] > spriteDistance[i + 1])
-        {
-            spriteOrder[i] = spriteOrder[i + 1];
-            spriteOrder[i + 1] = spriteOrder[i];
-        }
-        i++;
-    }
-    i = 0;
-    while (i < 5)
-    {
-        printf("%d\n", spriteOrder[i]);
-        i++;
-    }
-}*/
-
 void create_algo(t_index *idx)
 {
     int		i;
     int		hit;
-    float   ZBuffer[idx->el->resolution_x];
+    //float   ZBuffer[idx->el->resolution_x];
     //int     spriteOrder[idx->spr->numSprites];
     //float   spriteDistance[idx->spr->numSprites];
 
@@ -169,8 +68,11 @@ void create_algo(t_index *idx)
         generate_textures(idx);
         calculate_textures(idx);
         calculate_colors(idx);
-        ZBuffer[i] = idx->big->perpWallDist;
+        //ZBuffer[i] = idx->big->perpWallDist;
         verLine(i, idx);
+        //SET THE ZBUFFER FOR THE SPRITE CASTING
+        //perpendicular distance is used
+        //ZBuffer[x] = perpWallDist;
         i++;
     }
     i = 0;
@@ -182,7 +84,7 @@ void create_algo(t_index *idx)
         i++;
     }*/
     //sortSprites(spriteOrder, spriteDistance, idx);
-    //sprites_raycasting(idx);
+    sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
 

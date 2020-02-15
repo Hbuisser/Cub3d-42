@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/14 18:11:55 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/15 13:19:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ char *create_map(t_index *idx, int count)
 				idx->parse->map[i][j] = '0';
 			}
 			if (idx->parse->map[i][j] == '2')
+			{
 				idx->spr->numSprites += 1;
+				idx->spr->x = j;
+				idx->spr->y = i;
+			}
 			j++;
 		}
 		i++;
