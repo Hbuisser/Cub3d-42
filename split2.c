@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 19:58:35 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/09 20:20:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:21:58 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 static int	ft_nbwords(const char *s, char c)
 {
 	int		nb;
-	int		in;
+	int		i;
     
 	nb = 0;
-	in = 0;
+	i = 0;
 	while (*s != '\0')
 	{
-		if (in == 1 && *s == c)
-			in = 0;
-		if (in == 0 && *s != c)
+		if (i == 1 && *s == c)
+			i = 0;
+		if (i == 0 && *s != c)
 		{
-			in = 1;
+			i = 1;
 			nb++;
 		}
 		s++;
