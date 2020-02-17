@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 18:17:14 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:16:03 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,18 @@ void sprites_raycasting(t_index *idx)
         idx->spr->stripe = idx->spr->drawStartX;
         while (idx->spr->stripe < idx->spr->drawEndX)
         {
-            idx->spr->texX = (int)(256 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth) / 256;
+            idx->spr->texX = (int)((idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth);
+            //printf("%i\n", idx->spr->texX);
             if (idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < idx->el->resolution_x && idx->spr->transformY < idx->spr->ZBuffer[idx->spr->stripe])
             {
                 y = idx->spr->drawStartY;
-                while (y < idx->spr->drawEndY)
+                while (y < idx->spr->drawEndY && idx->spr->texY < 64)
                 {
-                    d = (y-idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
+                    d = (y - idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
                     idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 256;
-                    //if((color & 0x00FFFFFF) != 0)
-                    idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprWidth * idx->spr->texY + idx->spr->texX];
+                    //printf("----%i\n", idx->spr->sprWidth);
+                    if((idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
+                        idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX];
                     y++;
                 }
             }
