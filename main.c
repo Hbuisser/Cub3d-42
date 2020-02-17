@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 16:51:13 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 18:40:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void create_algo(t_index *idx)
 {
     int		i;
     int		hit;
-    //double  ZBuffer[idx->el->resolution_x];
     //int     spriteOrder[idx->spr->numSprites];
     //float   spriteDistance[idx->spr->numSprites];
     
@@ -60,6 +59,7 @@ void create_algo(t_index *idx)
 
     i = 0;
     hit = 0;
+    
     while (i < idx->el->resolution_x)
     {
         hit = 0;
@@ -68,14 +68,12 @@ void create_algo(t_index *idx)
         perform_dda(hit, idx);
         calculate_dist(idx);
         calculate_height_wall(idx);
-        generate_textures(idx);
         calculate_textures(idx);
         calculate_colors(idx);
-        idx->spr->ZBuffer[i] = idx->big->perpWallDist;
         verLine(i, idx);
+        idx->spr->ZBuffer[i] = idx->big->perpWallDist;
         i++;
     }
-    i = 0;
     /*while (i < numSprites)
     {
         spriteOrder[i] = i;
@@ -131,6 +129,7 @@ int main(int ac, char **av)
         return (-1);
     idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
     create_data(idx);
+    generate_textures(idx);
     idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
     idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     create_algo(idx);

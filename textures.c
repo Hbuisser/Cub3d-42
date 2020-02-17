@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 16:26:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 18:29:02 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 void    calculate_colors(t_index *idx)
 {
-    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    idx->spr->spr_tex = mlx_get_data_addr(idx->spr->spr_tex, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-
     // color in textures
     if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
         idx->tex->color = (int *)idx->tex->color_n;
@@ -29,7 +23,6 @@ void    calculate_colors(t_index *idx)
         idx->tex->color = (int *)idx->tex->color_s;
     else
         idx->tex->color = (int *)idx->tex->color_e;
-    
     // color in sprite
     idx->spr->color = (int *)idx->spr->spr_tex;
 }
@@ -81,5 +74,10 @@ int generate_textures(t_index *idx)
         write (1, "texture of the sprite is wrong", 30);
         return (-1);
     }
+    idx->tex->color_n = mlx_get_data_addr(idx->tex->color_n, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_s = mlx_get_data_addr(idx->tex->color_s, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_w = mlx_get_data_addr(idx->tex->color_w, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->tex->color_e = mlx_get_data_addr(idx->tex->color_e, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+    idx->spr->spr_tex = mlx_get_data_addr(idx->spr->spr_tex, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     return (0);
 }

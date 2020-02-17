@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 16:54:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 17:29:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void init_1(t_index *idx)
     idx->big->drawEnd = 0;
     idx->big->lineHeight = 0;
     idx->big->wallHeight = 0;
-    idx->tex->color_n = 0;
+    idx->tex->color_n = NULL;
     idx->tex->color_s = NULL;
     idx->tex->color_e = NULL;
 }
