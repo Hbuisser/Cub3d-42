@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 15:35:16 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:51:13 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int main(int ac, char **av)
     t_elements  *el = malloc(sizeof(t_elements));
     t_tex       *tex = malloc(sizeof(t_tex));
     t_spr       *spr = malloc(sizeof(t_spr));
-    t_pos       *pos = malloc(sizeof(t_pos));
 
 	if (ac < 2)
 		return (-1);
@@ -124,7 +123,6 @@ int main(int ac, char **av)
     idx->window = window;
     idx->tex = tex;
     idx->spr = spr;
-    idx->pos = pos;
 
     create_init(idx);
 	if (parse_cub(idx, av[1]) < 0)

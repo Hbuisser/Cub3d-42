@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 15:35:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:48:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,18 +137,11 @@ typedef struct      s_tex
     int         *color;
 }                   t_tex;
 
-typedef struct  s_pos
-{
-    float      x;
-    float      y;
-}               t_pos;
-
 typedef struct      s_spr
 {
     int         numSprites;
     int         x;
     int         y;
-    t_pos       **spr_pos;
 	void		*spr_tex;
     int         *color;
 	int 		sprWidth;
@@ -180,7 +173,6 @@ typedef struct 		s_index
     t_elements  *el;
     t_tex       *tex;
     t_spr       *spr;
-    t_pos       *pos;
 }					t_index;
 
 /*
