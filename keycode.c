@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 15:20:55 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:12:06 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int ft_key(int keycode, t_index *idx)
     float rotSpeed;
     float oldPlaneX;
 
-    moveSpeed = 0.4;
+    moveSpeed = 0.14;
     rotSpeed = 0.3;
     oldPlaneX = idx->big->planeX;
 

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/15 15:13:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:35:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ typedef struct      s_spr
 	int 		stripe;
 	int 		texX;
 	int 		texY;
+    double      *ZBuffer;
 }                   t_spr;
 
 typedef struct 		s_index
@@ -193,7 +194,7 @@ int 	transform_to_hex(int r, int g, int b);
 ** Initialisation
 */
 
-void create_init(t_index *idx);
+void    create_init(t_index *idx);
 
 /*
 ** Parsing
@@ -228,17 +229,17 @@ char	*get_sprite_texture(t_index *idx);
 ** Main algo
 */
 
-void calculate_ray_and_deltaDist(int i, t_index *idx);
-void calculate_step_and_sideDist(t_index *idx);
-void perform_dda(int hit, t_index *idx);
-void calculate_dist(t_index *idx);
-void calculate_height_wall(t_index *idx);
+void    calculate_ray_and_deltaDist(int i, t_index *idx);
+void    calculate_step_and_sideDist(t_index *idx);
+void    perform_dda(int hit, t_index *idx);
+void    calculate_dist(t_index *idx);
+void    calculate_height_wall(t_index *idx);
 
 /*
 ** Keycode
 */
 
-int ft_key(int keycode, t_index *idx);
+int     ft_key(int keycode, t_index *idx);
 
 /*
 ** Textures
@@ -252,13 +253,13 @@ void    calculate_colors(t_index *idx);
 **  Sprites
 */
 
-void    sprites_raycasting(t_index *idx);
+void sprites_raycasting(t_index *idx);
 
 /*
 ** GNL
 */
 
 int		get_next_line(const int fd, char **line);
-char		**ft_strsplit(const char *s, char c);
+char	**ft_strsplit(const char *s, char c);
 
 #endif

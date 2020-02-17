@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/15 16:03:35 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:35:16 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,12 @@ void create_algo(t_index *idx)
 {
     int		i;
     int		hit;
-    //float   ZBuffer[idx->el->resolution_x];
+    //double  ZBuffer[idx->el->resolution_x];
     //int     spriteOrder[idx->spr->numSprites];
     //float   spriteDistance[idx->spr->numSprites];
+    
+    if (!(idx->spr->ZBuffer = malloc(sizeof(double *) * idx->el->resolution_x + 1)))
+        write (1, "zbuf", 4);
 
     i = 0;
     hit = 0;
@@ -68,11 +71,8 @@ void create_algo(t_index *idx)
         generate_textures(idx);
         calculate_textures(idx);
         calculate_colors(idx);
-        //ZBuffer[i] = idx->big->perpWallDist;
+        idx->spr->ZBuffer[i] = idx->big->perpWallDist;
         verLine(i, idx);
-        //SET THE ZBUFFER FOR THE SPRITE CASTING
-        //perpendicular distance is used
-        //ZBuffer[x] = perpWallDist;
         i++;
     }
     i = 0;
