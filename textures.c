@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 18:29:02 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:37:33 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void    calculate_colors(t_index *idx)
 {
-    // color in textures
     if (idx->big->side == 1 && (idx->big->mapY > idx->big->posY))
-        idx->tex->color = (int *)idx->tex->color_n;
-    else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
-        idx->tex->color = (int *)idx->tex->color_w;
-    else if (idx->big->side == 0 && (idx->big->mapX > idx->big->posX))
         idx->tex->color = (int *)idx->tex->color_s;
-    else
+    else if (idx->big->side == 1 && (idx->big->mapY < idx->big->posY))
+        idx->tex->color = (int *)idx->tex->color_n;
+    else if (idx->big->side == 0 && (idx->big->mapX > idx->big->posX))
         idx->tex->color = (int *)idx->tex->color_e;
-    // color in sprite
+    else
+        idx->tex->color = (int *)idx->tex->color_w;
     idx->spr->color = (int *)idx->spr->spr_tex;
 }
 

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 18:40:42 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:28:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void create_algo(t_index *idx)
 
 void create_data(t_index *idx)
 {
-    idx->big->posX = idx->parse->posX;
-    idx->big->posY = idx->parse->posY;
-    idx->big->dirX = -1;
+    idx->big->posX = idx->parse->pos_x_init;
+    idx->big->posY = idx->parse->pos_y_init;
+    idx->big->dirX = 1;
     idx->big->dirY = 0;
     idx->big->planeX = 0;
     idx->big->planeY = 0.66;

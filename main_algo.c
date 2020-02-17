@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:38:07 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/13 16:39:34 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:20:48 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void perform_dda(int hit, t_index *idx)
             idx->big->mapY += idx->big->stepY;
             idx->big->side = 1;
         }
-        if (idx->parse->map[idx->big->mapY][idx->big->mapX] > '0') 
+        if (idx->parse->map[idx->big->mapY][idx->big->mapX] == '1') 
             hit = 1;
     }
 }

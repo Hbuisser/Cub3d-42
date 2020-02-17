@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 17:29:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:46:56 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void init_3(t_index *idx)
     idx->parse->map = NULL;
     idx->parse->line_nbr = 0;
     idx->parse->column_nbr = 0;
-    idx->parse->posX = 0;
-    idx->parse->posY = 0;
+    idx->parse->pos_x_init = 0;
+    idx->parse->pos_y_init = 0;
     idx->parse->dir = 0;
     idx->img->img = NULL;
     idx->img->addr = NULL;

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 19:16:03 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:09:04 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,17 @@ void sprites_raycasting(t_index *idx)
     int i;
     int y;
     int d;
-    int *color;
     
     i = 0;
     y = 0;
     d = 0;
-    color = NULL;
     while (i < idx->spr->numSprites)
     {
-        idx->spr->spriteX = (double)idx->spr->x - (double)idx->parse->posX;
-        idx->spr->spriteY = (double)idx->spr->x - (double)idx->parse->posY;
-        //transform sprite with the inverse camera matrix
-        //required for correct matrix multiplication
+        idx->spr->spriteX = (float)idx->spr->x - (float)idx->big->posX;
+        idx->spr->spriteY = (float)idx->spr->y - (float)idx->big->posY;
         idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
         idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
-        //this is actually the depth inside the screen, that what Z is in 3D
-        idx->spr->transformY = idx->spr->invDet * (((-idx->big->planeY) * idx->spr->spriteX) + (idx->big->planeX * idx->spr->spriteY));
+        idx->spr->transformY = idx->spr->invDet * (-idx->big->planeY * idx->spr->spriteX + (idx->big->planeX * idx->spr->spriteY));
         idx->spr->spriteScreenX = (int)((idx->el->resolution_x / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
         //parameters for scaling and moving the sprites
         idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
@@ -59,15 +54,13 @@ void sprites_raycasting(t_index *idx)
         while (idx->spr->stripe < idx->spr->drawEndX)
         {
             idx->spr->texX = (int)((idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth);
-            //printf("%i\n", idx->spr->texX);
             if (idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < idx->el->resolution_x && idx->spr->transformY < idx->spr->ZBuffer[idx->spr->stripe])
             {
                 y = idx->spr->drawStartY;
-                while (y < idx->spr->drawEndY && idx->spr->texY < 64)
+                while (y < idx->spr->drawEndY && idx->spr->texY < 64 && idx->spr->texX < 64)
                 {
-                    d = (y - idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
-                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 256;
-                    //printf("----%i\n", idx->spr->sprWidth);
+                    d = (y - idx->spr->vMoveScreen) * 128 - idx->el->resolution_y * 64 + idx->spr->sprHeight * 64;
+                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
                     if((idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
                         idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX];
                     y++;

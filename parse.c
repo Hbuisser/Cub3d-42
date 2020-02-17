@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/15 13:19:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:31:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ char *create_map(t_index *idx, int count)
 		{
 			if ((ft_isalpha(idx->parse->map[i][j])))
 			{
-				idx->parse->posX = j;
-				idx->parse->posY = i;
+				idx->parse->pos_x_init = j;
+				idx->parse->pos_y_init = i;
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
 			}

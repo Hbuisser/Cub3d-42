@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 18:12:14 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 20:29:59 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_key(int keycode, t_index *idx)
         idx->big->posX -= idx->big->dirX * moveSpeed;
         idx->big->posY -= idx->big->dirY * moveSpeed;
     }
-    else if (keycode == MLXK_A)
+    else if (keycode == MLXK_D)
     {
         oldDirX = idx->big->dirX;
         idx->big->dirX = idx->big->dirX * cos(rotSpeed) - idx->big->dirY * sin(rotSpeed);
@@ -44,7 +44,7 @@ int ft_key(int keycode, t_index *idx)
         idx->big->planeX = idx->big->planeX * cos(rotSpeed) - idx->big->planeY * sin(rotSpeed);
         idx->big->planeY = oldPlaneX * sin(rotSpeed) + idx->big->planeY * cos(rotSpeed);
     }
-    else if (keycode == MLXK_D)
+    else if (keycode == MLXK_A)
     {
         oldDirX = idx->big->dirX;
         idx->big->dirX = idx->big->dirX * cos(-rotSpeed) - idx->big->dirY * sin(-rotSpeed);
