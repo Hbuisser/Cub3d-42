@@ -6,7 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/17 16:35:21 by hbuisser         ###   ########.fr       */
+=======
+/*   Updated: 2020/02/17 15:55:28 by hbuisser         ###   ########.fr       */
+>>>>>>> 21a3f3f1e5afe26fa10917a7e09e2d99fc1e0e90
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +70,7 @@ void sprites_raycasting(t_index *idx)
                     d = (y-idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
                     idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 256;
                     idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprWidth * idx->spr->texY + idx->spr->texX];
+                	idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprWidth * idx->spr->texY + idx->spr->texX];
                     y++;
                 }
             }
