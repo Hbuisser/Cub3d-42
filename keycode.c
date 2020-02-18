@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 20:29:59 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:38:46 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int ft_key(int keycode, t_index *idx)
     rotSpeed = 0.1;
     oldPlaneX = idx->big->planeX;
 
+// && pos > 0 && pos < posmax (strlen d'une ligne)
     if (keycode == MLXK_ESC || keycode == MLXK_X)
         exit(0);
     else if (keycode == MLXK_W || keycode == MLXK_UP)

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 22:01:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:48:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void sprites_raycasting(t_index *idx)
     d = 0;
     while (i < idx->spr->numSprites)
     {
-        idx->spr->spriteX = (float)idx->spr->x - (float)idx->big->posX;
-        idx->spr->spriteY = (float)idx->spr->y - (float)idx->big->posY;
+        idx->spr->spriteX = (double)idx->spr->x - (double)idx->big->posX;
+        idx->spr->spriteY = (double)idx->spr->y - (double)idx->big->posY;
         idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
         
         idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
@@ -34,7 +34,8 @@ void sprites_raycasting(t_index *idx)
         idx->spr->spriteScreenX = (int)((idx->el->resolution_x / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
         idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        idx->spr->sprHeight = fabs(idx->el->resolution_y / idx->spr->transformY) / vDiv;
+
+        idx->spr->sprHeight = (int)fabs(idx->el->resolution_y / idx->spr->transformY) / vDiv;
         idx->spr->drawStartY = -idx->spr->sprHeight / 2 + idx->el->resolution_y / 2 + idx->spr->vMoveScreen;
         if (idx->spr->drawStartY < 0)
             idx->spr->drawStartY = 0;
@@ -42,27 +43,28 @@ void sprites_raycasting(t_index *idx)
         if (idx->spr->drawEndY >= idx->el->resolution_y)
             idx->spr->drawEndY = idx->el->resolution_y - 1;
 
-        idx->spr->sprWidth = fabs(idx->el->resolution_y / idx->spr->transformY) / uDiv;
+        idx->spr->sprWidth = (int)fabs(idx->el->resolution_y / idx->spr->transformY) / uDiv;
         idx->spr->drawStartX = -idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
         if (idx->spr->drawStartX < 0)
             idx->spr->drawStartX = 0;
         idx->spr->drawEndX = idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
         if (idx->spr->drawEndX >= idx->el->resolution_x)
             idx->spr->drawEndX = idx->el->resolution_x - 1;
+        
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
         idx->spr->stripe = idx->spr->drawStartX;
         while (idx->spr->stripe < idx->spr->drawEndX)
         {
-            idx->spr->texX = (int)((idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth);
+            idx->spr->texX = (int)(256 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth) / 256;
             if (idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < idx->el->resolution_x && idx->spr->transformY < idx->spr->ZBuffer[idx->spr->stripe])
             {
                 y = idx->spr->drawStartY;
-                while (y < idx->spr->drawEndY && idx->spr->texY < 64 && idx->spr->texX < 64)
+                while (y < idx->spr->drawEndY && idx->spr->texY < 128 && idx->spr->texX < 128)
                 {
-                    d = (y - idx->spr->vMoveScreen) * 128 - idx->el->resolution_y * 64 + idx->spr->sprHeight * 64;
-                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
-                    if ((idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
-                        idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX];
+                    d = (y - idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
+                    idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 256;
+                    if ((idx->spr->color[64 * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
+                        idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[64 * idx->spr->texY + idx->spr->texX];
                     y++;
                 }
             }
