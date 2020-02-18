@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 21:05:50 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:47:02 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void init_4(t_index *idx)
     idx->tex->color = NULL;
     idx->spr->numSprites = 0;
     idx->spr->numSprites = 0;
-    idx->spr->x = 0;
-    idx->spr->y = 0;
     idx->spr->spr_tex = NULL;
 	idx->spr->sprWidth = 0;
 	idx->spr->sprHeight = 0;

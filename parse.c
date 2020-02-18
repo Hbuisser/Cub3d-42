@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 17:16:17 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:04:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,10 @@ char *create_map(t_index *idx, int count)
 		{
 			if ((ft_isalpha(idx->parse->map[i][j])))
 			{
-				idx->parse->pos_x_init = j;
-				idx->parse->pos_y_init = i;
+				idx->parse->pos_x_init = j + 0.5;
+				idx->parse->pos_y_init = i + 0.5;
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
-			}
-			if (idx->parse->map[i][j] == '3')
-			{
-				idx->spr->numSprites3 += 1;
-				idx->spr->x = j;
-				idx->spr->y = i;
 			}
 			if (idx->parse->map[i][j] == '2')
 				idx->spr->numSprites += 1;
@@ -125,6 +119,10 @@ void malloc_size_sprite(t_index *idx)
 	if (!(idx->spr->sprites_x = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
         write (1, "sprx", 5);
     if (!(idx->spr->sprites_y = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
+        write (1, "spry", 5);
+	if (!(idx->spr->spriteOrder = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
+        write (1, "spry", 5);
+	if (!(idx->spr->spriteDistance = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
         write (1, "spry", 5);
 }
 
@@ -144,8 +142,8 @@ void parse_sprites(t_index *idx)
 		{
 			if (idx->parse->map[i][j] == '2')
 			{
-				idx->spr->sprites_x[k] = j;
-				idx->spr->sprites_y[k] = i;
+				idx->spr->sprites_x[k] = j + 0.5;
+				idx->spr->sprites_y[k] = i + 0.5;
 				k++;
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 17:08:09 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:46:40 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,7 @@ typedef struct      s_tex
 
 typedef struct      s_spr
 {
-    // to delete after
-    int         numSprites3;
     int         numSprites;
-    int         x;
-    int         y;
 	void		*spr_tex;
     int         *color;
 	int 		sprWidth;
@@ -165,6 +161,9 @@ typedef struct      s_spr
     double      *ZBuffer;
     int         *sprites_x;
     int         *sprites_y;
+    int         *spriteOrder;
+    double      *spriteDistance;
+
 }                   t_spr;
 
 typedef struct 		s_index
