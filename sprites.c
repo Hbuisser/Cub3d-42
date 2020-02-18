@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 20:09:04 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 22:01:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ void sprites_raycasting(t_index *idx)
         idx->spr->spriteX = (float)idx->spr->x - (float)idx->big->posX;
         idx->spr->spriteY = (float)idx->spr->y - (float)idx->big->posY;
         idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
+        
         idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
-        idx->spr->transformY = idx->spr->invDet * (-idx->big->planeY * idx->spr->spriteX + (idx->big->planeX * idx->spr->spriteY));
+        idx->spr->transformY = idx->spr->invDet * (((-idx->big->planeY) * idx->spr->spriteX) + (idx->big->planeX * idx->spr->spriteY));
+        
         idx->spr->spriteScreenX = (int)((idx->el->resolution_x / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
-        //parameters for scaling and moving the sprites
         idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
-        //calculate height of the sprite on screen
-        //using "transformY" instead of the real distance prevents fisheye
-        idx->spr->spriteHeight = abs((int)(idx->el->resolution_y / (idx->spr->transformY))) / vDiv;
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////	
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        idx->spr->sprHeight = fabs(idx->el->resolution_y / idx->spr->transformY) / vDiv;
         idx->spr->drawStartY = -idx->spr->sprHeight / 2 + idx->el->resolution_y / 2 + idx->spr->vMoveScreen;
         if (idx->spr->drawStartY < 0)
             idx->spr->drawStartY = 0;
         idx->spr->drawEndY = idx->spr->sprHeight / 2 + idx->el->resolution_y / 2 + idx->spr->vMoveScreen;
         if (idx->spr->drawEndY >= idx->el->resolution_y)
             idx->spr->drawEndY = idx->el->resolution_y - 1;
-        idx->spr->sprWidth = abs((int)(idx->el->resolution_y / (idx->spr->transformY))) / uDiv;
+
+        idx->spr->sprWidth = fabs(idx->el->resolution_y / idx->spr->transformY) / uDiv;
         idx->spr->drawStartX = -idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
-        if (idx->spr->drawStartX < 0) 
+        if (idx->spr->drawStartX < 0)
             idx->spr->drawStartX = 0;
         idx->spr->drawEndX = idx->spr->sprWidth / 2 + idx->spr->spriteScreenX;
         if (idx->spr->drawEndX >= idx->el->resolution_x)
@@ -61,7 +61,7 @@ void sprites_raycasting(t_index *idx)
                 {
                     d = (y - idx->spr->vMoveScreen) * 128 - idx->el->resolution_y * 64 + idx->spr->sprHeight * 64;
                     idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
-                    if((idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
+                    if ((idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
                         idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[idx->spr->sprHeight * idx->spr->texY + idx->spr->texX];
                     y++;
                 }

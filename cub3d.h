@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 19:58:27 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 21:48:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@
 # define MLXK_UP 126
 # define MLXK_DOWN 125
 
-#define uDiv 4
-#define vDiv 4
-#define vMove 2
+#define uDiv 1
+#define vDiv 1
+#define vMove 0
 
 typedef struct		s_window
 {
@@ -153,7 +153,6 @@ typedef struct      s_spr
 	float		transformY;
 	int 		spriteScreenX;
 	int 		vMoveScreen;
-	int 		spriteHeight;
 	int 		drawStartY;
 	int 		drawEndY;
 	int 		drawStartX;

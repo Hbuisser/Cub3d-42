@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 19:46:56 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/17 21:05:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void init_4(t_index *idx)
 	idx->spr->transformY = 0;
 	idx->spr->spriteScreenX = 0;
 	idx->spr->vMoveScreen = 0;
-	idx->spr->spriteHeight = 0;
 	idx->spr->drawStartY = 0;
 }
 

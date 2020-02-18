@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 20:28:05 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 14:38:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,34 @@ void create_data(t_index *idx)
 {
     idx->big->posX = idx->parse->pos_x_init;
     idx->big->posY = idx->parse->pos_y_init;
-    idx->big->dirX = 1;
-    idx->big->dirY = 0;
-    idx->big->planeX = 0;
-    idx->big->planeY = 0.66;
+    if (idx->parse->dir == 'E')
+    {
+        idx->big->planeX = 0;
+        idx->big->planeY = 0.66;
+        idx->big->dirX = 1;
+        idx->big->dirY = 0;
+    }
+    else if (idx->parse->dir == 'W')
+    {
+        idx->big->planeX = 0;
+        idx->big->planeY = -0.66;
+        idx->big->dirX = -1;
+        idx->big->dirY = 0;
+    }
+    else if (idx->parse->dir == 'S')
+    {
+        idx->big->planeX = -0.66;
+        idx->big->planeY = 0;
+        idx->big->dirX = 0;
+        idx->big->dirY = 1;
+    }
+    else if (idx->parse->dir == 'N')
+    {
+        idx->big->planeX = 0.66;
+        idx->big->planeY = 0;
+        idx->big->dirX = 0;
+        idx->big->dirY = -1;
+    }
     idx->tex->texWidth = 64;
     idx->tex->texHeight = 64;
     idx->spr->sprWidth = 0;
