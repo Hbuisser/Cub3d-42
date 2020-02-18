@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/08 18:06:55 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:00:01 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int 	check_map_characters(char *map_string_clean)
 	{
 		if (map_string_clean[i] != '1' &&
 				map_string_clean[i] != '2' &&
+				// to delete after
+				map_string_clean[i] != '3' &&
 				map_string_clean[i] != '0' &&
 				map_string_clean[i] != 'N' &&
 				map_string_clean[i] != 'S' &&

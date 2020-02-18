@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 14:38:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:14:04 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,9 @@ void create_algo(t_index *idx)
 {
     int		i;
     int		hit;
-    //int     spriteOrder[idx->spr->numSprites];
-    //float   spriteDistance[idx->spr->numSprites];
-    
-    if (!(idx->spr->ZBuffer = malloc(sizeof(double *) * idx->el->resolution_x + 1)))
-        write (1, "zbuf", 4);
 
     i = 0;
     hit = 0;
-    
     while (i < idx->el->resolution_x)
     {
         hit = 0;
@@ -74,14 +68,15 @@ void create_algo(t_index *idx)
         idx->spr->ZBuffer[i] = idx->big->perpWallDist;
         i++;
     }
-    /*while (i < numSprites)
+    //sort_sprites(spriteOrder, spriteDistance, idx);
+    /*i = 0;
+    while (i < idx->spr->numSprites)
     {
         spriteOrder[i] = i;
         spriteDistance[i] = ((idx->parse->posX - sprite[i].x) * (idx->parse->posX - sprite[i].x) +
                 (idx->parse->posY - sprite[i].y) * (idx->parse->posY - sprite[i].y));
         i++;
     }*/
-    //sortSprites(spriteOrder, spriteDistance, idx);
     sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
@@ -146,6 +141,7 @@ int main(int ac, char **av)
     idx->tex = tex;
     idx->spr = spr;
 
+
     create_init(idx);
 	if (parse_cub(idx, av[1]) < 0)
         return (-1);
@@ -153,6 +149,8 @@ int main(int ac, char **av)
         return (-1);
     idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
     create_data(idx);
+    if (!(idx->spr->ZBuffer = malloc(sizeof(double *) * idx->el->resolution_x + 1)))
+        write (1, "zbuf", 4);
     generate_textures(idx);
     idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
     idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);

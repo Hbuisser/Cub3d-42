@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 20:31:23 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 17:16:17 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,14 @@ char *create_map(t_index *idx, int count)
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
 			}
-			if (idx->parse->map[i][j] == '2')
+			if (idx->parse->map[i][j] == '3')
 			{
-				idx->spr->numSprites += 1;
+				idx->spr->numSprites3 += 1;
 				idx->spr->x = j;
 				idx->spr->y = i;
 			}
+			if (idx->parse->map[i][j] == '2')
+				idx->spr->numSprites += 1;
 			j++;
 		}
 		i++;
@@ -116,6 +118,40 @@ char *create_map(t_index *idx, int count)
 	idx->parse->line_nbr = i;
 	idx->parse->column_nbr = j;
 	return (map_string_clean);
+}
+
+void malloc_size_sprite(t_index *idx)
+{
+	if (!(idx->spr->sprites_x = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
+        write (1, "sprx", 5);
+    if (!(idx->spr->sprites_y = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
+        write (1, "spry", 5);
+}
+
+void parse_sprites(t_index *idx)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (idx->parse->map[i] != NULL)
+	{
+		j = 0;
+		while (idx->parse->map[i][j] != '\0')
+		{
+			if (idx->parse->map[i][j] == '2')
+			{
+				idx->spr->sprites_x[k] = j;
+				idx->spr->sprites_y[k] = i;
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 int parse_cub(t_index *idx, char *filename)
@@ -130,6 +166,8 @@ int parse_cub(t_index *idx, char *filename)
 	close(fd);
 	count = count_no_spaces(idx);
 	map_string_clean = create_map(idx, count);
+	malloc_size_sprite(idx);
+	parse_sprites(idx);
 	if (create_elements(idx) < 0)
 		return (-1);
 	if (check_elements_errors(idx) < 0)
