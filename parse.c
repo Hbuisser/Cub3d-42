@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 18:04:42 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:13:09 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,29 @@ char *create_map(t_index *idx, int count)
 	return (map_string_clean);
 }
 
-void malloc_size_sprite(t_index *idx)
+int malloc_size_sprite(t_index *idx)
 {
 	if (!(idx->spr->sprites_x = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
-        write (1, "sprx", 5);
+	{
+        write (1, "Error\n", 6);
+		return (-1);
+	}
     if (!(idx->spr->sprites_y = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
-        write (1, "spry", 5);
+    {
+        write (1, "Error\n", 6);
+		return (-1);
+	}
 	if (!(idx->spr->spriteOrder = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
-        write (1, "spry", 5);
+    {
+        write (1, "Error\n", 6);
+		return (-1);
+	}
 	if (!(idx->spr->spriteDistance = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
-        write (1, "spry", 5);
+    {
+        write (1, "Error\n", 6);
+		return (-1);
+	}
+	return (0);
 }
 
 void parse_sprites(t_index *idx)

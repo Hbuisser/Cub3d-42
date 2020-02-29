@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 17:46:40 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:15:28 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define MLXK_RIGHT 124
 # define MLXK_UP 126
 # define MLXK_DOWN 125
+# define MLXK_TD 14
+# define MLXK_TG 12
 
 #define uDiv 1
 #define vDiv 1
@@ -120,6 +122,10 @@ typedef struct      s_big
     int         wallHeight;
     int         lineHeight;
     int         side;
+    float       moveSpeed;
+    float       oldDirX;
+    float       rotSpeed;
+    float       oldPlaneX;
 }					t_big;
 
 typedef struct      s_tex
