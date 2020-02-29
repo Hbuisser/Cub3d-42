@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/06 11:27:13 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:39:58 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_west_and_east(t_index *idx)
 		write(1, "--> Wrong first letter for the west texture path", 49);
 		return (-1);
 	}
-	else if (idx->el->elem[idx->el->west_line][1] != 'E')
+	if (idx->el->elem[idx->el->west_line][1] != 'E')
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong second letter for the west texture path", 50);
@@ -32,7 +32,7 @@ int	check_west_and_east(t_index *idx)
 		write(1, "--> Wrong first letter for the east texture path", 49);
 		return (-1);
 	}
-	else if (idx->el->elem[idx->el->east_line][1] != 'A')
+	if (idx->el->elem[idx->el->east_line][1] != 'A')
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong second letter for the east texture path", 50);
@@ -49,7 +49,7 @@ int	check_north_and_south(t_index *idx)
 		write(1, "--> Wrong first letter for the north texture path", 49);
 		return (-1);
 	}
-	else if (idx->el->elem[idx->el->north_line][1] != 'O')
+	if (idx->el->elem[idx->el->north_line][1] != 'O')
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong second letter for the north texture path", 50);
@@ -63,7 +63,7 @@ int	check_north_and_south(t_index *idx)
 		write(1, "--> Wrong first letter for the south texture path", 49);
 		return (-1);
 	}
-	else if (idx->el->elem[idx->el->south_line][1] != 'O')
+	if (idx->el->elem[idx->el->south_line][1] != 'O')
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong second letter for the south texture path", 50);

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 17:18:05 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:26:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	parse_data_and_map(int fd, t_index *idx)
 			else
 			{
 				write(1, "Error\n", 6);
-				write(1, "map not surrounded by 1", 23);
+				write(1, "Map not surrounded by 1", 23);
 				return (-1);
 			}
 		}
@@ -119,21 +119,25 @@ int malloc_size_sprite(t_index *idx)
 	if (!(idx->spr->sprites_x = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
 	{
         write (1, "Error\n", 6);
+		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
     if (!(idx->spr->sprites_y = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
     {
         write (1, "Error\n", 6);
+		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
 	if (!(idx->spr->spriteOrder = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
     {
         write (1, "Error\n", 6);
+		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
 	if (!(idx->spr->spriteDistance = malloc(sizeof(int *) * idx->spr->numSprites + 1)))
     {
         write (1, "Error\n", 6);
+		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
 	return (0);

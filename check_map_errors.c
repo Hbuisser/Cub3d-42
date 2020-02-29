@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 17:46:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:28:26 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int 	check_map_characters(char *map_string_clean)
 				map_string_clean[i] != 'W' &&
 				map_string_clean[i] != '\n')
 		{
-			write(1, "map countains wrong things", 26);
+			write(1, "Error\n", 6);
+			write (1, "Map countains wrong things", 26);
 			return (-1);
 		}
 		i++;
@@ -57,7 +58,8 @@ int		check_borders(t_index *idx)
 	{
 		if (idx->parse->map[0][j] != '1')
 		{
-			write(1, "map not surrounded by 1", 23);
+			write(1, "Error\n", 6);
+			write(1, "Map not surrounded by 1", 23);
 			return (-1);
 		}
 		j++;
@@ -67,7 +69,8 @@ int		check_borders(t_index *idx)
 	{
 		if (idx->parse->map[idx->parse->line_nbr - 1][j] != '1')
 		{
-			write(1, "map not surrounded by 1", 23);
+			write(1, "Error\n", 6);
+			write(1, "Map not surrounded by 1", 23);
 			return (-1);
 		}
 		j++;
@@ -77,7 +80,8 @@ int		check_borders(t_index *idx)
 	{
 		if (idx->parse->map[j][idx->parse->column_nbr - 1] != '1')
 		{
-			write(1, "map not surrounded by 1", 23);
+			write(1, "Error\n", 6);
+			write(1, "Map not surrounded by 1", 23);
 			return (-1);
 		}
 		j++;
