@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 16:49:36 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:03:35 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void    calculate_colors(t_index *idx)
 
 void	calculate_textures(t_index *idx)
 {
-    double	wallX;
+    float	wallX;
 
     if (idx->big->side == 0) 
         wallX = idx->big->posY + idx->big->perpWallDist * idx->big->rayDirY;

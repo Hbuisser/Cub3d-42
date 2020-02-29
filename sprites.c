@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/18 17:59:10 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:04:39 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void calculate_draw_start_end(t_index *idx)
 
 void calculate_transform(int i, t_index *idx)
 {
-    idx->spr->spriteX = (double)idx->spr->sprites_x[i] - (double)idx->big->posX;
-    idx->spr->spriteY = (double)idx->spr->sprites_y[i] - (double)idx->big->posY;
+    idx->spr->spriteX = (float)idx->spr->sprites_x[i] - (float)idx->big->posX;
+    idx->spr->spriteY = (float)idx->spr->sprites_y[i] - (float)idx->big->posY;
     idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
     
     idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);

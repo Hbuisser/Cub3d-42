@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 16:15:28 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:02:28 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,11 @@ typedef struct      s_spr
     int         *color;
 	int 		sprWidth;
 	int 		sprHeight;
-	double 		spriteX;
-	double		spriteY;
-    double		invDet;
-	double		transformX;
-	double		transformY;
+	float 		spriteX;
+	float		spriteY;
+    float		invDet;
+	float		transformX;
+	float		transformY;
 	int 		spriteScreenX;
 	int 		vMoveScreen;
 	int 		drawStartY;
@@ -164,11 +164,11 @@ typedef struct      s_spr
 	int 		stripe;
 	int 		texX;
 	int 		texY;
-    double      *ZBuffer;
+    float       *ZBuffer;
     int         *sprites_x;
     int         *sprites_y;
     int         *spriteOrder;
-    double      *spriteDistance;
+    float       *spriteDistance;
 
 }                   t_spr;
 
