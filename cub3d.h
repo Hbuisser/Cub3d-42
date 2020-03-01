@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 12:40:10 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 14:23:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ typedef struct      s_spr
     float       *ZBuffer;
     int         *sprites_x;
     int         *sprites_y;
-    int         *spriteOrder;
     float       spriteDistance_one;
     float       spriteDistance_two;
 
@@ -241,6 +240,7 @@ void    calculate_height_wall(t_index *idx);
 */
 
 int     ft_key(int keycode, t_index *idx);
+int exit_all(t_index *idx);
 
 /*
 ** Textures
@@ -255,6 +255,12 @@ void    calculate_colors(t_index *idx);
 */
 
 void sprites_raycasting(t_index *idx);
+
+/*
+** free
+*/
+
+int			free_all(t_index *idx, int ret);
 
 /*
 ** GNL

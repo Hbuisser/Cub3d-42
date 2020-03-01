@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 12:46:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 14:20:31 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void create_algo(t_index *idx)
     i = 0;
     while (i < idx->spr->numSprites)
     {
-        idx->spr->spriteOrder[i] = i;
         idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[i]) * (idx->big->posX - idx->spr->sprites_x[i]) +
                 (idx->big->posY - idx->spr->sprites_y[i]) * (idx->big->posY - idx->spr->sprites_y[i]));
         idx->spr->spriteDistance_two = ((idx->big->posX - idx->spr->sprites_x[i + 1]) * (idx->big->posX - idx->spr->sprites_x[i + 1]) +
@@ -91,7 +90,6 @@ void create_algo(t_index *idx)
         else 
             i++;
     }
-    //sort_sprites(idx);
     sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }
@@ -172,6 +170,7 @@ int main(int ac, char **av)
     idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
     create_algo(idx);
     mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
+	mlx_hook(idx->window->mlx_win, 17, 0, exit_all, idx);
     mlx_loop(idx->window->mlx_ptr);
     return (0);
 }
