@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 16:24:06 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:46:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void create_algo(t_index *idx)
 {
     int		i;
     int		hit;
+    int     tmp_x;
+    int     tmp_y;
 
     i = 0;
     hit = 0;
@@ -72,11 +74,24 @@ void create_algo(t_index *idx)
     while (i < idx->spr->numSprites)
     {
         idx->spr->spriteOrder[i] = i;
-        idx->spr->spriteDistance[i] = ((idx->big->posX - idx->spr->sprites_x[i]) * (idx->big->posX - idx->spr->sprites_x[i]) +
+        idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[i]) * (idx->big->posX - idx->spr->sprites_x[i]) +
                 (idx->big->posY - idx->spr->sprites_y[i]) * (idx->big->posY - idx->spr->sprites_y[i]));
-        i++;
+        idx->spr->spriteDistance_two = ((idx->big->posX - idx->spr->sprites_x[i + 1]) * (idx->big->posX - idx->spr->sprites_x[i + 1]) +
+                (idx->big->posY - idx->spr->sprites_y[i + 1]) * (idx->big->posY - idx->spr->sprites_y[i + 1]));
+        if (idx->spr->spriteDistance_one < idx->spr->spriteDistance_two)
+        {
+            tmp_x = idx->spr->sprites_x[i];
+            tmp_y = idx->spr->sprites_y[i];
+            idx->spr->sprites_x[i] = idx->spr->sprites_x[i + 1];
+            idx->spr->sprites_y[i] = idx->spr->sprites_y[i + 1];
+            idx->spr->sprites_x[i + 1] = tmp_x;
+            idx->spr->sprites_y[i + 1] = tmp_y;
+            i = 0;
+        }
+        else 
+            i++;
     }
-    //sort_sprites(spriteOrder, spriteDistance, idx);
+    //sort_sprites(idx);
     sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
 }

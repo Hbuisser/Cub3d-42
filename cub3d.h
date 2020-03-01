@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 17:02:28 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:40:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ typedef struct      s_spr
     int         *sprites_x;
     int         *sprites_y;
     int         *spriteOrder;
-    float       *spriteDistance;
+    float       spriteDistance_one;
+    float       spriteDistance_two;
 
 }                   t_spr;
 

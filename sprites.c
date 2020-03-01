@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 17:04:39 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:48:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,47 +85,3 @@ void sprites_raycasting(t_index *idx)
         i++;
     }
 }
-
-/*void sort_sprites(int *spriteOrder, double *spriteDistance, t_index *idx)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (i < idx->spr->numSprites)
-    {
-        while (j < idx->spr->numSprites)
-        {
-            if (spriteDistance[i] > spriteDistance[j])
-            {
-                tmp = spriteDistance[i];
-                spriteOrder[i] = spriteOrder[i + 1];
-                spriteOrder[i + 1] = spriteOrder[i];
-            }
-            j++;
-        }
-        i++;
-    }
-    i = 0;
-    while (i < 5)
-    {
-        printf("%d\n", spriteOrder[i]);
-        i++;
-    }
-
-
-    std::vector<std::pair<double, int>> sprites(amount);
-    for(int i = 0; i < amount; i++) 
-    {
-        sprites[i].first = dist[i];
-        sprites[i].second = order[i];
-    }
-    std::sort(sprites.begin(), sprites.end());
-    // restore in reverse order to go from farthest to nearest
-    for(int i = 0; i < amount; i++) 
-    {
-        dist[i] = sprites[amount - i - 1].first;
-        order[i] = sprites[amount - i - 1].second;
-    }
-}*/

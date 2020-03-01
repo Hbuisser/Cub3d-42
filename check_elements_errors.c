@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 18:39:58 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:46:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	check_north_and_south(t_index *idx)
 	if (idx->el->elem[idx->el->south_line][0] != 'S')
 	{
 		write(1, "Error\n", 6);
-		// trop louche pour le 2em char 
-		//printf("%c\n", idx->el->elem[idx->el->south_line][0]);
 		write(1, "--> Wrong first letter for the south texture path", 49);
 		return (-1);
 	}
