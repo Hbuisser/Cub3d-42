@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 14:20:31 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/04 12:29:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,6 @@ int main(int ac, char **av)
     t_tex       *tex = malloc(sizeof(t_tex));
     t_spr       *spr = malloc(sizeof(t_spr));
 
-	if (ac < 2)
-		return (-1);
-
     idx->big = big;
     idx->img = img;
     idx->parse = parse;
@@ -158,19 +155,39 @@ int main(int ac, char **av)
     idx->tex = tex;
     idx->spr = spr;
 
-    create_init(idx);
-	if (parse_cub(idx, av[1]) < 0)
-        return (-1);
-    if (!(idx->window->mlx_ptr = mlx_init()))
-        return (-1);
-    idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
-    create_data(idx);
-    generate_textures(idx);
-    idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
-    idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
-    create_algo(idx);
-    mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
-	mlx_hook(idx->window->mlx_win, 17, 0, exit_all, idx);
-    mlx_loop(idx->window->mlx_ptr);
+    if (ac < 2)
+		return (-1);
+    else if (ac == 2)
+    {
+        create_init(idx);
+        if (parse_cub(idx, av[1]) < 0)
+            return (-1);
+        if (!(idx->window->mlx_ptr = mlx_init()))
+            return (-1);
+        idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
+        create_data(idx);
+        generate_textures(idx);
+        idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
+        idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+        create_algo(idx);
+        mlx_hook(idx->window->mlx_win, 2, 1L<<1, ft_key, idx);
+        mlx_hook(idx->window->mlx_win, 17, 0, exit_all, idx);
+        mlx_loop(idx->window->mlx_ptr);
+    }
+    /*else if (ac == 3 && !ft_strncmp(av[2], "--save", 5))
+    {
+        create_init(idx);
+        if (parse_cub(idx, av[1]) < 0)
+            return (-1);
+        if (!(idx->window->mlx_ptr = mlx_init()))
+            return (-1);
+        idx->window->mlx_win = mlx_new_window(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y, WINDOW_TITLE);
+        create_data(idx);
+        generate_textures(idx);
+        idx->img->img = mlx_new_image(idx->window->mlx_ptr, idx->el->resolution_x, idx->el->resolution_y);
+        idx->img->addr = (int *)mlx_get_data_addr(idx->img->img, &idx->img->bits_per_pixel, &idx->img->line_length, &idx->img->endian);
+        create_algo(idx);
+        screen_shot(idx);
+    }*/
     return (0);
 }

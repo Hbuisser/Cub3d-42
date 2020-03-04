@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 14:23:14 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:19:33 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,5 +268,11 @@ int			free_all(t_index *idx, int ret);
 
 int		get_next_line(const int fd, char **line);
 char	**ft_strsplit(const char *s, char c);
+
+/*
+** Screen shot
+*/
+
+int screen_shot(t_index *idx);
 
 #endif
