@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 18:57:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:32:48 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,7 @@ int		check_borders(t_index *idx)
 int check_around(int i, int j, t_index *idx)
 {
     if (idx->parse->map[i][j - 1] != ' ' && idx->parse->map[i][j - 1] != '1' && idx->parse->map[i][j - 1] != '\0')
-    {
-        printf("1\n");
-        printf("%s\n", idx->parse->map[i]);
         return (-1);
-    }
     if (idx->parse->map[i][j + 1] != ' ' && idx->parse->map[i][j + 1] != '1' && idx->parse->map[i][j + 1] != '\0')
         return (-1);
     if (idx->parse->map[i - 1][j] != ' ' && idx->parse->map[i - 1][j] != '1' && idx->parse->map[i - 1][j] != '\0')
@@ -152,11 +148,12 @@ int check_spaces_algo(t_index *idx)
 	int i;
     int j;
 
-    i = 1;
-	while (i < (idx->parse->line_nbr - 2))
+	i = 1;
+	while (i < (idx->parse->line_nbr - 1))
 	{
         j = 1;
-        while (idx->parse->map[i][j] != (idx->parse->map[i][new_strlen(idx->parse->map[i]) - 1]))
+        //while (idx->parse->map[i][j] != (idx->parse->map[i][new_strlen(idx->parse->map[i]) - 1]))
+		while (idx->parse->map[i][j] != '\0')
         {
             if (idx->parse->map[i][j] == ' ' && (check_around(i, j, idx) < 0))
             {

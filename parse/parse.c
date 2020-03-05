@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 18:58:18 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:06:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int parse_map(int fd, t_index *idx)
     }
     idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
-	//printf("%s\n", idx->parse->map_string);
 	free(line);
 	line = NULL;
     return (1);
