@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 17:54:04 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:18:19 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int parse_map(int fd, t_index *idx)
 
 	line = "";
     idx->parse->map_string = "";
-	//while (line[0] == '\0')
-	//		get_next_line(fd, &line);
+	while (line[0] == '\0')
+		get_next_line(fd, &line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
     while (get_next_line(fd, &line))
@@ -139,8 +139,8 @@ int create_map(t_index *idx)
 		{
 			if ((ft_isalpha(idx->parse->map[i][j])))
 			{
-				idx->parse->pos_x_init = j + 1;
-				idx->parse->pos_y_init = i + 1;
+				idx->parse->pos_x_init = j + 0.5;
+				idx->parse->pos_y_init = i + 0.5;
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
 			}
@@ -192,16 +192,8 @@ void parse_sprites(t_index *idx)
 		{
 			if (idx->parse->map[i][j] == '2')
 			{
-				if (idx->parse->map[i - 1][j] == '1' || idx->parse->map[i][j - 1] == '1')
-				{
-					idx->spr->sprites_x[k] = j + 1;
-					idx->spr->sprites_y[k] = i + 1;
-				}
-				else
-				{
-					idx->spr->sprites_x[k] = j + 0.5;
-					idx->spr->sprites_y[k] = i + 0.5;
-				}
+				idx->spr->sprites_x[k] = j + 0.5;
+				idx->spr->sprites_y[k] = i + 0.5;
 				k++;
 			}
 			j++;

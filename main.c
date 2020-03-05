@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 16:16:30 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:28:41 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void verLine(int i, t_index *idx)
         idx->img->addr[y * idx->el->resolution_x + i] = idx->tex->color[idx->tex->texY * idx->tex->texHeight + idx->tex->texX];
         y++;
     }
-    k = y + 1;
+    k = y;
     while (k < idx->el->resolution_y)
     {
         idx->img->addr[k * idx->el->resolution_x + i] = idx->el->f_color_hex;
@@ -121,7 +121,7 @@ void create_data(t_index *idx)
     }
     else if (idx->parse->dir == 'N')
     {
-        idx->big->planeX = 0.66;
+        idx->big->planeX = 1.4;
         idx->big->planeY = 0;
         idx->big->dirX = 0;
         idx->big->dirY = -1;

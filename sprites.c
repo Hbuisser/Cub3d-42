@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 12:48:50 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:15:26 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void verline_sprites(t_index *idx)
     idx->spr->stripe = idx->spr->drawStartX;
     while (idx->spr->stripe < idx->spr->drawEndX)
     {
-        idx->spr->texX = (int)(256 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth) / 256;
+        idx->spr->texX = (int)(128 * (idx->spr->stripe - (-idx->spr->sprWidth / 2 + idx->spr->spriteScreenX)) * idx->tex->texWidth / idx->spr->sprWidth) / 128;
         if (idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < idx->el->resolution_x && idx->spr->transformY < idx->spr->ZBuffer[idx->spr->stripe])
         {
             y = idx->spr->drawStartY;
-            while (y < idx->spr->drawEndY && idx->spr->texY < 128 && idx->spr->texX < 128)
+            while (y < idx->spr->drawEndY && idx->spr->texY < 64 && idx->spr->texX < 64)
             {
-                d = (y - idx->spr->vMoveScreen) * 256 - idx->el->resolution_y * 128 + idx->spr->sprHeight * 128;
-                idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 256;
+                d = (y - idx->spr->vMoveScreen) * 128 - idx->el->resolution_y * 64 + idx->spr->sprHeight * 64;
+                idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
                 if ((idx->spr->color[64 * idx->spr->texY + idx->spr->texX] & 0x00FFFFFF) != 0)
                     idx->img->addr[y * idx->el->resolution_x + idx->spr->stripe] = idx->spr->color[64 * idx->spr->texY + idx->spr->texX];
                 y++;

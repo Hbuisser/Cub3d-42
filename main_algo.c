@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:38:07 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/17 20:20:48 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:24:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void calculate_height_wall(t_index *idx)
 {
-    idx->big->wallHeight = idx->el->resolution_y * 0.6;
+    idx->big->wallHeight = idx->el->resolution_y * 0.5;
     idx->big->lineHeight = (int)(idx->big->wallHeight / idx->big->perpWallDist);
+    
     idx->big->drawStart = -idx->big->lineHeight / 2 + idx->el->resolution_y / 2;
     if (idx->big->drawStart < 0)
         idx->big->drawStart = 0;
