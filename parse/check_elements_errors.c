@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/04 14:08:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:09:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ int	check_west_and_east(t_index *idx)
 	if (idx->el->elem[idx->el->west_line][0] != 'W')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong first letter for the west texture path", 49);
+		write(1, "Wrong west texture path\n", 24);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->west_line][1] != 'E')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong second letter for the west texture path", 50);
+		write(1, "Wrong west texture path\n", 24);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->east_line][0] != 'E')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong first letter for the east texture path", 49);
+		write(1, "Wrong east texture path\n", 24);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->east_line][1] != 'A')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong second letter for the east texture path", 50);
+		write(1, "Wrong east texture path\n", 24);
 		return (-1);
 	}
 	return (0);
@@ -46,25 +46,25 @@ int	check_north_and_south(t_index *idx)
 	if (idx->el->elem[idx->el->north_line][0] != 'N')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong first letter for the north texture path", 49);
+		write(1, "Wrong north texture path\n", 25);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->north_line][1] != 'O')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong second letter for the north texture path", 50);
+		write(1, "Wrong north texture path\n", 25);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->south_line][0] != 'S')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong first letter for the south texture path", 49);
+		write(1, "Wrong south texture path\n", 25);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->south_line][1] != 'O')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong second letter for the south texture path", 50);
+		write(1, "Wrong south texture path\n", 26);
 		return (-1);
 	}
 	return (0);
@@ -80,7 +80,7 @@ int check_path(char *str)
 		if (str[i] == ' ')
 		{
 			write(1, "Error\n", 6);
-			write(1, "--> Wrong path", 14);
+			write(1, "Wrong path\n", 11);
 			return (-1);
 		}
 		i++;
@@ -93,14 +93,14 @@ int check_resolution(t_index *idx)
 	if (idx->el->elem[idx->el->resolution_line][0] != 'R')
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong resolution letter", 27);
+		write(1, "--> Wrong resolution letter\n", 28);
 		return (-1);
 	}
 	if (idx->el->elem[idx->el->resolution_line][1] != ' ' &&
 			!ft_isdigit(idx->el->elem[idx->el->resolution_line][1]))
 	{
 		write(1, "Error\n", 6);
-		write(1, "--> Wrong resolution details", 27);
+		write(1, "--> Wrong resolution details\n", 28);
 		return (-1);
 	}
 	return (0);

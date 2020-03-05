@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/04 14:08:44 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:12:31 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int get_ceilling_color(t_index *idx)
                 idx->el->elem[idx->el->ceilling_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong ceilling arguments", 33);
+                write(1, "--> Wrong ceilling arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -44,7 +44,7 @@ int get_ceilling_color(t_index *idx)
                 idx->el->elem[idx->el->ceilling_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong ceilling arguments", 33);
+                write(1, "--> Wrong ceilling arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -59,7 +59,7 @@ int get_ceilling_color(t_index *idx)
                 idx->el->elem[idx->el->ceilling_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong ceilling arguments", 33);
+                write(1, "--> Wrong ceilling arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -72,7 +72,7 @@ int get_ceilling_color(t_index *idx)
                 idx->el->elem[idx->el->ceilling_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong ceilling arguments", 33);
+                write(1, "--> Wrong ceilling arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -86,7 +86,7 @@ int get_ceilling_color(t_index *idx)
         if (idx->el->elem[idx->el->ceilling_line][i] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "--> Wrong ceilling arguments", 33);
+            write(1, "--> Wrong ceilling arguments\n", 34);
             return (-1);
         }
         i++;
@@ -113,7 +113,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 33);
+                write(1, "--> Wrong floor arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -126,7 +126,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 33);
+                write(1, "--> Wrong floor arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -141,7 +141,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 33);
+                write(1, "--> Wrong floor arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -154,7 +154,7 @@ int get_floor_color(t_index *idx)
                 idx->el->elem[idx->el->floor_line][i] != ' ')
         {
                 write(1, "Error\n", 6);
-                write(1, "--> Wrong floor arguments", 33);
+                write(1, "--> Wrong floor arguments\n", 34);
                 return (-1);
         }
         i++; 
@@ -168,7 +168,7 @@ int get_floor_color(t_index *idx)
         if (idx->el->elem[idx->el->floor_line][i] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "--> Wrong floor arguments", 33);
+            write(1, "--> Wrong floor arguments\n", 34);
             return (-1);
         }
         i++;
@@ -199,7 +199,7 @@ int get_resolution(t_index *idx)
             !ft_isdigit(idx->el->elem[idx->el->resolution_line][i]))
     {
             write(1, "Error\n", 6);
-            write(1, "--> Wrong resolution arguments", 30);
+            write(1, "--> Wrong resolution arguments\n", 31);
             return (-1);
     }  
     while (idx->el->elem[idx->el->resolution_line][i] >= '0' &&
@@ -214,7 +214,7 @@ int get_resolution(t_index *idx)
         if (idx->el->elem[idx->el->resolution_line][i] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "--> Wrong resolution arguments", 30);
+            write(1, "--> Wrong resolution arguments\n", 31);
             return (-1);
         }
         i++;

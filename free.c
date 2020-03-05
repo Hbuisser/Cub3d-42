@@ -6,13 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 13:32:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 14:24:06 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:18:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void free_spr(t_index *idx)
+/*void free_spr(t_index *idx)
 {
     if (idx->spr)
 	{
@@ -29,9 +29,9 @@ void free_spr(t_index *idx)
 	}
     free(idx->spr);
     idx->spr = 0;
-}
+}*/
 
-void free_tex(t_index *idx)
+/*void free_tex(t_index *idx)
 {
     if (idx->tex)
 	{
@@ -48,15 +48,15 @@ void free_tex(t_index *idx)
 	}
     free(idx->tex);
     idx->tex = 0;
-}
+}*/
 
-void free_big(t_index *idx)
+/*void free_big(t_index *idx)
 {
     free(idx->big);
     idx->big = 0;
-}
+}*/
 
-void	free_elem(t_index *idx)
+/*void	free_elem(t_index *idx)
 {
 	int i;
 
@@ -71,9 +71,9 @@ void	free_elem(t_index *idx)
 		free(idx->el->elem);
 		idx->el->elem = 0;
 	}
-}
+}*/
 
-void free_el(t_index *idx)
+/*void free_el(t_index *idx)
 {
     if (idx->el)
 	{
@@ -91,9 +91,9 @@ void free_el(t_index *idx)
 	}
     free(idx->el);
     idx->el = 0;
-}
+}*/
 
-static void	free_map(t_index *idx)
+/*static void	free_map(t_index *idx)
 {
 	int i;
 
@@ -108,9 +108,9 @@ static void	free_map(t_index *idx)
 		free(idx->parse->map);
 		idx->parse->map = 0;
 	}
-}
+}*/
 
-static void free_parse(t_index *idx)
+/*static void free_parse(t_index *idx)
 {
     if (idx->parse)
 	{
@@ -124,9 +124,9 @@ static void free_parse(t_index *idx)
 	}
     free(idx->parse);
     idx->parse = 0;
-}
+}*/
 
-static void free_window(t_index *idx)
+/*static void free_window(t_index *idx)
 {
     if (idx->window->mlx_ptr && idx->window->mlx_win)
 	{
@@ -134,9 +134,9 @@ static void free_window(t_index *idx)
 		free(idx->window);
 		idx->window = 0;
 	}
-}
+}*/
 
-static void free_image(t_index *idx)
+/*static void free_image(t_index *idx)
 {
     if (idx->img)
 	{
@@ -144,16 +144,18 @@ static void free_image(t_index *idx)
 		free(idx->img);
 		idx->img = 0;
 	}
-}
+}*/
 
 int			free_all(t_index *idx, int ret)
 {
-    free_image(idx);
-    free_window(idx);
-	free_parse(idx);
-    free_el(idx);
-    free_big(idx);
-    free_tex(idx);
+    //free_image(idx);
+    //free_window(idx);
+	//free_parse(idx);
+    //free_el(idx);
+    //free_big(idx);
+    //free_tex(idx);
     free_spr(idx);
+	idx->parse->line_nbr = 0;
+	exit(0);
 	return (ret);
 }

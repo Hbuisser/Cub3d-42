@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 19:32:48 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:10:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int 	check_map_characters(t_index *idx)
 				idx->parse->map_string[i] != ' ' &&
 				idx->parse->map_string[i] != '\n')
 		{
-			write(1, "Error\n", 6);
-			write (1, "Map countains wrong things", 26);
+			write (1, "Error\n", 6);
+			write (1, "Map countains wrong things\n", 27);
 			return (-1);
 		}
 		i++;
@@ -64,8 +64,6 @@ int		check_borders(t_index *idx)
     int i;
 
 	j = 0;
-    // check first line
-	//printf("%s\n", idx->parse->map[0]);
 	while (idx->parse->map[0][j] != '\0')
 	{
 		if (idx->parse->map[0][j] != '1' && idx->parse->map[0][j] != ' ')
@@ -78,7 +76,6 @@ int		check_borders(t_index *idx)
 		j++;
 	}
     j = 0;
-    // check last line
 	while (idx->parse->map[idx->parse->line_nbr - 1][j] != '\0')
 	{
 		if ((idx->parse->map[idx->parse->line_nbr - 1][j] != '1') && (idx->parse->map[idx->parse->line_nbr - 1][j] != ' '))
@@ -91,7 +88,6 @@ int		check_borders(t_index *idx)
 		j++;
 	}
     i = 0;
-    // check last column
 	while (idx->parse->map[i] != NULL)
 	{
         j = 0;
@@ -106,14 +102,13 @@ int		check_borders(t_index *idx)
         }
         i++;
 	}
-    // check first column
     i = 0;
     while (idx->parse->map[i] != NULL)
 	{
         if (idx->parse->map[i][0] != '1' && idx->parse->map[i][0] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "Map not surrounded by 1/n", 24);
+            write(1, "Map not surrounded by 1\n", 24);
             exit(0);
 			return (-1);
         }
@@ -152,13 +147,12 @@ int check_spaces_algo(t_index *idx)
 	while (i < (idx->parse->line_nbr - 1))
 	{
         j = 1;
-        //while (idx->parse->map[i][j] != (idx->parse->map[i][new_strlen(idx->parse->map[i]) - 1]))
 		while (idx->parse->map[i][j] != '\0')
         {
             if (idx->parse->map[i][j] == ' ' && (check_around(i, j, idx) < 0))
             {
                 write(1, "Error\n", 6);
-                write(1, "Map not surrounded by 1", 23);
+                write(1, "Map not surrounded by 1\n", 24);
                 return (-1);
             }
             j++;

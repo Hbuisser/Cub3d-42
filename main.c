@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 18:28:41 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:53:37 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void create_data(t_index *idx)
     idx->spr->sprHeight = 0;
     idx->big->moveSpeed = 0.2;
     idx->big->rotSpeed = 0.2;
-    if (!(idx->spr->ZBuffer = malloc(sizeof(double *) * idx->el->resolution_x + 1)))
+    if (!(idx->spr->ZBuffer = malloc(sizeof(float *) * idx->el->resolution_x + 1)))
         write (1, "zbuf", 4);
 }
 
