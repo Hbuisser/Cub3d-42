@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 17:19:33 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:02:34 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,10 @@ int		parse_cub(t_index *idx, char *filename);
 ** Map and elements errors
 */
 
-int		check_map_errors(t_index *idx, char *map_string_clean);
+int		check_map_errors(t_index *idx);
 int     check_elements_errors(t_index *idx);
+int	new_strlen(char *s);
+int		check_borders(t_index *idx);
 
 /*
 ** Parse elements

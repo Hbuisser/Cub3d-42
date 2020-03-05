@@ -6,84 +6,131 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/04 14:13:13 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:54:04 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	parse_map_data(int fd, t_index *idx)
+int parse_data(int fd, t_index *idx)
 {
-	char 	*line;
+    char *line;
+    int i;
 
-	idx->parse->data = "";
-	idx->parse->map_string = "";
-	while (get_next_line(fd, &line))
-	{
-		if (line[0] == '\0')
+    i = 0;
+    idx->parse->data = "";
+    while (get_next_line(fd, &line) && i < 8)
+    {
+        if (line[0] == '\0')
 			get_next_line(fd, &line);
-		if (!ft_isdigit(line[0]))
-		{
+        if (!ft_isdigit(line[0]))
+        {
 			idx->parse->data = ft_strjoin(idx->parse->data, line);
 			idx->parse->data = ft_strjoin(idx->parse->data, "\n");
 			free(line);
 			line = NULL;
-		}
-		else
-		{
-			if (line[0] == '1')
-			{
-				idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
-				idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
-				free(line);
-				line = NULL;
-			}
-		}
-	}
-	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
-	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
+            i++;
+        }
+    }
+	while (line[0] == '\0')
+		get_next_line(fd, &line);
+	idx->parse->data = ft_strjoin(idx->parse->data, line);
 	idx->parse->data = ft_strjoin(idx->parse->data, "\0");
 	free(line);
 	line = NULL;
-	return (0);
+    return (1);
 }
 
-int count_no_spaces_map(t_index *idx)
+int parse_map(int fd, t_index *idx)
 {
-	int i;
-	int count;
+    char *line;
 
-	i = -1;
-	count = 0;
-	while (idx->parse->map_string[++i] != '\0')
-		if (idx->parse->map_string[i] != ' ')
-			count++;
-	return (count);
-}
-
-char *create_map(t_index *idx, int count)
-{
-	int i;
-	int j;
-	char *map_string_clean;
-
-	i = 0;
-	j = 0;
-	if (!(map_string_clean = malloc(sizeof(char) * count + 1)))
-		return (NULL);
-	while (idx->parse->map_string[i] != '\0')
-	{
-		if (idx->parse->map_string[i] != ' ')
+	line = "";
+    idx->parse->map_string = "";
+	//while (line[0] == '\0')
+	//		get_next_line(fd, &line);
+	idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
+	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
+    while (get_next_line(fd, &line))
+    {
+        if (line[0] == '\0')
 		{
-			map_string_clean[j] = idx->parse->map_string[i];
-			j++;
-		}
+            write(1, "Error\n", 6);
+            write(1, "Blank line in the map\n", 30);
+            return (-1);
+        }
+        idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
+        idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\n");
+        free(line);
+        line = NULL;
+    }
+    idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
+	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
+    return (1);
+}
+
+char *create_new_line(char *str, int diff)
+{
+    int i;
+    char *new;
+
+    i = 0;
+    if (!(new = malloc(sizeof(char *) * (new_strlen(str) + diff + 1))))
+        return (NULL);
+    while (str[i] != '\0')
+    {
+        new[i] = str[i];
+        i++;
+    }
+    while (diff > 0)
+    {
+        new[i] = ' ';
+        i++;
+        diff--;
+    }
+    new[i] = '\0';
+    return (new);
+}
+
+int create_good_size_map(t_index *idx)
+{
+    int i;
+	int j;
+    int len;
+    int diff;
+    
+    i = 0;
+    j = 0;
+    diff = 0;
+    len = new_strlen(idx->parse->map[i]);
+    while (idx->parse->map[i] != NULL)
+	{
+		if (new_strlen(idx->parse->map[i]) > len)
+            len = new_strlen(idx->parse->map[i]);
 		i++;
 	}
-	map_string_clean[j] = '\0';
-	if (!(idx->parse->map = ft_strsplit(map_string_clean, '\n')))
-		return (NULL);
-	i = 0;
+    i = 0;
+    while (idx->parse->map[i] != NULL)
+	{
+		if (new_strlen(idx->parse->map[i]) < len)
+        {
+            diff = len - new_strlen(idx->parse->map[i]);
+            if (!(idx->parse->map[i] = create_new_line(idx->parse->map[i], diff)))
+				return (-1);
+        }
+		i++;
+	}
+    return (1);
+}
+
+int create_map(t_index *idx)
+{
+    int i;
+	int j;
+
+    if (!(idx->parse->map = ft_strsplit(idx->parse->map_string, '\n')))
+		return (-1);
+    i = 0;
 	j = 0;
 	while (idx->parse->map[i] != NULL)
 	{
@@ -92,20 +139,24 @@ char *create_map(t_index *idx, int count)
 		{
 			if ((ft_isalpha(idx->parse->map[i][j])))
 			{
-				idx->parse->pos_x_init = j;
-				idx->parse->pos_y_init = i;
+				idx->parse->pos_x_init = j + 1;
+				idx->parse->pos_y_init = i + 1;
 				idx->parse->dir = idx->parse->map[i][j];
 				idx->parse->map[i][j] = '0';
 			}
-			if (idx->parse->map[i][j] == '2')
+            if (idx->parse->map[i][j] == '2')
 				idx->spr->numSprites += 1;
-			j++;
+            j++;
 		}
 		i++;
 	}
 	idx->parse->line_nbr = i;
 	idx->parse->column_nbr = j;
-	return (map_string_clean);
+	if (check_borders(idx) < 0)
+		return (-1);
+    if (create_good_size_map(idx) < 0)
+        return (-1);
+    return (1);
 }
 
 int malloc_size_sprite(t_index *idx)
@@ -122,7 +173,7 @@ int malloc_size_sprite(t_index *idx)
 		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
-	return (0);
+	return (1);
 }
 
 void parse_sprites(t_index *idx)
@@ -162,22 +213,21 @@ void parse_sprites(t_index *idx)
 int parse_cub(t_index *idx, char *filename)
 {
 	int		fd;
-	int 	count;
-	char 	*map_string_clean;
 	
 	fd = open(filename, O_RDONLY);
-	if (parse_map_data(fd, idx) < 0)
+	if (parse_data(fd, idx) < 0)
 		return (-1);
+    if (parse_map(fd, idx) < 0)
+        return (-1);
 	close(fd);
-	count = count_no_spaces_map(idx);
-	map_string_clean = create_map(idx, count);
+	create_map(idx);
 	malloc_size_sprite(idx);
 	parse_sprites(idx);
 	if (create_elements(idx) < 0)
 		return (-1);
 	if (check_elements_errors(idx) < 0)
 		return (-1);
-	if (check_map_errors(idx, map_string_clean) < 0)
+	if (check_map_errors(idx) < 0)
 		return (-1);
 	return (1);
 }
