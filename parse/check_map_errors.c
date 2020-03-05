@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 17:52:30 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:57:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ int		check_borders(t_index *idx)
 
 	j = 0;
     // check first line
+	//printf("%s\n", idx->parse->map[0]);
 	while (idx->parse->map[0][j] != '\0')
 	{
 		if (idx->parse->map[0][j] != '1' && idx->parse->map[0][j] != ' ')
 		{
 			write(1, "Error\n", 6);
-			write(1, "Map not surrounded by 1 one", 30);
+			write(1, "Map not surrounded by 1\n", 24);
+			exit(0);
 			return (-1);
 		}
 		j++;
@@ -82,7 +84,8 @@ int		check_borders(t_index *idx)
 		if ((idx->parse->map[idx->parse->line_nbr - 1][j] != '1') && (idx->parse->map[idx->parse->line_nbr - 1][j] != ' '))
 		{
 			write(1, "Error\n", 6);
-			write(1, "Map not surrounded by 1 two", 30);
+			write(1, "Map not surrounded by 1\n", 24);
+			exit(0);
 			return (-1);
 		}
 		j++;
@@ -97,8 +100,9 @@ int		check_borders(t_index *idx)
         if (idx->parse->map[i][j - 1] != '1')
         {
             write(1, "Error\n", 6);
-            write(1, "Map not surrounded by 1 trhee", 30);
-            return (-1);
+            write(1, "Map not surrounded by 1\n", 24);
+            exit(0);
+			return (-1);
         }
         i++;
 	}
@@ -109,8 +113,9 @@ int		check_borders(t_index *idx)
         if (idx->parse->map[i][0] != '1' && idx->parse->map[i][0] != ' ')
         {
             write(1, "Error\n", 6);
-            write(1, "Map not surrounded by 1 four", 30);
-            return (-1);
+            write(1, "Map not surrounded by 1/n", 24);
+            exit(0);
+			return (-1);
         }
         i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 18:18:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:58:18 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int parse_data(int fd, t_index *idx)
 
     i = 0;
     idx->parse->data = "";
-    while (get_next_line(fd, &line) && i < 8)
+    while (get_next_line(fd, &line) && i < 7)
     {
         if (line[0] == '\0')
 			get_next_line(fd, &line);
@@ -56,7 +56,7 @@ int parse_map(int fd, t_index *idx)
         if (line[0] == '\0')
 		{
             write(1, "Error\n", 6);
-            write(1, "Blank line in the map\n", 30);
+            write(1, "Map not surrounded by 1\n", 24);
             return (-1);
         }
         idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
@@ -66,6 +66,9 @@ int parse_map(int fd, t_index *idx)
     }
     idx->parse->map_string = ft_strjoin(idx->parse->map_string, line);
 	idx->parse->map_string = ft_strjoin(idx->parse->map_string, "\0");
+	//printf("%s\n", idx->parse->map_string);
+	free(line);
+	line = NULL;
     return (1);
 }
 
