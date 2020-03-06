@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/01 16:25:57 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:13:01 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int ft_key(int keycode, t_index *idx)
     idx->big->oldPlaneX = idx->big->planeX;
 
     if (keycode == MLXK_ESC || keycode == MLXK_X)
-    {
-        mlx_destroy_window(idx->window->mlx_ptr, idx->window->mlx_win);
-        exit(0);
-    }
+        free_all(idx, -1);
     else if (keycode == MLXK_W || keycode == MLXK_UP)
     {
         //if (idx->parse->map[(int)(idx->big->posX + idx->big->dirX * idx->big->moveSpeed)][(int)idx->big->posY] != '1')
