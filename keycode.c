@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/06 13:13:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 15:10:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ int ft_key(int keycode, t_index *idx)
         free_all(idx, -1);
     else if (keycode == MLXK_W || keycode == MLXK_UP)
     {
-        //if (idx->parse->map[(int)(idx->big->posX + idx->big->dirX * idx->big->moveSpeed)][(int)idx->big->posY] != '1')
+        if (idx->parse->map[(int)idx->big->posY][(int)(idx->big->posX + idx->big->dirX * (idx->big->moveSpeed + 0.1))] != '1')
             idx->big->posX += idx->big->dirX * idx->big->moveSpeed;
-        //if (idx->parse->map[(int)idx->big->posX][(int)(idx->big->posY + idx->big->dirY * idx->big->moveSpeed)] != '1')
+        if (idx->parse->map[(int)(idx->big->posY + idx->big->dirY * (idx->big->moveSpeed + 0.1))][(int)idx->big->posX] != '1')
             idx->big->posY += idx->big->dirY * idx->big->moveSpeed;
     }
     else if (keycode == MLXK_S || keycode == MLXK_DOWN)
     {
-        //if (idx->parse->map[(int)(idx->big->posX - idx->big->dirX * idx->big->moveSpeed)][(int)idx->big->posY] != '1')
+        if (idx->parse->map[(int)idx->big->posY][(int)(idx->big->posX - idx->big->dirX * (idx->big->moveSpeed * 0.1))] != '1')
             idx->big->posX -= idx->big->dirX * idx->big->moveSpeed;
-        //if (idx->parse->map[(int)idx->big->posX][(int)(idx->big->posY - idx->big->dirY * idx->big->moveSpeed)] != '1')
+        if (idx->parse->map[(int)(idx->big->posY - idx->big->dirY * (idx->big->moveSpeed * 0.1))][(int)idx->big->posX] != '1')
             idx->big->posY -= idx->big->dirY * idx->big->moveSpeed;
     }
     /*if (keycode == MLXK_TD)

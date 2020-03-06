@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 19:53:37 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 15:33:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ int transform_to_hex(int r, int g, int b)
 void create_algo(t_index *idx)
 {
     int		i;
+    int j;
     int		hit;
     int     tmp_x;
     int     tmp_y;
 
     i = 0;
+    j = 0;
     hit = 0;
     while (i < idx->el->resolution_x)
     {
@@ -70,25 +72,30 @@ void create_algo(t_index *idx)
         idx->spr->ZBuffer[i] = idx->big->perpWallDist;
         i++;
     }
-    i = 0;
+    i = 1;
+    //idx->spr->spriteDistance_two = 0;
     while (i < idx->spr->numSprites)
     {
+        j = i;
         idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[i]) * (idx->big->posX - idx->spr->sprites_x[i]) +
-                (idx->big->posY - idx->spr->sprites_y[i]) * (idx->big->posY - idx->spr->sprites_y[i]));
-        idx->spr->spriteDistance_two = ((idx->big->posX - idx->spr->sprites_x[i + 1]) * (idx->big->posX - idx->spr->sprites_x[i + 1]) +
-                (idx->big->posY - idx->spr->sprites_y[i + 1]) * (idx->big->posY - idx->spr->sprites_y[i + 1]));
-        if (idx->spr->spriteDistance_one < idx->spr->spriteDistance_two)
+                    (idx->big->posY - idx->spr->sprites_y[i]) * (idx->big->posY - idx->spr->sprites_y[i]));
+        while (j < idx->spr->numSprites)
         {
-            tmp_x = idx->spr->sprites_x[i];
-            tmp_y = idx->spr->sprites_y[i];
-            idx->spr->sprites_x[i] = idx->spr->sprites_x[i + 1];
-            idx->spr->sprites_y[i] = idx->spr->sprites_y[i + 1];
-            idx->spr->sprites_x[i + 1] = tmp_x;
-            idx->spr->sprites_y[i + 1] = tmp_y;
-            i = 0;
+            if (((idx->big->posX - idx->spr->sprites_x[j]) * (idx->big->posX - idx->spr->sprites_x[j]) +
+                    (idx->big->posY - idx->spr->sprites_y[j]) * (idx->big->posY - idx->spr->sprites_y[j])) > idx->spr->spriteDistance_one)
+            {
+                idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[j]) * (idx->big->posX - idx->spr->sprites_x[j]) +
+                    (idx->big->posY - idx->spr->sprites_y[j]) * (idx->big->posY - idx->spr->sprites_y[j]));
+                tmp_x = idx->spr->sprites_x[i];
+                tmp_y = idx->spr->sprites_y[i];
+                idx->spr->sprites_x[i] = idx->spr->sprites_x[i + 1];
+                idx->spr->sprites_y[i] = idx->spr->sprites_y[i + 1];
+                idx->spr->sprites_x[i + 1] = tmp_x;
+                idx->spr->sprites_y[i + 1] = tmp_y;
+            }
+            j++;
         }
-        else 
-            i++;
+        i++;
     }
     sprites_raycasting(idx);
     mlx_put_image_to_window(idx->window->mlx_ptr, idx->window->mlx_win, idx->img->img, 0, 0);
@@ -101,20 +108,20 @@ void create_data(t_index *idx)
     if (idx->parse->dir == 'E')
     {
         idx->big->planeX = 0;
-        idx->big->planeY = 0.66;
+        idx->big->planeY = 1.4;
         idx->big->dirX = 1;
         idx->big->dirY = 0;
     }
     else if (idx->parse->dir == 'W')
     {
         idx->big->planeX = 0;
-        idx->big->planeY = -0.66;
+        idx->big->planeY = -1.4;
         idx->big->dirX = -1;
         idx->big->dirY = 0;
     }
     else if (idx->parse->dir == 'S')
     {
-        idx->big->planeX = -0.66;
+        idx->big->planeX = -1.4;
         idx->big->planeY = 0;
         idx->big->dirX = 0;
         idx->big->dirY = 1;

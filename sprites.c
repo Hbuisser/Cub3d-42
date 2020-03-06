@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 19:58:43 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:59:24 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void verline_sprites(t_index *idx)
         if (idx->spr->transformY > 0 && idx->spr->stripe > 0 && idx->spr->stripe < idx->el->resolution_x && idx->spr->transformY < idx->spr->ZBuffer[idx->spr->stripe])
         {
             y = idx->spr->drawStartY;
-            while (y < idx->spr->drawEndY && idx->spr->texY < 64 && idx->spr->texX < 64)
+            //while (y < idx->spr->drawEndY && idx->spr->texY < 64 && idx->spr->texX < 64)
+            while (y < idx->spr->drawEndY)
             {
                 d = (y - idx->spr->vMoveScreen) * 128 - idx->el->resolution_y * 64 + idx->spr->sprHeight * 64;
                 idx->spr->texY = ((d * idx->tex->texHeight) / idx->spr->sprHeight) / 128;
@@ -67,7 +68,7 @@ void calculate_transform(int i, t_index *idx)
     idx->spr->invDet = 1.0 / (idx->big->planeX * idx->big->dirY - idx->big->dirX * idx->big->planeY);
     
     idx->spr->transformX = idx->spr->invDet * (idx->big->dirY * idx->spr->spriteX - idx->big->dirX * idx->spr->spriteY);
-    idx->spr->transformY = idx->spr->invDet * (((-idx->big->planeY) * idx->spr->spriteX) + (idx->big->planeX * idx->spr->spriteY));
+    idx->spr->transformY = idx->spr->invDet * (-idx->big->planeY * idx->spr->spriteX + idx->big->planeX * idx->spr->spriteY);
     
     idx->spr->spriteScreenX = (int)((idx->el->resolution_x / 2) * (1 + idx->spr->transformX / idx->spr->transformY));
     idx->spr->vMoveScreen = (int)(vMove / idx->spr->transformY);
