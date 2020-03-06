@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:38:07 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 18:24:14 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:38:16 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void calculate_dist(t_index *idx)
     else 
         idx->big->perpWallDist = (idx->big->mapY - idx->big->posY +
         (1 - idx->big->stepY) / 2) / idx->big->rayDirY;
+    if (idx->big->perpWallDist == 0)
+        idx->big->perpWallDist = 0.1;
 }
 
 void perform_dda(int hit, t_index *idx)

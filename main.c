@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/06 15:33:12 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:06:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,9 @@ int transform_to_hex(int r, int g, int b)
 void create_algo(t_index *idx)
 {
     int		i;
-    int j;
     int		hit;
-    int     tmp_x;
-    int     tmp_y;
 
     i = 0;
-    j = 0;
     hit = 0;
     while (i < idx->el->resolution_x)
     {
@@ -70,31 +66,6 @@ void create_algo(t_index *idx)
         calculate_colors(idx);
         verLine(i, idx);
         idx->spr->ZBuffer[i] = idx->big->perpWallDist;
-        i++;
-    }
-    i = 1;
-    //idx->spr->spriteDistance_two = 0;
-    while (i < idx->spr->numSprites)
-    {
-        j = i;
-        idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[i]) * (idx->big->posX - idx->spr->sprites_x[i]) +
-                    (idx->big->posY - idx->spr->sprites_y[i]) * (idx->big->posY - idx->spr->sprites_y[i]));
-        while (j < idx->spr->numSprites)
-        {
-            if (((idx->big->posX - idx->spr->sprites_x[j]) * (idx->big->posX - idx->spr->sprites_x[j]) +
-                    (idx->big->posY - idx->spr->sprites_y[j]) * (idx->big->posY - idx->spr->sprites_y[j])) > idx->spr->spriteDistance_one)
-            {
-                idx->spr->spriteDistance_one = ((idx->big->posX - idx->spr->sprites_x[j]) * (idx->big->posX - idx->spr->sprites_x[j]) +
-                    (idx->big->posY - idx->spr->sprites_y[j]) * (idx->big->posY - idx->spr->sprites_y[j]));
-                tmp_x = idx->spr->sprites_x[i];
-                tmp_y = idx->spr->sprites_y[i];
-                idx->spr->sprites_x[i] = idx->spr->sprites_x[i + 1];
-                idx->spr->sprites_y[i] = idx->spr->sprites_y[i + 1];
-                idx->spr->sprites_x[i + 1] = tmp_x;
-                idx->spr->sprites_y[i + 1] = tmp_y;
-            }
-            j++;
-        }
         i++;
     }
     sprites_raycasting(idx);

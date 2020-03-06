@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/29 16:18:34 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 15:36:09 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void init_5(t_index *idx)
 	idx->spr->texY = 0;
     idx->big->oldDirX = 0;
     idx->big->oldPlaneX = 0;
+    idx->spr->spriteDistance = 0;
 }
 
 void create_init(t_index *idx)

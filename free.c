@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 13:32:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/06 13:11:42 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:11:31 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	free_all(t_index *idx, int ret)
     free_big(idx);
     free_tex(idx);
     free_spr(idx);
-	idx->parse->line_nbr = 0;
 	exit(0);
 	return (ret);
 }

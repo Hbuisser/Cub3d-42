@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/05 17:02:34 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:24:35 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 # define MLXK_TD 14
 # define MLXK_TG 12
 
-#define uDiv 1
-#define vDiv 1
+#define uDiv 2
+#define vDiv 2
 #define vMove 0
 
 typedef struct		s_window
@@ -167,9 +167,7 @@ typedef struct      s_spr
     float       *ZBuffer;
     int         *sprites_x;
     int         *sprites_y;
-    float       spriteDistance_one;
-    float       spriteDistance_two;
-
+    float       spriteDistance;
 }                   t_spr;
 
 typedef struct 		s_index

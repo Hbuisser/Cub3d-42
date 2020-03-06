@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:52:57 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/04 12:30:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:34:17 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@
 
     ft_bzero(header);
     file_size = 14 + 40 + (idx->el->resolution_x * idx->el->resolution_y) * 4;
-    header[0] = 'B';
-    header[1] = 'M';
+    header[0] = (unsigned char)'B';
+    header[1] = (unsigned char)'M';
 
 	header[2] = (unsigned char)(file_size);
 	header[3] = (unsigned char)(file_size >> 8);
 	header[4] = (unsigned char)(file_size >> 16);
 	header[5] = (unsigned char)(file_size >> 24);
+
+    header[10] = (unsigned char)(54);
+    header[14] = 
 
     write(fd, &file_size, 4);
     write(fd, "\0\0\0\0", 4);
