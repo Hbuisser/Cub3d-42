@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/06 17:24:35 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 10:41:52 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,13 @@ typedef struct      s_spr
 
 typedef struct 		s_index
 {
-	t_window    *window;
-	t_image     *img;
-	t_big       *big;
-    t_parse     *parse;
-    t_elements  *el;
-    t_tex       *tex;
-    t_spr       *spr;
+	t_window    window;
+	t_image     img;
+	t_big       big;
+    t_parse     parse;
+    t_elements  el;
+    t_tex       tex;
+    t_spr       spr;
 }					t_index;
 
 /*
