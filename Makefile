@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/07 13:39:01 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/07 14:49:20 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS 			= main.c \
 					split2.c \
 					keycode.c \
 					init.c \
+					init2.c \
 					textures.c \
 					main_algo.c \
 					sprites.c \
@@ -32,7 +33,7 @@ OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 LIBFT 			= libft
 MINILIBX 		= miniLibX
-CC				= gcc -g -Wall -Wextra -Werror -fsanitize=address
+CC				= gcc -g -Wall -Wextra -Werror #-fsanitize=address
 RM				= rm -f
 MLXFLAGS 		= -I ./miniLibX -L ./miniLibX -lmlx -framework OpenGl -framework Appkit
 LIBFLAGS 		= -I ./libft -L ./libft -L . ./libft/*.c 

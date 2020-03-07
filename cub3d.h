@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 13:38:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:52:02 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,100 +181,42 @@ typedef struct 		s_index
     t_spr       spr;
 }					t_index;
 
-/*
-** Main file
-*/
-
 void    create_algo(t_index *m);
 int 	transform_to_hex(int r, int g, int b);
-
-/*
-** Initialisation
-*/
-
 void create_init(t_index *m);
+void	init_5(t_index *m);
+void	init_4(t_index *m);
+void	init_3(t_index *m);
+void	init_2(t_index *m);
+void	init_1(t_index *m);
+int		create_data(t_index *m);
 int	create_data(t_index *m);
-
-/*
-** Parsing
-*/
-
 int		parse_cub(t_index *m, char *filename);
-
-/*
-** Map and elements errors
-*/
-
 int		check_map_errors(t_index *m);
 int     check_elements_errors(t_index *m);
 int	new_strlen(char *s);
 int		check_borders(t_index *m);
-
-/*
-** Parse elements
-*/
-
 int     create_elements(t_index *m);
-
-/*
-** Get textures elements
-*/
-
 char	*get_east_texture(t_index *m);
 char	*get_west_texture(t_index *m);
 char	*get_south_texture(t_index *m);
 char	*get_north_texture(t_index *m);
 char	*get_sprite_texture(t_index *m);
-
-/*
-** Main algo
-*/
-
 void    calculate_ray_and_deltadist(int i, t_index *m);
 void    calculate_step_and_sidedist(t_index *m);
 void    perform_dda(int hit, t_index *m);
 void    calculate_dist(t_index *m);
 void    calculate_height_wall(t_index *m);
-
-/*
-** Keycode
-*/
-
 int     ft_key(int keycode, t_index *m);
 int exit_all(t_index *m);
-
-/*
-** Textures
-*/
-
 int     generate_textures(t_index *m);
 void	calculate_textures(t_index *m);
 void    calculate_colors(t_index *m);
-
-/*
-**  Sprites
-*/
-
 void sprites_raycasting(t_index *m);
 void	verline_sprites(t_index *m);
-
-/*
-** free
-*/
-
 int	free_all(t_index *m, int ret);
-
-/*
-** GNL
-*/
-
 int		get_next_line(const int fd, char **line);
 char	**ft_strsplit(const char *s, char c);
-
-/*
-** Screen shot
-*/
-
 int screen_shot(t_index *m);
 
 #endif
