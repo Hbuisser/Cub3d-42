@@ -6,92 +6,92 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:38:07 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 11:04:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:28:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void calculate_height_wall(t_index *idx)
+void calculate_height_wall(t_index *m)
 {
-    idx->big.wallHeight = idx->el.resolution_y * 0.5;
-    idx->big.lineHeight = (int)(idx->big.wallHeight / idx->big.perpWallDist);
+    m->big.wallHeight = m->el.res_y * 0.5;
+    m->big.lineHeight = (int)(m->big.wallHeight / m->big.perpWallDist);
     
-    idx->big.drawStart = -idx->big.lineHeight / 2 + idx->el.resolution_y / 2;
-    if (idx->big.drawStart < 0)
-        idx->big.drawStart = 0;
-    idx->big.drawEnd = idx->big.lineHeight / 2 + idx->el.resolution_y / 2;
-    if (idx->big.drawEnd >= idx->el.resolution_y)
-        idx->big.drawEnd = idx->el.resolution_y - 1;
+    m->big.drawStart = -m->big.lineHeight / 2 + m->el.res_y / 2;
+    if (m->big.drawStart < 0)
+        m->big.drawStart = 0;
+    m->big.drawEnd = m->big.lineHeight / 2 + m->el.res_y / 2;
+    if (m->big.drawEnd >= m->el.res_y)
+        m->big.drawEnd = m->el.res_y - 1;
 }
 
-void calculate_dist(t_index *idx)
+void calculate_dist(t_index *m)
 {
-    if (idx->big.side == 0)
-        idx->big.perpWallDist = (idx->big.mapX - idx->big.posX +
-        (1 - idx->big.stepX) / 2) / idx->big.rayDirX;
+    if (m->big.side == 0)
+        m->big.perpWallDist = (m->big.mapX - m->big.posX +
+        (1 - m->big.stepX) / 2) / m->big.rayDirX;
     else 
-        idx->big.perpWallDist = (idx->big.mapY - idx->big.posY +
-        (1 - idx->big.stepY) / 2) / idx->big.rayDirY;
-    if (idx->big.perpWallDist == 0)
-        idx->big.perpWallDist = 0.1;
+        m->big.perpWallDist = (m->big.mapY - m->big.posY +
+        (1 - m->big.stepY) / 2) / m->big.rayDirY;
+    if (m->big.perpWallDist == 0)
+        m->big.perpWallDist = 0.1;
 }
 
-void perform_dda(int hit, t_index *idx)
+void perform_dda(int hit, t_index *m)
 {
     while (hit == 0)
     {
-        if (idx->big.sideDistX < idx->big.sideDistY)
+        if (m->big.sideDistX < m->big.sideDistY)
         {
-            idx->big.sideDistX += idx->big.deltaDistX;
-            idx->big.mapX += idx->big.stepX;
-            idx->big.side = 0;
+            m->big.sideDistX += m->big.deltaDistX;
+            m->big.mapX += m->big.stepX;
+            m->big.side = 0;
         }
         else
         {
-            idx->big.sideDistY += idx->big.deltaDistY;
-            idx->big.mapY += idx->big.stepY;
-            idx->big.side = 1;
+            m->big.sideDistY += m->big.deltaDistY;
+            m->big.mapY += m->big.stepY;
+            m->big.side = 1;
         }
-        if (idx->parse.map[idx->big.mapY][idx->big.mapX] == '1') 
+        if (m->parse.map[m->big.mapY][m->big.mapX] == '1') 
             hit = 1;
     }
 }
 
-void calculate_step_and_sideDist(t_index *idx)
+void calculate_step_and_sideDist(t_index *m)
 {
-    if (idx->big.rayDirX < 0)
+    if (m->big.rayDirX < 0)
     {
-        idx->big.stepX = -1;
-        idx->big.sideDistX = (idx->big.posX - idx->big.mapX) * idx->big.deltaDistX;
+        m->big.stepX = -1;
+        m->big.sideDistX = (m->big.posX - m->big.mapX) * m->big.deltaDistX;
     }
     else
     {
-        idx->big.stepX = 1;
-        idx->big.sideDistX = (idx->big.mapX + 1.0 - idx->big.posX) * idx->big.deltaDistX;
+        m->big.stepX = 1;
+        m->big.sideDistX = (m->big.mapX + 1.0 - m->big.posX) * m->big.deltaDistX;
     }
-    if (idx->big.rayDirY < 0)
+    if (m->big.rayDirY < 0)
     {
-        idx->big.stepY = -1;
-        idx->big.sideDistY = (idx->big.posY - idx->big.mapY) * idx->big.deltaDistY;
+        m->big.stepY = -1;
+        m->big.sideDistY = (m->big.posY - m->big.mapY) * m->big.deltaDistY;
     }
     else
     {
-        idx->big.stepY = 1;
-        idx->big.sideDistY = (idx->big.mapY + 1.0 - idx->big.posY) * idx->big.deltaDistY;
+        m->big.stepY = 1;
+        m->big.sideDistY = (m->big.mapY + 1.0 - m->big.posY) * m->big.deltaDistY;
     }
 }
 
-void calculate_ray_and_deltaDist(int i, t_index *idx)
+void calculate_ray_and_deltaDist(int i, t_index *m)
 {
     // x-coordinate in camera space
-    idx->big.cameraX = 2 * i / (float)idx->el.resolution_x - 1;
-    idx->big.rayDirX = idx->big.dirX + idx->big.planeX * idx->big.cameraX;
-    idx->big.rayDirY = idx->big.dirY + idx->big.planeY * idx->big.cameraX;
+    m->big.cameraX = 2 * i / (float)m->el.res_x - 1;
+    m->big.rayDirX = m->big.dirX + m->big.planeX * m->big.cameraX;
+    m->big.rayDirY = m->big.dirY + m->big.planeY * m->big.cameraX;
     // mapX and mapY represent the current square of the map the ray is in
-    idx->big.mapX = (int)idx->big.posX;
-    idx->big.mapY = (int)idx->big.posY;
+    m->big.mapX = (int)m->big.posX;
+    m->big.mapY = (int)m->big.posY;
     // deltaDistX is the distance the ray has to travel to go from 1 x-side to the next x-side
-    idx->big.deltaDistX = fabs(1 / idx->big.rayDirX);
-    idx->big.deltaDistY = fabs(1 / idx->big.rayDirY);
+    m->big.deltaDistX = fabs(1 / m->big.rayDirX);
+    m->big.deltaDistY = fabs(1 / m->big.rayDirY);
 }

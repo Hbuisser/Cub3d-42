@@ -6,74 +6,74 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 11:08:09 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:17:54 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_key(int keycode, t_index *idx)
+int ft_key(int keycode, t_index *m)
 {
-    idx->big.oldPlaneX = idx->big.planeX;
+    m->big.oldPlaneX = m->big.planeX;
 
     if (keycode == MLXK_ESC || keycode == MLXK_X)
-        free_all(idx, -1);
+        free_all(m, -1);
     else if (keycode == MLXK_W || keycode == MLXK_UP)
     {
-        if (idx->parse.map[(int)idx->big.posY][(int)(idx->big.posX + idx->big.dirX * (idx->big.moveSpeed + 0.1))] != '1')
-            idx->big.posX += idx->big.dirX * idx->big.moveSpeed;
-        if (idx->parse.map[(int)(idx->big.posY + idx->big.dirY * (idx->big.moveSpeed + 0.1))][(int)idx->big.posX] != '1')
-            idx->big.posY += idx->big.dirY * idx->big.moveSpeed;
+        if (m->parse.map[(int)m->big.posY][(int)(m->big.posX + m->big.dirX * (m->big.moveSpeed + 0.1))] != '1')
+            m->big.posX += m->big.dirX * m->big.moveSpeed;
+        if (m->parse.map[(int)(m->big.posY + m->big.dirY * (m->big.moveSpeed + 0.1))][(int)m->big.posX] != '1')
+            m->big.posY += m->big.dirY * m->big.moveSpeed;
     }
     else if (keycode == MLXK_S || keycode == MLXK_DOWN)
     {
-        if (idx->parse.map[(int)idx->big.posY][(int)(idx->big.posX - idx->big.dirX * (idx->big.moveSpeed * 0.1))] != '1')
-            idx->big.posX -= idx->big.dirX * idx->big.moveSpeed;
-        if (idx->parse.map[(int)(idx->big.posY - idx->big.dirY * (idx->big.moveSpeed * 0.1))][(int)idx->big.posX] != '1')
-            idx->big.posY -= idx->big.dirY * idx->big.moveSpeed;
+        if (m->parse.map[(int)m->big.posY][(int)(m->big.posX - m->big.dirX * (m->big.moveSpeed * 0.1))] != '1')
+            m->big.posX -= m->big.dirX * m->big.moveSpeed;
+        if (m->parse.map[(int)(m->big.posY - m->big.dirY * (m->big.moveSpeed * 0.1))][(int)m->big.posX] != '1')
+            m->big.posY -= m->big.dirY * m->big.moveSpeed;
     }
 
     if (keycode == MLXK_LEFT)
 	{
-        //if (idx->parse.map[(int)(idx->big.posY - idx->big.dirX  * (idx->big.moveSpeed + 0.1))][(int)idx->big.posX] != '1')
-			idx->big.posY -= idx->big.dirX * idx->big.moveSpeed;
-        //if (idx->parse.map[(int)idx->big.posX][(int)(idx->big.posX + idx->big.dirY * (idx->big.moveSpeed + 0.1))] != '1')
-			idx->big.posX += idx->big.dirY * idx->big.moveSpeed;
+        //if (m->parse.map[(int)(m->big.posY - m->big.dirX  * (m->big.moveSpeed + 0.1))][(int)m->big.posX] != '1')
+			m->big.posY -= m->big.dirX * m->big.moveSpeed;
+        //if (m->parse.map[(int)m->big.posX][(int)(m->big.posX + m->big.dirY * (m->big.moveSpeed + 0.1))] != '1')
+			m->big.posX += m->big.dirY * m->big.moveSpeed;
 	}
 	if (keycode == MLXK_RIGHT)
 	{
-        //if (idx->parse.map[(int)(idx->big.posY + idx->big.dirX * (idx->big.moveSpeed * 0.1))][(int)idx->big.posY] != '1')
-			idx->big.posY += idx->big.dirX * idx->big.moveSpeed;
-        //if (idx->parse.map[(int)idx->big.posX][(int)(idx->big.posX - idx->big.dirY * (idx->big.moveSpeed * 0.1))] != '1')
-			idx->big.posX -= idx->big.dirY * idx->big.moveSpeed;
+        //if (m->parse.map[(int)(m->big.posY + m->big.dirX * (m->big.moveSpeed * 0.1))][(int)m->big.posY] != '1')
+			m->big.posY += m->big.dirX * m->big.moveSpeed;
+        //if (m->parse.map[(int)m->big.posX][(int)(m->big.posX - m->big.dirY * (m->big.moveSpeed * 0.1))] != '1')
+			m->big.posX -= m->big.dirY * m->big.moveSpeed;
 	}
     
     else if (keycode == MLXK_D)
     {
-        idx->big.oldDirX = idx->big.dirX;
-        idx->big.dirX = idx->big.dirX * cos(idx->big.rotSpeed) - idx->big.dirY * sin(idx->big.rotSpeed);
-        idx->big.dirY = idx->big.oldDirX * sin(idx->big.rotSpeed) + idx->big.dirY * cos(idx->big.rotSpeed);
-        idx->big.oldPlaneX = idx->big.planeX;
-        idx->big.planeX = idx->big.planeX * cos(idx->big.rotSpeed) - idx->big.planeY * sin(idx->big.rotSpeed);
-        idx->big.planeY = idx->big.oldPlaneX * sin(idx->big.rotSpeed) + idx->big.planeY * cos(idx->big.rotSpeed);
+        m->big.oldDirX = m->big.dirX;
+        m->big.dirX = m->big.dirX * cos(m->big.rotSpeed) - m->big.dirY * sin(m->big.rotSpeed);
+        m->big.dirY = m->big.oldDirX * sin(m->big.rotSpeed) + m->big.dirY * cos(m->big.rotSpeed);
+        m->big.oldPlaneX = m->big.planeX;
+        m->big.planeX = m->big.planeX * cos(m->big.rotSpeed) - m->big.planeY * sin(m->big.rotSpeed);
+        m->big.planeY = m->big.oldPlaneX * sin(m->big.rotSpeed) + m->big.planeY * cos(m->big.rotSpeed);
     }
     else if (keycode == MLXK_A)
     {
-        idx->big.oldDirX = idx->big.dirX;
-        idx->big.dirX = idx->big.dirX * cos(-idx->big.rotSpeed) - idx->big.dirY * sin(-idx->big.rotSpeed);
-        idx->big.dirY = idx->big.oldDirX * sin(-idx->big.rotSpeed) + idx->big.dirY * cos(-idx->big.rotSpeed);
-        idx->big.oldPlaneX = idx->big.planeX;
-        idx->big.planeX = idx->big.planeX * cos(-idx->big.rotSpeed) - idx->big.planeY * sin(-idx->big.rotSpeed);
-        idx->big.planeY = idx->big.oldPlaneX * sin(-idx->big.rotSpeed) + idx->big.planeY * cos(-idx->big.rotSpeed);
+        m->big.oldDirX = m->big.dirX;
+        m->big.dirX = m->big.dirX * cos(-m->big.rotSpeed) - m->big.dirY * sin(-m->big.rotSpeed);
+        m->big.dirY = m->big.oldDirX * sin(-m->big.rotSpeed) + m->big.dirY * cos(-m->big.rotSpeed);
+        m->big.oldPlaneX = m->big.planeX;
+        m->big.planeX = m->big.planeX * cos(-m->big.rotSpeed) - m->big.planeY * sin(-m->big.rotSpeed);
+        m->big.planeY = m->big.oldPlaneX * sin(-m->big.rotSpeed) + m->big.planeY * cos(-m->big.rotSpeed);
     }
-    mlx_clear_window(idx->window.mlx_ptr, idx->window.mlx_win);
-    create_algo(idx);
+    mlx_clear_window(m->win.mlx_ptr, m->win.mlx_win);
+    create_algo(m);
     return (0);
 }
 
-int exit_all(t_index *idx)
+int exit_all(t_index *m)
 {
-    free_all(idx, 1);
+    free_all(m, 1);
 	exit(1);
     return (1);
 }

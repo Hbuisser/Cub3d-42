@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 10:41:52 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:28:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@
 #define vDiv 2
 #define vMove 0
 
-typedef struct		s_window
+typedef struct		s_win
 {
     void		*mlx_ptr;
     void		*mlx_win;
-}					t_window;
+}					t_win;
 
 typedef struct		s_image
 {
@@ -73,8 +73,8 @@ typedef struct      s_elements
 {
     char	**elem;
     int		resolution_line;
-    int		resolution_x;
-    int		resolution_y;
+    int		res_x;
+    int		res_y;
     int 	north_line;
     int 	south_line;
     int 	west_line;
@@ -172,7 +172,7 @@ typedef struct      s_spr
 
 typedef struct 		s_index
 {
-	t_window    window;
+	t_win    win;
 	t_image     img;
 	t_big       big;
     t_parse     parse;
@@ -185,82 +185,82 @@ typedef struct 		s_index
 ** Main file
 */
 
-void    create_algo(t_index *idx);
+void    create_algo(t_index *m);
 int 	transform_to_hex(int r, int g, int b);
 
 /*
 ** Initialisation
 */
 
-void    create_init(t_index *idx);
+void    create_init(t_index *m);
 
 /*
 ** Parsing
 */
 
-int		parse_cub(t_index *idx, char *filename);
+int		parse_cub(t_index *m, char *filename);
 
 /*
 ** Map and elements errors
 */
 
-int		check_map_errors(t_index *idx);
-int     check_elements_errors(t_index *idx);
+int		check_map_errors(t_index *m);
+int     check_elements_errors(t_index *m);
 int	new_strlen(char *s);
-int		check_borders(t_index *idx);
+int		check_borders(t_index *m);
 
 /*
 ** Parse elements
 */
 
-int     create_elements(t_index *idx);
+int     create_elements(t_index *m);
 
 /*
 ** Get textures elements
 */
 
-char	*get_east_texture(t_index *idx);
-char	*get_west_texture(t_index *idx);
-char	*get_south_texture(t_index *idx);
-char	*get_north_texture(t_index *idx);
-char	*get_sprite_texture(t_index *idx);
+char	*get_east_texture(t_index *m);
+char	*get_west_texture(t_index *m);
+char	*get_south_texture(t_index *m);
+char	*get_north_texture(t_index *m);
+char	*get_sprite_texture(t_index *m);
 
 /*
 ** Main algo
 */
 
-void    calculate_ray_and_deltaDist(int i, t_index *idx);
-void    calculate_step_and_sideDist(t_index *idx);
-void    perform_dda(int hit, t_index *idx);
-void    calculate_dist(t_index *idx);
-void    calculate_height_wall(t_index *idx);
+void    calculate_ray_and_deltaDist(int i, t_index *m);
+void    calculate_step_and_sideDist(t_index *m);
+void    perform_dda(int hit, t_index *m);
+void    calculate_dist(t_index *m);
+void    calculate_height_wall(t_index *m);
 
 /*
 ** Keycode
 */
 
-int     ft_key(int keycode, t_index *idx);
-int exit_all(t_index *idx);
+int     ft_key(int keycode, t_index *m);
+int exit_all(t_index *m);
 
 /*
 ** Textures
 */
 
-int     generate_textures(t_index *idx);
-void	calculate_textures(t_index *idx);
-void    calculate_colors(t_index *idx);
+int     generate_textures(t_index *m);
+void	calculate_textures(t_index *m);
+void    calculate_colors(t_index *m);
 
 /*
 **  Sprites
 */
 
-void sprites_raycasting(t_index *idx);
+void sprites_raycasting(t_index *m);
 
 /*
 ** free
 */
 
-int			free_all(t_index *idx, int ret);
+int			free_all(t_index *m, int ret);
 
 /*
 ** GNL
@@ -273,6 +273,6 @@ char	**ft_strsplit(const char *s, char c);
 ** Screen shot
 */
 
-int screen_shot(t_index *idx);
+int screen_shot(t_index *m);
 
 #endif

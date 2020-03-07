@@ -6,109 +6,109 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 13:32:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 11:11:52 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:18:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*void free_spr(t_index *idx)
+/*void free_spr(t_index *m)
 {
-    if (idx->spr)
+    if (m->spr)
 	{
-		free(idx->spr);
-		idx->spr = 0;
+		free(m->spr);
+		m->spr = 0;
 	}
 }
 
-void free_tex(t_index *idx)
+void free_tex(t_index *m)
 {
-    if (idx->tex)
+    if (m->tex)
 	{
-		free(idx->tex);
-    	idx->tex = 0;
+		free(m->tex);
+    	m->tex = 0;
 	}
 }
 
-void free_big(t_index *idx)
+void free_big(t_index *m)
 {
-	if (idx->big)
+	if (m->big)
 	{
-    	free(idx->big);
-    	idx->big = 0;
+    	free(m->big);
+    	m->big = 0;
 	}
 }
 
-void	free_elem(t_index *idx)
+void	free_elem(t_index *m)
 {
 	int i;
 
     i = -1;
-	if (idx->el.elem)
+	if (m->el.elem)
 	{
 		while (++i < 8)
 		{
-			free(idx->el.elem[i]);
-			idx->el.elem[i] = 0;
+			free(m->el.elem[i]);
+			m->el.elem[i] = 0;
 		}
-		free(idx->el.elem);
-		idx->el.elem = 0;
+		free(m->el.elem);
+		m->el.elem = 0;
 	}
 }
 
-void free_el(t_index *idx)
+void free_el(t_index *m)
 {
-    if (idx->el)
+    if (m->el)
 	{
-        free_elem(idx);
-		free(idx->el);
-    	idx->el = 0;
+        free_elem(m);
+		free(m->el);
+    	m->el = 0;
 	}
 }
 
-static void	free_map(t_index *idx)
+static void	free_map(t_index *m)
 {
 	int i;
 
     i = -1;
-	if (idx->parse.map)
+	if (m->parse.map)
 	{
-		while (++i < idx->parse.line_nbr)
+		while (++i < m->parse.line_nbr)
 		{
-			free(idx->parse.map[i]);
-			idx->parse.map[i] = 0;
+			free(m->parse.map[i]);
+			m->parse.map[i] = 0;
 		}
-		free(idx->parse.map);
-		idx->parse.map = 0;
+		free(m->parse.map);
+		m->parse.map = 0;
 	}
 }
 
-static void free_window(t_index *idx)
+static void free_win(t_index *m)
 {
-    if (idx->window.mlx_ptr && idx->window.mlx_win)
+    if (m->win.mlx_ptr && m->win.mlx_win)
 	{
-		mlx_destroy_window(idx->window.mlx_ptr, idx->window.mlx_win);
-		free(idx->window);
-		idx->window = 0;
+		mlx_destroy_window(m->win.mlx_ptr, m->win.mlx_win);
+		free(m->win);
+		m->win = 0;
 	}
 }
 
-static void free_image(t_index *idx)
+static void free_image(t_index *m)
 {
-    if (idx->img)
-		mlx_destroy_image(idx->window.mlx_ptr, idx->img);
+    if (m->img)
+		mlx_destroy_image(m->win.mlx_ptr, m->img);
 }*/
 
-int	free_all(t_index *idx, int ret)
+int	free_all(t_index *m, int ret)
 {
-    /*free_image(idx);
-    free_window(idx);
-	free_map(idx);
-    free_el(idx);
-    free_big(idx);
-    free_tex(idx);
-    free_spr(idx);*/
-	idx->parse.pos_x_init = 0;
+    /*free_image(m);
+    free_win(m);
+	free_map(m);
+    free_el(m);
+    free_big(m);
+    free_tex(m);
+    free_spr(m);*/
+	m->parse.pos_x_init = 0;
 	exit(0);
 	return (ret);
 }

@@ -6,76 +6,76 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 11:03:25 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:28:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    calculate_colors(t_index *idx)
+void    calculate_colors(t_index *m)
 {
-    if (idx->big.side == 1 && (idx->big.mapY > idx->big.posY))
-        idx->tex.color = (int *)idx->tex.color_s;
-    else if (idx->big.side == 1 && (idx->big.mapY < idx->big.posY))
-        idx->tex.color = (int *)idx->tex.color_n;
-    else if (idx->big.side == 0 && (idx->big.mapX > idx->big.posX))
-        idx->tex.color = (int *)idx->tex.color_e;
+    if (m->big.side == 1 && (m->big.mapY > m->big.posY))
+        m->tex.color = (int *)m->tex.color_s;
+    else if (m->big.side == 1 && (m->big.mapY < m->big.posY))
+        m->tex.color = (int *)m->tex.color_n;
+    else if (m->big.side == 0 && (m->big.mapX > m->big.posX))
+        m->tex.color = (int *)m->tex.color_e;
     else
-        idx->tex.color = (int *)idx->tex.color_w;
-    idx->spr.color = (int *)idx->spr.spr_tex;
+        m->tex.color = (int *)m->tex.color_w;
+    m->spr.color = (int *)m->spr.spr_tex;
 }
 
-void	calculate_textures(t_index *idx)
+void	calculate_textures(t_index *m)
 {
     float	wallX;
 
-    if (idx->big.side == 0) 
-        wallX = idx->big.posY + idx->big.perpWallDist * idx->big.rayDirY;
+    if (m->big.side == 0) 
+        wallX = m->big.posY + m->big.perpWallDist * m->big.rayDirY;
     else
-        wallX = idx->big.posX + idx->big.perpWallDist * idx->big.rayDirX;
+        wallX = m->big.posX + m->big.perpWallDist * m->big.rayDirX;
     wallX -= floor((wallX));
-    idx->tex.texX = (int)(wallX * idx->tex.texHeight);
-    if (idx->big.side == 0 && idx->big.rayDirX > 0)
-		idx->tex.texX = idx->tex.texWidth - idx->tex.texX - 1;
-    if (idx->big.side == 1 && idx->big.rayDirY < 0)
-		idx->tex.texX = idx->tex.texWidth - idx->tex.texX - 1;
+    m->tex.texX = (int)(wallX * m->tex.texHeight);
+    if (m->big.side == 0 && m->big.rayDirX > 0)
+		m->tex.texX = m->tex.texWidth - m->tex.texX - 1;
+    if (m->big.side == 1 && m->big.rayDirY < 0)
+		m->tex.texX = m->tex.texWidth - m->tex.texX - 1;
 	// How much to increase the texture coordinate per screen pixel
-	idx->tex.step = 1.0 * idx->tex.texHeight / idx->big.lineHeight;
+	m->tex.step = 1.0 * m->tex.texHeight / m->big.lineHeight;
 	// Starting texture coordinate
-	idx->tex.texPos = (idx->big.drawStart - idx->el.resolution_y / 2 + idx->big.lineHeight / 2) * idx->tex.step;
+	m->tex.texPos = (m->big.drawStart - m->el.res_y / 2 + m->big.lineHeight / 2) * m->tex.step;
 }
 
-int generate_textures(t_index *idx)
+int generate_textures(t_index *m)
 {
-    if (!(idx->tex.color_n = mlx_xpm_file_to_image(idx->window.mlx_ptr, idx->el.n_path, &idx->tex.texWidth, &idx->tex.texWidth)))
+    if (!(m->tex.color_n = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.n_path, &m->tex.texWidth, &m->tex.texWidth)))
     {
         write (1, "n wrong path texture\n", 20);
         return (-1);
     }
-	if (!(idx->tex.color_s = mlx_xpm_file_to_image(idx->window.mlx_ptr, idx->el.s_path, &idx->tex.texWidth, &idx->tex.texHeight)))
+	if (!(m->tex.color_s = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.s_path, &m->tex.texWidth, &m->tex.texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-	if (!(idx->tex.color_w = mlx_xpm_file_to_image(idx->window.mlx_ptr, idx->el.w_path, &idx->tex.texWidth, &idx->tex.texHeight)))
+	if (!(m->tex.color_w = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.w_path, &m->tex.texWidth, &m->tex.texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-	if (!(idx->tex.color_e = mlx_xpm_file_to_image(idx->window.mlx_ptr, idx->el.e_path, &idx->tex.texWidth, &idx->tex.texHeight)))
+	if (!(m->tex.color_e = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.e_path, &m->tex.texWidth, &m->tex.texHeight)))
     {
         write (1, "wrong path texture", 18);
         return (-1);
     }
-    if (!(idx->spr.spr_tex = mlx_xpm_file_to_image(idx->window.mlx_ptr, idx->el.spr_path, &idx->spr.sprWidth, &idx->spr.sprHeight)))
+    if (!(m->spr.spr_tex = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.spr_path, &m->spr.sprWidth, &m->spr.sprHeight)))
     {
         write (1, "texture of the sprite is wrong", 30);
         return (-1);
     }
-    idx->tex.color_n = mlx_get_data_addr(idx->tex.color_n, &idx->img.bits_per_pixel, &idx->img.line_length, &idx->img.endian);
-    idx->tex.color_s = mlx_get_data_addr(idx->tex.color_s, &idx->img.bits_per_pixel, &idx->img.line_length, &idx->img.endian);
-    idx->tex.color_w = mlx_get_data_addr(idx->tex.color_w, &idx->img.bits_per_pixel, &idx->img.line_length, &idx->img.endian);
-    idx->tex.color_e = mlx_get_data_addr(idx->tex.color_e, &idx->img.bits_per_pixel, &idx->img.line_length, &idx->img.endian);
-    idx->spr.spr_tex = mlx_get_data_addr(idx->spr.spr_tex, &idx->img.bits_per_pixel, &idx->img.line_length, &idx->img.endian);
+    m->tex.color_n = mlx_get_data_addr(m->tex.color_n, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
+    m->tex.color_s = mlx_get_data_addr(m->tex.color_s, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
+    m->tex.color_w = mlx_get_data_addr(m->tex.color_w, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
+    m->tex.color_e = mlx_get_data_addr(m->tex.color_e, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
+    m->spr.spr_tex = mlx_get_data_addr(m->spr.spr_tex, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
     return (0);
 }
