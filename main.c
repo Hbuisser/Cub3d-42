@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:27:02 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:23:20 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	create_algo(t_index *m)
 	while (i < m->el.res_x)
 	{
 		hit = 0;
-		calculate_ray_and_deltaDist(i, m);
-		calculate_step_and_sideDist(m);
+		calculate_ray_and_deltadist(i, m);
+		calculate_step_and_sidedist(m);
 		perform_dda(hit, m);
 		calculate_dist(m);
 		calculate_height_wall(m);
@@ -71,49 +71,6 @@ void	create_algo(t_index *m)
 	mlx_put_image_to_window(m->win.mlx_ptr, m->win.mlx_win, m->img.img, 0, 0);
 }
 
-int	create_data(t_index *m)
-{
-	m->big.posX = m->parse.pos_x_init;
-	m->big.posY = m->parse.pos_y_init;
-	if (m->parse.dir == 'E')
-	{
-		m->big.planeX = 0;
-		m->big.planeY = 1.4;
-		m->big.dirX = 1;
-		m->big.dirY = 0;
-	}
-	else if (m->parse.dir == 'W')
-	{
-		m->big.planeX = 0;
-		m->big.planeY = -1.4;
-		m->big.dirX = -1;
-		m->big.dirY = 0;
-	}
-	else if (m->parse.dir == 'S')
-	{
-		m->big.planeX = -1.4;
-		m->big.planeY = 0;
-		m->big.dirX = 0;
-		m->big.dirY = 1;
-	}
-	else if (m->parse.dir == 'N')
-	{
-		m->big.planeX = 1.4;
-		m->big.planeY = 0;
-		m->big.dirX = 0;
-		m->big.dirY = -1;
-	}
-	m->tex.texWidth = 64;
-	m->tex.texHeight = 64;
-	m->spr.sprWidth = 0;
-	m->spr.sprHeight = 0;
-	m->big.moveSpeed = 0.2;
-	m->big.rotSpeed = 0.2;
-	if (!(m->spr.ZBuffer = malloc(sizeof(float *) * m->el.res_x + 1)))
-		return (-1);
-	return (1);
-}
-
 int		launch_program(t_index *m, char *av)
 {
 	create_init(m);
@@ -121,12 +78,13 @@ int		launch_program(t_index *m, char *av)
 		return (-1);
 	if (!(m->win.mlx_ptr = mlx_init()))
 		return (-1);
-	m->win.mlx_win = mlx_new_window
-		(m->win.mlx_ptr, m->el.res_x, m->el.res_y, WINDOW_TITLE);
+	m->win.mlx_win = mlx_new_window(m->win.mlx_ptr,
+		m->el.res_x, m->el.res_y, WINDOW_TITLE);
 	create_data(m);
 	generate_textures(m);
 	m->img.img = mlx_new_image(m->win.mlx_ptr, m->el.res_x, m->el.res_y);
-	m->img.addr = (int *)mlx_get_data_addr(m->img.img, &m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
+	m->img.addr = (int *)mlx_get_data_addr(m->img.img, &m->img.bits_per_pixel,
+		&m->img.line_length, &m->img.endian);
 	create_algo(m);
 	return (1);
 }
@@ -134,7 +92,7 @@ int		launch_program(t_index *m, char *av)
 int		main(int ac, char **av)
 {
 	t_index		m;
-    
+
 	if (ac < 2)
 		return (-1);
 	else if (ac == 2)

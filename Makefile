@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/06 20:23:09 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/07 13:39:01 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS 			= main.c \
 					textures.c \
 					main_algo.c \
 					sprites.c \
+					sprites2.c \
 					free.c \
 					bmp.c
 OBJS			= ${SRCS:.c=.o}

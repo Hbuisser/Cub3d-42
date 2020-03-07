@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:28:36 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:38:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,8 @@ int 	transform_to_hex(int r, int g, int b);
 ** Initialisation
 */
 
-void    create_init(t_index *m);
+void create_init(t_index *m);
+int	create_data(t_index *m);
 
 /*
 ** Parsing
@@ -229,8 +230,8 @@ char	*get_sprite_texture(t_index *m);
 ** Main algo
 */
 
-void    calculate_ray_and_deltaDist(int i, t_index *m);
-void    calculate_step_and_sideDist(t_index *m);
+void    calculate_ray_and_deltadist(int i, t_index *m);
+void    calculate_step_and_sidedist(t_index *m);
 void    perform_dda(int hit, t_index *m);
 void    calculate_dist(t_index *m);
 void    calculate_height_wall(t_index *m);
@@ -255,12 +256,13 @@ void    calculate_colors(t_index *m);
 */
 
 void sprites_raycasting(t_index *m);
+void	verline_sprites(t_index *m);
 
 /*
 ** free
 */
 
-int			free_all(t_index *m, int ret);
+int	free_all(t_index *m, int ret);
 
 /*
 ** GNL

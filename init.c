@@ -6,11 +6,54 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:28:48 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:27:51 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	create_data(t_index *m)
+{
+	m->big.posX = m->parse.pos_x_init;
+	m->big.posY = m->parse.pos_y_init;
+	if (m->parse.dir == 'E')
+	{
+		m->big.planeX = 0;
+		m->big.planeY = 1.4;
+		m->big.dirX = 1;
+		m->big.dirY = 0;
+	}
+	else if (m->parse.dir == 'W')
+	{
+		m->big.planeX = 0;
+		m->big.planeY = -1.4;
+		m->big.dirX = -1;
+		m->big.dirY = 0;
+	}
+	else if (m->parse.dir == 'S')
+	{
+		m->big.planeX = -1.4;
+		m->big.planeY = 0;
+		m->big.dirX = 0;
+		m->big.dirY = 1;
+	}
+	else if (m->parse.dir == 'N')
+	{
+		m->big.planeX = 1.4;
+		m->big.planeY = 0;
+		m->big.dirX = 0;
+		m->big.dirY = -1;
+	}
+	m->tex.texWidth = 64;
+	m->tex.texHeight = 64;
+	m->spr.sprWidth = 0;
+	m->spr.sprHeight = 0;
+	m->big.moveSpeed = 0.2;
+	m->big.rotSpeed = 0.04;
+	if (!(m->spr.ZBuffer = malloc(sizeof(float *) * m->el.res_x + 1)))
+		return (-1);
+	return (1);
+}
 
 void init_1(t_index *m)
 {
