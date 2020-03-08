@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:52:57 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:28:46 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:19:15 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ int screen_shot(t_index *m)
     if (!write_data(fd, m))
         return (0);
 	close(fd);
-    free_all(m, -1);
+    exit_all(m);
     return (1);
 }

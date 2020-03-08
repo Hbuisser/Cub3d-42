@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 14:47:56 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:35:03 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:59:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		create_data(t_index *m)
 	m->spr.sprwidth = 0;
 	m->spr.sprheight = 0;
 	m->big.movespeed = 0.2;
-	m->big.rotspeed = 0.04;
+	m->big.rotspeed = 0.08;
 	if (!(m->spr.zbuffer = malloc(sizeof(float *) * m->el.res_x + 1)))
 		return (-1);
 	return (1);
@@ -72,11 +72,4 @@ void	create_init(t_index *m)
 	init_3(m);
 	init_4(m);
 	init_5(m);
-}
-
-int		exit_all(t_index *m)
-{
-	free_all(m, 1);
-	exit(1);
-	return (1);
 }

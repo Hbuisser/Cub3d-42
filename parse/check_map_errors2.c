@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 14:17:20 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 14:20:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:13:43 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int		return_error_exit(t_index *m)
 {
 	write(1, "Error\n", 6);
 	write(1, "Map not surrounded by 1\n", 24);
-	free_all(m , 1);
-	exit(0);
+	exit_all(m);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:58:21 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:00:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		ft_key(int keycode, t_index *m)
 {
 	m->big.oldplanex = m->big.planex;
 	if (keycode == MLXK_ESC || keycode == MLXK_X)
-		free_all(m, -1);
+		exit_all(m);
 	keys_up_down(m, keycode);
 	keys_rot1(m, keycode);
 	keys_rot2(m, keycode);
