@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/08 16:59:45 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/08 19:45:53 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ SRCS 			= main.c \
 					./parse/parse.c \
 					./parse/parse2.c \
 					./parse/get_elements.c \
+					./parse/get_elem_resolution.c \
+					./parse/get_elem_floor.c \
+					./parse/get_elem_ceilling.c \
 					./parse/get_textures.c \
 					./parse/get_sprites.c \
 					./parse/check_elements_errors.c \

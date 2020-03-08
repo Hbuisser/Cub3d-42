@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:59:21 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:46:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ typedef struct		s_elements
 	int		west_line;
 	int		east_line;
 	int		sprite_line;
-	int		floor_line;
-	int		ceilling_line;
-	int		ceilling_color_r;
-	int		ceilling_color_g;
-	int		ceilling_color_b;
-	int		floor_color_r;
-	int		floor_color_g;
-	int		floor_color_b;
+	int		f_l;
+	int		c_l;
+	int		c_r;
+	int		c_g;
+	int		c_b;
+	int		f_r;
+	int		f_g;
+	int		f_b;
 	int		c_color_hex;
 	int		f_color_hex;
 	char	*n_path;
@@ -199,6 +199,9 @@ int		new_strlen(char *s);
 int		check_borders_lines(t_index *m);
 int		check_borders_columns(t_index *m);
 int     get_elements(t_index *m);
+int 	get_resolution(t_index *m);
+int 	get_ceilling_color(t_index *m);
+int 	get_floor_color(t_index *m);
 int 	get_sprites(t_index *m);
 int		check_dir_letter(t_index *m);
 void 	parse_sprites(t_index *m);

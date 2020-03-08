@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:59:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:39:26 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ void	init_2(t_index *m)
 	m->el.west_line = 0;
 	m->el.east_line = 0;
 	m->el.sprite_line = 0;
-	m->el.floor_line = 0;
-	m->el.ceilling_line = 0;
-	m->el.ceilling_color_r = 0;
-	m->el.ceilling_color_g = 0;
-	m->el.ceilling_color_b = 0;
-	m->el.floor_color_r = 0;
+	m->el.f_l = 0;
+	m->el.c_l = 0;
+	m->el.c_r = 0;
+	m->el.c_g = 0;
+	m->el.c_b = 0;
+	m->el.f_r = 0;
 }
 
 void	init_3(t_index *m)
 {
-	m->el.floor_color_g = 0;
-	m->el.floor_color_b = 0;
+	m->el.f_g = 0;
+	m->el.f_b = 0;
 	m->el.c_color_hex = 0;
 	m->el.f_color_hex = 0;
 	m->el.n_path = NULL;
