@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/08 14:20:03 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/08 16:59:45 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,13 @@ LIBFT_PATH 		= ./libft
 MINILIBX_PATH   = ./miniLibX
 SRCS 			= main.c \
 					./parse/parse.c \
+					./parse/parse2.c \
+					./parse/get_elements.c \
+					./parse/get_textures.c \
+					./parse/get_sprites.c \
+					./parse/check_elements_errors.c \
 					./parse/check_map_errors.c \
 					./parse/check_map_errors2.c \
-					./parse/parse_elements.c \
-					./parse/get_textures_paths.c \
-					./parse/check_elements_errors.c \
 					split2.c \
 					keycode.c \
 					init.c \

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 14:19:24 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:00:47 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,29 +184,30 @@ typedef struct		s_index
 void	create_algo(t_index *m);
 int		transform_to_hex(int r, int g, int b);
 void	create_init(t_index *m);
-
 void	init_5(t_index *m);
 void	init_4(t_index *m);
 void	init_3(t_index *m);
 void	init_2(t_index *m);
 void	init_1(t_index *m);
-
 int		create_data(t_index *m);
 int		parse_cub(t_index *m, char *filename);
+int 	create_map(t_index *m);
+int 	create_good_size_map(t_index *m);
 int		check_map_errors(t_index *m);
 int		check_elements_errors(t_index *m);
 int		new_strlen(char *s);
 int		check_borders_lines(t_index *m);
 int		check_borders_columns(t_index *m);
-int     create_elements(t_index *m);
+int     get_elements(t_index *m);
+int 	get_sprites(t_index *m);
 int		check_dir_letter(t_index *m);
-
+void 	parse_sprites(t_index *m);
+int 	malloc_size_sprite(t_index *m);
 char	*get_east_texture(t_index *m);
 char	*get_west_texture(t_index *m);
 char	*get_south_texture(t_index *m);
 char	*get_north_texture(t_index *m);
 char	*get_sprite_texture(t_index *m);
-
 void    calculate_ray_and_deltadist(int i, t_index *m);
 void    calculate_step_and_sidedist(t_index *m);
 void    perform_dda(int hit, t_index *m);

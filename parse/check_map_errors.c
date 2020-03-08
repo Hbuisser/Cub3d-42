@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 14:18:59 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:54:09 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,20 @@ int		check_map_characters(t_index *m)
 
 int		check_around2(int i, int j, t_index *m)
 {
-	if (m->parse.map[i - 1][j + 1] != ' ' && m->parse.map[i - 1][j + 1] != '1' &&
+	if (m->parse.map[i - 1][j + 1] != ' ' &&
+		m->parse.map[i - 1][j + 1] != '1' &&
 		m->parse.map[i - 1][j + 1] != '\0')
 		return (-1);
-	if (m->parse.map[i - 1][j - 1] != ' ' && m->parse.map[i - 1][j - 1] != '1' &&
+	if (m->parse.map[i - 1][j - 1] != ' ' &&
+		m->parse.map[i - 1][j - 1] != '1' &&
 		m->parse.map[i - 1][j - 1] != '\0')
 		return (-1);
-	if (m->parse.map[i + 1][j - 1] != ' ' && m->parse.map[i + 1][j - 1] != '1' &&
+	if (m->parse.map[i + 1][j - 1] != ' ' &&
+		m->parse.map[i + 1][j - 1] != '1' &&
 		m->parse.map[i + 1][j - 1] != '\0')
 		return (-1);
-	if (m->parse.map[i + 1][j + 1] != ' ' && m->parse.map[i + 1][j + 1] != '1' &&
+	if (m->parse.map[i + 1][j + 1] != ' ' &&
+		m->parse.map[i + 1][j + 1] != '1' &&
 		m->parse.map[i + 1][j + 1] != '\0')
 		return (-1);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 14:40:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:11:25 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int		keys_rot2(t_index *m, int keycode)
 	return (1);
 }
 
-///// still segfault right
 int		keys_right_left(t_index *m, int keycode)
 {
 	if (keycode == MLXK_LEFT)
@@ -89,7 +88,7 @@ int		keys_right_left(t_index *m, int keycode)
 		(m->big.moveSpeed * 0.1))][(int)m->big.posX] != '1')
 			m->big.posY += m->big.dirX * m->big.moveSpeed;
 		if (m->parse.map[(int)m->big.posY][(int)(m->big.posX -
-		m->big.dirY * (m->big.moveSpeed * 0.1))] != '1')
+		m->big.dirY * (m->big.moveSpeed + 0.1))] != '1')
 			m->big.posX -= m->big.dirY * m->big.moveSpeed;
 	}
 	return (1);
