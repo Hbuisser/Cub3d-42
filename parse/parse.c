@@ -6,70 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:15:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:43:50 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int parse_data(int fd, t_index *m)
-{
-    char *line;
-    int i;
-
-    i = 0;
-    m->parse.data = "";
-    while (get_next_line(fd, &line) && i < 7)
-    {
-        if (line[0] == '\0')
-			get_next_line(fd, &line);
-        if (!ft_isdigit(line[0]))
-        {
-			m->parse.data = ft_strjoin(m->parse.data, line);
-			m->parse.data = ft_strjoin(m->parse.data, "\n");
-			free(line);
-			line = NULL;
-            i++;
-        }
-    }
-	while (line[0] == '\0')
-		get_next_line(fd, &line);
-	m->parse.data = ft_strjoin(m->parse.data, line);
-	m->parse.data = ft_strjoin(m->parse.data, "\0");
-	free(line);
-	line = NULL;
-    return (1);
-}
-
-int parse_map(int fd, t_index *m)
-{
-    char *line;
-
-	line = "";
-    m->parse.map_string = "";
-	while (line[0] == '\0')
-		get_next_line(fd, &line);
-	m->parse.map_string = ft_strjoin(m->parse.map_string, line);
-	m->parse.map_string = ft_strjoin(m->parse.map_string, "\n");
-    while (get_next_line(fd, &line))
-    {
-        if (line[0] == '\0')
-		{
-            write(1, "Error\n", 6);
-            write(1, "Map not surrounded by 1\n", 24);
-            return (-1);
-        }
-        m->parse.map_string = ft_strjoin(m->parse.map_string, line);
-        m->parse.map_string = ft_strjoin(m->parse.map_string, "\n");
-        free(line);
-        line = NULL;
-    }
-    m->parse.map_string = ft_strjoin(m->parse.map_string, line);
-	m->parse.map_string = ft_strjoin(m->parse.map_string, "\0");
-	free(line);
-	line = NULL;
-    return (1);
-}
 
 char *create_new_line(char *str, int diff)
 {
@@ -122,42 +63,6 @@ int create_good_size_map(t_index *m)
         }
 		i++;
 	}
-    return (1);
-}
-
-int create_map(t_index *m)
-{
-    int i;
-	int j;
-
-    if (!(m->parse.map = ft_strsplit(m->parse.map_string, '\n')))
-		return (-1);
-    i = 0;
-	j = 0;
-	while (m->parse.map[i] != NULL)
-	{
-		j = 0;
-		while (m->parse.map[i][j] != '\0')
-		{
-			if ((ft_isalpha(m->parse.map[i][j])))
-			{
-				m->parse.pos_x_init = j + 0.5;
-				m->parse.pos_y_init = i + 0.5;
-				m->parse.dir = m->parse.map[i][j];
-				m->parse.map[i][j] = '0';
-			}
-            if (m->parse.map[i][j] == '2')
-				m->spr.numSprites += 1;
-            j++;
-		}
-		i++;
-	}
-	m->parse.line_nbr = i;
-	m->parse.column_nbr = j;
-	if (check_borders(m) < 0)
-		return (-1);
-    if (create_good_size_map(m) < 0)
-        return (-1);
     return (1);
 }
 
@@ -217,6 +122,105 @@ void parse_sprites(t_index *m)
 	}
 }
 
+void	get_position(t_index *m)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (m->parse.map[i] != NULL)
+	{
+		j = 0;
+		while (m->parse.map[i][j] != '\0')
+		{
+			if ((ft_isalpha(m->parse.map[i][j])))
+			{
+				m->parse.pos_x_init = j + 0.5;
+				m->parse.pos_y_init = i + 0.5;
+				m->parse.dir = m->parse.map[i][j];
+				m->parse.map[i][j] = '0';
+			}
+            if (m->parse.map[i][j] == '2')
+				m->spr.numSprites += 1;
+            j++;
+		}
+		i++;
+	}
+	m->parse.line_nbr = i;
+	m->parse.column_nbr = j;
+}
+
+int create_map(t_index *m)
+{
+    if (!(m->parse.map = ft_strsplit(m->parse.map_string, '\n')))
+		return (-1);
+	get_position(m);
+	if (check_borders_lines(m) < 0)
+		return (-1);
+	if (check_borders_columns(m) < 0)
+		return (-1);
+    return (1);
+}
+
+int parse_map(int fd, t_index *m)
+{
+    char *line;
+
+	line = "";
+    m->parse.map_string = "";
+	while (line[0] == '\0')
+		get_next_line(fd, &line);
+	m->parse.map_string = ft_strjoin(m->parse.map_string, line);
+	m->parse.map_string = ft_strjoin(m->parse.map_string, "\n");
+    while (get_next_line(fd, &line))
+    {
+        if (line[0] == '\0')
+		{
+            write(1, "Error\n", 6);
+            write(1, "Map not surrounded by 1\n", 24);
+            return (-1);
+        }
+        m->parse.map_string = ft_strjoin(m->parse.map_string, line);
+        m->parse.map_string = ft_strjoin(m->parse.map_string, "\n");
+        free(line);
+        line = NULL;
+    }
+    m->parse.map_string = ft_strjoin(m->parse.map_string, line);
+	m->parse.map_string = ft_strjoin(m->parse.map_string, "\0");
+	free(line);
+	line = NULL;
+    return (1);
+}
+
+int parse_data(int fd, t_index *m)
+{
+    char *line;
+    int i;
+
+    i = 0;
+    m->parse.data = "";
+    while (get_next_line(fd, &line) && i < 7)
+    {
+        if (line[0] == '\0')
+			get_next_line(fd, &line);
+        if (!ft_isdigit(line[0]))
+        {
+			m->parse.data = ft_strjoin(m->parse.data, line);
+			m->parse.data = ft_strjoin(m->parse.data, "\n");
+			free(line);
+			line = NULL;
+            i++;
+        }
+    }
+	while (line[0] == '\0')
+		get_next_line(fd, &line);
+	m->parse.data = ft_strjoin(m->parse.data, line);
+	m->parse.data = ft_strjoin(m->parse.data, "\0");
+	free(line);
+	line = NULL;
+    return (1);
+}
+
 int parse_cub(t_index *m, char *filename)
 {
 	int		fd;
@@ -227,7 +231,10 @@ int parse_cub(t_index *m, char *filename)
     if (parse_map(fd, m) < 0)
         return (-1);
 	close(fd);
-	create_map(m);
+	if (create_map(m) < 0)
+		return (-1);
+	if (create_good_size_map(m) < 0)
+        return (-1);
 	malloc_size_sprite(m);
 	parse_sprites(m);
 	if (create_elements(m) < 0)

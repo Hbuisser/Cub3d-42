@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 13:23:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:39:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,16 @@ int		main(int ac, char **av)
 		return (-1);
 	else if (ac == 2)
 	{
-		launch_program(&m, av[1]);
+		if ((launch_program(&m, av[1])) < 0)
+			return (-1);
 		mlx_hook(m.win.mlx_win, 2, 1L << 1, ft_key, &m);
 		mlx_hook(m.win.mlx_win, 17, 0, exit_all, &m);
 		mlx_loop(m.win.mlx_ptr);
 	}
 	else if (ac == 3 && !ft_strncmp(av[2], "--save", 5))
 	{
-		launch_program(&m, av[1]);
+		if ((launch_program(&m, av[1])) < 0)
+			return (-1);
 		screen_shot(&m);
 	}
 	return (0);

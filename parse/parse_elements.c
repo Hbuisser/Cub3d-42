@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/07 12:29:15 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:31:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,37 +222,41 @@ int get_resolution(t_index *m)
     return (0);
 }
 
+void    check_letters(t_index *m, int i, int j)
+{
+    if (m->el.elem[i][j] == 'R')
+        m->el.resolution_line = i;
+    if (m->el.elem[i][j] == 'N')
+        m->el.north_line = i;
+    if (m->el.elem[i][j] == 'S')
+    {
+        if (m->el.elem[i][j + 1] == 'O')
+            m->el.south_line = i;
+        else
+            m->el.sprite_line = i;
+    }
+    if (m->el.elem[i][j] == 'W')
+        m->el.west_line = i;
+    if (m->el.elem[i][j] == 'E')
+        m->el.east_line = i;
+    if (m->el.elem[i][j] == 'F')
+        m->el.floor_line = i;
+    if (m->el.elem[i][j] == 'C')
+        m->el.ceilling_line = i;
+}
+
 void create_elements_lines(t_index *m)
 {
     int i;
     int j;
 
     i = 0;
-    j = 0;
     while (m->el.elem[i] != NULL)
     {
         j = 0;
         while (m->el.elem[i][j] != '\0')
         {
-            if (m->el.elem[i][j] == 'R')
-                m->el.resolution_line = i;
-            else if (m->el.elem[i][j] == 'N')
-                m->el.north_line = i;
-            else if (m->el.elem[i][j] == 'S')
-            {
-                if (m->el.elem[i][j + 1] == 'O')
-                    m->el.south_line = i;
-                else
-                    m->el.sprite_line = i;
-            }
-            else if (m->el.elem[i][j] == 'W')
-                m->el.west_line = i;
-            else if (m->el.elem[i][j] == 'E')
-                m->el.east_line = i;
-            else if (m->el.elem[i][j] == 'F')
-                m->el.floor_line = i;
-            else if (m->el.elem[i][j] == 'C')
-                m->el.ceilling_line = i;
+            check_letters(m, i, j);
             j++;
         }
         i++;
@@ -283,6 +287,5 @@ int create_elements(t_index *m)
     get_south_texture(m);
     get_west_texture(m);
     get_east_texture(m);
-    check_elements_errors(m);
     return (0);
 }
