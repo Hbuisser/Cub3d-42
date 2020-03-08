@@ -7,7 +7,7 @@ WE ./textures/greystone.xpm
 EA ./textures/wood.xpm
 
 S ./textures/barrel.xpm
-F 255,248,220
+F    255  ,  248  ,  220
 
 
 
