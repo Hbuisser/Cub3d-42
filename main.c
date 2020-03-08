@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 14:39:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:56:55 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void	verline(int i, t_index *m)
 	int y;
 
 	j = 0;
-	y = m->big.drawStart;
+	y = m->big.drawstart;
 	while (j < y)
 	{
 		m->img.addr[j * m->el.res_x + i] = m->el.c_color_hex;
 		j++;
 	}
-	while (y < m->big.drawEnd)
+	while (y < m->big.drawend)
 	{
-		m->tex.texY = (int)m->tex.texPos & (m->tex.texHeight - 1);
-		m->tex.texPos += m->tex.step;
+		m->tex.texy = (int)m->tex.texpos & (m->tex.texheight - 1);
+		m->tex.texpos += m->tex.step;
 		m->img.addr[y * m->el.res_x + i] =
-			m->tex.color[m->tex.texY * m->tex.texHeight + m->tex.texX];
+			m->tex.color[m->tex.texy * m->tex.texheight + m->tex.texx];
 		y++;
 	}
 	k = y;
@@ -64,7 +64,7 @@ void	create_algo(t_index *m)
 		calculate_textures(m);
 		calculate_colors(m);
 		verline(i, m);
-		m->spr.ZBuffer[i] = m->big.perpWallDist;
+		m->spr.zbuffer[i] = m->big.perpwalldist;
 		i++;
 	}
 	sprites_raycasting(m);

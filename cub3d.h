@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:00:47 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:59:21 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,75 +99,75 @@ typedef struct		s_elements
 
 typedef struct		s_big
 {
-	float	posX;
-	float	posY;
-	float	dirX;
-	float	dirY;
-	float	planeX;
-	float	planeY;
-	float	cameraX;
-	float	rayDirX;
-	float	rayDirY;
-	int		mapX;
-	int		mapY;
-	float	sideDistX;
-	float	sideDistY;
-	float	deltaDistX;
-	float	deltaDistY;
-	float	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		drawStart;
-	int		drawEnd;
-	int		wallHeight;
-	int		lineHeight;
+	float	posx;
+	float	posy;
+	float	dirx;
+	float	diry;
+	float	planex;
+	float	planey;
+	float	camerax;
+	float	raydirx;
+	float	raydiry;
+	int		mapx;
+	int		mapy;
+	float	sidedistx;
+	float	sidedisty;
+	float	deltadistx;
+	float	deltadisty;
+	float	perpwalldist;
+	int		stepx;
+	int		stepy;
+	int		drawstart;
+	int		drawend;
+	int		wallheight;
+	int		lineheight;
 	int		side;
-	float	moveSpeed;
-	float	oldDirX;
-	float	rotSpeed;
-	float	oldPlaneX;
+	float	movespeed;
+	float	olddirx;
+	float	rotspeed;
+	float	oldplanex;
 }					t_big;
 
 typedef struct		s_tex
 {
-	int		texWidth;
-	int		texHeight;
+	int		texwidth;
+	int		texheight;
 	void	*color_n;
 	void	*color_s;
 	void	*color_e;
 	void	*color_w;
-	int		texX;
-	int		texY;
+	int		texx;
+	int		texy;
 	float	step;
-	float	texPos;
+	float	texpos;
 	int		*color;
 }					t_tex;
 
 typedef struct		s_spr
 {
-	int		numSprites;
+	int		numsprites;
 	void	*spr_tex;
 	int		*color;
-	int		sprWidth;
-	int		sprHeight;
-	float	spriteX;
-	float	spriteY;
-	float	invDet;
-	float	transformX;
-	float	transformY;
-	int		spriteScreenX;
-	int		vMoveScreen;
-	int		drawStartY;
-	int		drawEndY;
-	int		drawStartX;
-	int		drawEndX;
+	int		sprwidth;
+	int		sprheight;
+	float	spritex;
+	float	spritey;
+	float	invdet;
+	float	transformx;
+	float	transformy;
+	int		spritescreenx;
+	int		vmovescreen;
+	int		drawstarty;
+	int		drawendy;
+	int		drawstartx;
+	int		drawendx;
 	int		stripe;
-	int		texX;
-	int		texY;
-	float	*ZBuffer;
+	int		texx;
+	int		texy;
+	float	*zbuffer;
 	int		*sprites_x;
 	int		*sprites_y;
-	float	spriteDistance;
+	float	spritedistance;
 }					t_spr;
 
 typedef struct		s_index

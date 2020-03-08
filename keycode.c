@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:11:25 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:58:21 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ int		keys_up_down(t_index *m, int keycode)
 {
 	if (keycode == MLXK_W || keycode == MLXK_UP)
 	{
-		if (m->parse.map[(int)m->big.posY][(int)(m->big.posX +
-		m->big.dirX * (m->big.moveSpeed + 0.1))] != '1')
-			m->big.posX += m->big.dirX * m->big.moveSpeed;
-		if (m->parse.map[(int)(m->big.posY + m->big.dirY *
-		(m->big.moveSpeed + 0.1))][(int)m->big.posX] != '1')
-			m->big.posY += m->big.dirY * m->big.moveSpeed;
+		if (m->parse.map[(int)m->big.posy][(int)(m->big.posx +
+		m->big.dirx * (m->big.movespeed + 0.1))] != '1')
+			m->big.posx += m->big.dirx * m->big.movespeed;
+		if (m->parse.map[(int)(m->big.posy + m->big.diry *
+		(m->big.movespeed + 0.1))][(int)m->big.posx] != '1')
+			m->big.posy += m->big.diry * m->big.movespeed;
 	}
 	if (keycode == MLXK_S || keycode == MLXK_DOWN)
 	{
-		if (m->parse.map[(int)m->big.posY][(int)(m->big.posX -
-		m->big.dirX * (m->big.moveSpeed * 0.1))] != '1')
-			m->big.posX -= m->big.dirX * m->big.moveSpeed;
-		if (m->parse.map[(int)(m->big.posY - m->big.dirY *
-		(m->big.moveSpeed * 0.1))][(int)m->big.posX] != '1')
-			m->big.posY -= m->big.dirY * m->big.moveSpeed;
+		if (m->parse.map[(int)m->big.posy][(int)(m->big.posx -
+		m->big.dirx * (m->big.movespeed * 0.1))] != '1')
+			m->big.posx -= m->big.dirx * m->big.movespeed;
+		if (m->parse.map[(int)(m->big.posy - m->big.diry *
+		(m->big.movespeed * 0.1))][(int)m->big.posx] != '1')
+			m->big.posy -= m->big.diry * m->big.movespeed;
 	}
 	return (1);
 }
@@ -39,16 +39,16 @@ int		keys_rot1(t_index *m, int keycode)
 {
 	if (keycode == MLXK_D)
 	{
-		m->big.oldDirX = m->big.dirX;
-		m->big.dirX = m->big.dirX * cos(m->big.rotSpeed) -
-			m->big.dirY * sin(m->big.rotSpeed);
-		m->big.dirY = m->big.oldDirX * sin(m->big.rotSpeed) +
-			m->big.dirY * cos(m->big.rotSpeed);
-		m->big.oldPlaneX = m->big.planeX;
-		m->big.planeX = m->big.planeX * cos(m->big.rotSpeed) -
-			m->big.planeY * sin(m->big.rotSpeed);
-		m->big.planeY = m->big.oldPlaneX * sin(m->big.rotSpeed) +
-			m->big.planeY * cos(m->big.rotSpeed);
+		m->big.olddirx = m->big.dirx;
+		m->big.dirx = m->big.dirx * cos(m->big.rotspeed) -
+			m->big.diry * sin(m->big.rotspeed);
+		m->big.diry = m->big.olddirx * sin(m->big.rotspeed) +
+			m->big.diry * cos(m->big.rotspeed);
+		m->big.oldplanex = m->big.planex;
+		m->big.planex = m->big.planex * cos(m->big.rotspeed) -
+			m->big.planey * sin(m->big.rotspeed);
+		m->big.planey = m->big.oldplanex * sin(m->big.rotspeed) +
+			m->big.planey * cos(m->big.rotspeed);
 	}
 	return (1);
 }
@@ -57,16 +57,16 @@ int		keys_rot2(t_index *m, int keycode)
 {
 	if (keycode == MLXK_A)
 	{
-		m->big.oldDirX = m->big.dirX;
-		m->big.dirX = m->big.dirX * cos(-m->big.rotSpeed) -
-			m->big.dirY * sin(-m->big.rotSpeed);
-		m->big.dirY = m->big.oldDirX * sin(-m->big.rotSpeed) +
-			m->big.dirY * cos(-m->big.rotSpeed);
-		m->big.oldPlaneX = m->big.planeX;
-		m->big.planeX = m->big.planeX * cos(-m->big.rotSpeed) -
-			m->big.planeY * sin(-m->big.rotSpeed);
-		m->big.planeY = m->big.oldPlaneX * sin(-m->big.rotSpeed) +
-			m->big.planeY * cos(-m->big.rotSpeed);
+		m->big.olddirx = m->big.dirx;
+		m->big.dirx = m->big.dirx * cos(-m->big.rotspeed) -
+			m->big.diry * sin(-m->big.rotspeed);
+		m->big.diry = m->big.olddirx * sin(-m->big.rotspeed) +
+			m->big.diry * cos(-m->big.rotspeed);
+		m->big.oldplanex = m->big.planex;
+		m->big.planex = m->big.planex * cos(-m->big.rotspeed) -
+			m->big.planey * sin(-m->big.rotspeed);
+		m->big.planey = m->big.oldplanex * sin(-m->big.rotspeed) +
+			m->big.planey * cos(-m->big.rotspeed);
 	}
 	return (1);
 }
@@ -75,28 +75,28 @@ int		keys_right_left(t_index *m, int keycode)
 {
 	if (keycode == MLXK_LEFT)
 	{
-		if (m->parse.map[(int)(m->big.posY - m->big.dirX *
-		(m->big.moveSpeed + 0.1))][(int)m->big.posX] != '1')
-			m->big.posY -= m->big.dirX * m->big.moveSpeed;
-		if (m->parse.map[(int)m->big.posY][(int)(m->big.posX +
-		m->big.dirY * (m->big.moveSpeed + 0.1))] != '1')
-			m->big.posX += m->big.dirY * m->big.moveSpeed;
+		if (m->parse.map[(int)(m->big.posy - m->big.dirx *
+		(m->big.movespeed + 0.1))][(int)m->big.posx] != '1')
+			m->big.posy -= m->big.dirx * m->big.movespeed;
+		if (m->parse.map[(int)m->big.posy][(int)(m->big.posx +
+		m->big.diry * (m->big.movespeed + 0.1))] != '1')
+			m->big.posx += m->big.diry * m->big.movespeed;
 	}
 	if (keycode == MLXK_RIGHT)
 	{
-		if (m->parse.map[(int)(m->big.posY + m->big.dirX *
-		(m->big.moveSpeed * 0.1))][(int)m->big.posX] != '1')
-			m->big.posY += m->big.dirX * m->big.moveSpeed;
-		if (m->parse.map[(int)m->big.posY][(int)(m->big.posX -
-		m->big.dirY * (m->big.moveSpeed + 0.1))] != '1')
-			m->big.posX -= m->big.dirY * m->big.moveSpeed;
+		if (m->parse.map[(int)(m->big.posy + m->big.dirx *
+		(m->big.movespeed * 0.1))][(int)m->big.posx] != '1')
+			m->big.posy += m->big.dirx * m->big.movespeed;
+		if (m->parse.map[(int)m->big.posy][(int)(m->big.posx -
+		m->big.diry * (m->big.movespeed + 0.1))] != '1')
+			m->big.posx -= m->big.diry * m->big.movespeed;
 	}
 	return (1);
 }
 
 int		ft_key(int keycode, t_index *m)
 {
-	m->big.oldPlaneX = m->big.planeX;
+	m->big.oldplanex = m->big.planex;
 	if (keycode == MLXK_ESC || keycode == MLXK_X)
 		free_all(m, -1);
 	keys_up_down(m, keycode);

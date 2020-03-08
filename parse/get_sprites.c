@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 15:03:45 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:24:26 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:30:32 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int malloc_size_sprite(t_index *m)
 {
-	if (!(m->spr.sprites_x = malloc(sizeof(int *) * m->spr.numSprites + 1)))
+	if (!(m->spr.sprites_x = malloc(sizeof(int *) * m->spr.numsprites + 1)))
 	{
         write (1, "Error\n", 6);
 		write (1, "Can't malloc the sprite", 23);
 		return (-1);
 	}
-    if (!(m->spr.sprites_y = malloc(sizeof(int *) * m->spr.numSprites + 1)))
+    if (!(m->spr.sprites_y = malloc(sizeof(int *) * m->spr.numsprites + 1)))
     {
         write (1, "Error\n", 6);
 		write (1, "Can't malloc the sprite", 23);

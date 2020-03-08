@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 16:58:21 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 16:59:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:31:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	get_position(t_index *m)
 				m->parse.map[i][j] = '0';
 			}
             if (m->parse.map[i][j] == '2')
-				m->spr.numSprites += 1;
+				m->spr.numsprites += 1;
             j++;
 		}
 		i++;
