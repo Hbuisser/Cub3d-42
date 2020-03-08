@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 15:03:45 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 15:23:06 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:24:26 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,21 @@ int malloc_size_sprite(t_index *m)
 
 void manage_pos_sprites(t_index *m, int i, int j, int k)
 {
-	if (m->parse.map[i - 1][j] == '1' || m->parse.map[i][j - 1] == '1')
+	//if (m->parse.map[i - 1][j] == '1' || m->parse.map[i][j - 1] == '1')
+	if (m->parse.map[i - 1][j] == '1')
+	{
+		m->spr.sprites_x[k] = j + 0.5;
+		m->spr.sprites_y[k] = i + 1;
+	}
+	else if (m->parse.map[i - 1][j] == '1' && m->parse.map[i][j - 1] == '1')
 	{
 		m->spr.sprites_x[k] = j + 1;
 		m->spr.sprites_y[k] = i + 1;
 	}
-	/*else if (m->parse.map[i - 1][j] == '1' && m->parse.map[i][j + 1] == '1')
+	//else if (m->parse.map[i + 1][j] == '1' || m->parse.map[i][j + 1] == '1')
+	else if (m->parse.map[i + 1][j] == '1')
 	{
-		m->spr.sprites_x[k] = j + 2;
-		m->spr.sprites_y[k] = i + 2;
-	}*/
-	else if (m->parse.map[i + 1][j] == '1' || m->parse.map[i][j + 1] == '1')
-	{
-		m->spr.sprites_x[k] = j;
+		m->spr.sprites_x[k] = j + 0.5;
 		m->spr.sprites_y[k] = i;
 	}
 	else
