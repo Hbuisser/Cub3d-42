@@ -6,56 +6,13 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 13:32:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 20:39:24 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/09 12:47:56 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void 	free_spr(t_index *m)
-{
-	if (m->spr.zbuffer)
-	{
-		free(m->spr.zbuffer);
-		m->spr.zbuffer = 0;
-	}
-	if (m->spr.sprites_x)
-	{
-		free(m->spr.sprites_x);
-		m->spr.sprites_x = 0;
-	}
-	if (m->spr.sprites_y)
-	{
-		free(m->spr.sprites_y);
-		m->spr.sprites_y = 0;
-	}
-}
-
-void 	free_tex(t_index *m)
-{
-	if (m->tex.color_n)
-	{
-		free(m->tex.color_n);
-		m->tex.color_n = 0;
-	}
-	if (m->tex.color_s)
-	{
-		free(m->tex.color_s);
-		m->tex.color_s = 0;
-	}
-	if (m->tex.color_e)
-	{
-		free(m->tex.color_e);
-		m->tex.color_e = 0;
-	}
-	if (m->tex.color_w)
-	{
-		free(m->tex.color_w);
-		m->tex.color_w = 0;
-	}
-}
-
-void 	free_paths(t_index *m)
+void	free_paths(t_index *m)
 {
 	if (m->el.n_path)
 	{
@@ -83,7 +40,7 @@ void	free_elem(t_index *m)
 {
 	int i;
 
-    i = -1;
+	i = -1;
 	if (m->el.elem)
 	{
 		while (++i < 8)
@@ -106,7 +63,7 @@ void	free_map(t_index *m)
 {
 	int i;
 
-    i = -1;
+	i = -1;
 	if (m->parse.map)
 	{
 		while (++i < m->parse.line_nbr)
@@ -117,13 +74,13 @@ void	free_map(t_index *m)
 		free(m->parse.map);
 		m->parse.map = 0;
 	}
-	free (m->parse.map_string);
+	free(m->parse.map_string);
 	m->parse.map_string = 0;
 }
 
 void	free_win(t_index *m)
 {
-    if (m->win.mlx_ptr && m->win.mlx_win)
+	if (m->win.mlx_ptr && m->win.mlx_win)
 		mlx_destroy_window(m->win.mlx_ptr, m->win.mlx_win);
 }
 
@@ -131,8 +88,8 @@ int		exit_all(t_index *m)
 {
 	free_win(m);
 	free_map(m);
-    free_elem(m);
-    free_tex(m);
+	free_elem(m);
+	free_tex(m);
 	free_spr(m);
 	exit(0);
 	return (1);

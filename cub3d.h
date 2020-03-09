@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 20:36:21 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/09 12:51:36 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,6 @@
 # define MLXK_DOWN 125
 # define MLXK_TD 14
 # define MLXK_TG 12
-
-# define uDiv 2
-# define vDiv 2
-# define vMove 0
 
 typedef struct		s_win
 {
@@ -191,39 +187,41 @@ void	init_2(t_index *m);
 void	init_1(t_index *m);
 int		create_data(t_index *m);
 int		parse_cub(t_index *m, char *filename);
-int 	create_map(t_index *m);
-int 	create_good_size_map(t_index *m);
+int		create_map(t_index *m);
+int		create_good_size_map(t_index *m);
 int		check_map_errors(t_index *m);
 int		check_elements_errors(t_index *m);
 int		new_strlen(char *s);
 int		check_borders_lines(t_index *m);
 int		check_borders_columns(t_index *m);
-int     get_elements(t_index *m);
-int 	get_resolution(t_index *m);
-int 	get_ceilling_color(t_index *m);
-int 	get_floor_color(t_index *m);
-int 	get_sprites(t_index *m);
+int		get_elements(t_index *m);
+int		get_resolution(t_index *m);
+int		get_ceilling_color(t_index *m);
+int		get_floor_color(t_index *m);
+int		get_sprites(t_index *m);
 int		check_dir_letter(t_index *m);
-void 	parse_sprites(t_index *m);
-int 	malloc_size_sprite(t_index *m);
+void	parse_sprites(t_index *m);
+int		malloc_size_sprite(t_index *m);
 char	*get_east_texture(t_index *m);
 char	*get_west_texture(t_index *m);
 char	*get_south_texture(t_index *m);
 char	*get_north_texture(t_index *m);
 char	*get_sprite_texture(t_index *m);
-void    calculate_ray_and_deltadist(int i, t_index *m);
-void    calculate_step_and_sidedist(t_index *m);
-void    perform_dda(int hit, t_index *m);
-void    calculate_dist(t_index *m);
-void    calculate_height_wall(t_index *m);
-int     ft_key(int keycode, t_index *m);
+void	calculate_ray_and_deltadist(int i, t_index *m);
+void	calculate_step_and_sidedist(t_index *m);
+void	perform_dda(int hit, t_index *m);
+void	calculate_dist(t_index *m);
+void	calculate_height_wall(t_index *m);
+int		ft_key(int keycode, t_index *m);
 int		exit_all(t_index *m);
-int     generate_textures(t_index *m);
+int		generate_textures(t_index *m);
 void	calculate_textures(t_index *m);
-void    calculate_colors(t_index *m);
+void	calculate_colors(t_index *m);
 void	sprites_raycasting(t_index *m);
 void	verline_sprites(t_index *m);
 int		free_all(t_index *m, int ret);
+void	free_tex(t_index *m);
+void	free_spr(t_index *m);
 int		get_next_line(const int fd, char **line);
 char	**ft_strsplit(const char *s, char c);
 int		screen_shot(t_index *m);

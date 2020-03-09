@@ -6,7 +6,7 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/08 19:45:53 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/09 12:47:44 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS 			= main.c \
 					sprites.c \
 					sprites2.c \
 					free.c \
+					free2.c \
 					bmp.c 
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
