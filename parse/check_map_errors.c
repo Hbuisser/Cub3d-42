@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 16:54:09 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:28:00 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int		check_map_characters(t_index *m)
 			m->parse.map_string[i] != ' ' &&
 			m->parse.map_string[i] != '\n')
 		{
-			write (1, "Error\n", 6);
-			write (1, "Map countains wrong things\n", 27);
+			write(1, "Error\n", 6);
+			write(1, "Map countains wrong things\n", 27);
 			return (-1);
 		}
 		i++;

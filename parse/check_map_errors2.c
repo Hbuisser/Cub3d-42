@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 14:17:20 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 20:13:43 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:28:44 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		check_borders_lines(t_index *m)
 	while (m->parse.map[m->parse.line_nbr - 1][j] != '\0')
 	{
 		if ((m->parse.map[m->parse.line_nbr - 1][j] != '1') &&
-            (m->parse.map[m->parse.line_nbr - 1][j] != ' '))
+			(m->parse.map[m->parse.line_nbr - 1][j] != ' '))
 			return_error_exit(m);
 		j++;
 	}
