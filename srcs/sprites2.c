@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 13:38:20 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:51:39 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:00:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	write_sprites(t_index *m)
 {

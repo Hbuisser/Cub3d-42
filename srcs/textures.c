@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 16:35:19 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:59:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:12:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	calculate_colors(t_index *m)
 {
@@ -49,14 +49,17 @@ int		create_images2(t_index *m)
 	if (!(m->tex.color_e = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.e_path,
 		&m->tex.texwidth, &m->tex.texheight)))
 	{
-		write(1, "wrong path texture", 18);
-		return (-1);
+		write(1, "Error\n", 6);
+		write(1, "e wrong path texture", 20);
+		exit_all(m);
+		return (exit_all(m));
 	}
 	if (!(m->spr.spr_tex = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.spr_path,
 		&m->spr.sprwidth, &m->spr.sprheight)))
 	{
+		write(1, "Error\n", 6);
 		write(1, "texture of the sprite is wrong", 30);
-		return (-1);
+		return (exit_all(m));
 	}
 	return (1);
 }
@@ -66,28 +69,33 @@ int		create_images1(t_index *m)
 	if (!(m->tex.color_n = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.n_path,
 		&m->tex.texwidth, &m->tex.texwidth)))
 	{
+		write(1, "Error\n", 6);
 		write(1, "n wrong path texture\n", 20);
-		return (-1);
+		return (exit_all(m));
 	}
 	if (!(m->tex.color_s = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.s_path,
 		&m->tex.texwidth, &m->tex.texheight)))
 	{
-		write(1, "wrong path texture", 18);
-		return (-1);
+		write(1, "Error\n", 6);
+		write(1, "s wrong path texture", 20);
+		return (exit_all(m));
 	}
 	if (!(m->tex.color_w = mlx_xpm_file_to_image(m->win.mlx_ptr, m->el.w_path,
 		&m->tex.texwidth, &m->tex.texheight)))
 	{
-		write(1, "wrong path texture", 18);
-		return (-1);
+		write(1, "Error\n", 6);
+		write(1, "w wrong path texture", 20);
+		return (exit_all(m));
 	}
 	return (1);
 }
 
 int		generate_textures(t_index *m)
 {
-	create_images1(m);
-	create_images2(m);
+	if (create_images1(m) < 0)
+		return (exit_all(m));
+	if (create_images2(m) < 0)
+		return (exit_all(m));
 	m->tex.color_n = mlx_get_data_addr(m->tex.color_n,
 		&m->img.bits_per_pixel, &m->img.line_length, &m->img.endian);
 	m->tex.color_s = mlx_get_data_addr(m->tex.color_s,

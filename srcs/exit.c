@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 13:32:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 12:47:56 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:07:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	free_paths(t_index *m)
 {

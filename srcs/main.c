@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 15:26:28 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:22:24 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	verline(int i, t_index *m)
 {
@@ -109,7 +109,7 @@ int		main(int ac, char **av)
 			return (-1);
 		screen_shot(&m);
 	}
-	else 
+	else
 		exit_all(&m);
 	return (0);
 }

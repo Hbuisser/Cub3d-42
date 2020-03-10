@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 13:51:19 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:14:53 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	check_west_and_east(t_index *m)
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong west texture path\n", 24);
-		return (-1);
+		return (exit_all(m));
 	}
 	if (m->el.elem[m->el.east_line][0] != 'E' ||
 		m->el.elem[m->el.east_line][1] != 'A')
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong east texture path\n", 24);
-		return (-1);
+		return (exit_all(m));
 	}
 	return (0);
 }
@@ -38,14 +38,14 @@ int	check_north_and_south(t_index *m)
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong north texture path\n", 25);
-		return (-1);
+		return (exit_all(m));
 	}
 	if (m->el.elem[m->el.south_line][0] != 'S' ||
 		m->el.elem[m->el.south_line][1] != 'O')
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong south texture path\n", 25);
-		return (-1);
+		return (exit_all(m));
 	}
 	return (1);
 }
@@ -74,14 +74,14 @@ int	check_resolution(t_index *m)
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong resolution letter\n", 28);
-		return (-1);
+		return (exit_all(m));
 	}
 	if (m->el.elem[m->el.resolution_line][1] != ' ' &&
 		!ft_isdigit(m->el.elem[m->el.resolution_line][1]))
 	{
 		write(1, "Error\n", 6);
 		write(1, "--> Wrong resolution details\n", 28);
-		return (-1);
+		return (exit_all(m));
 	}
 	return (0);
 }

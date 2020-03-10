@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:12:28 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 16:53:16 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:09:57 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_east_texture(t_index *m)
 
 	i = 2;
 	count = 0;
-	while (m->el.elem[m->el.east_line][++i] == ' ')
+	while (m->el.elem[m->el.east_line][i] == ' ')
 		i++;
 	j = i;
 	i = i - 1;
@@ -48,7 +48,7 @@ char	*get_west_texture(t_index *m)
 
 	i = 2;
 	count = 0;
-	while (m->el.elem[m->el.west_line][++i] == ' ')
+	while (m->el.elem[m->el.west_line][i] == ' ')
 		i++;
 	j = i;
 	i = i - 1;
@@ -76,7 +76,7 @@ char	*get_south_texture(t_index *m)
 
 	i = 2;
 	count = 0;
-	while (m->el.elem[m->el.south_line][++i] == ' ')
+	while (m->el.elem[m->el.south_line][i] == ' ')
 		i++;
 	j = i;
 	i = i - 1;
@@ -104,7 +104,7 @@ char	*get_north_texture(t_index *m)
 
 	i = 2;
 	count = 0;
-	while (m->el.elem[m->el.north_line][++i] == ' ')
+	while (m->el.elem[m->el.north_line][i] == ' ')
 		i++;
 	j = i;
 	i = i - 1;

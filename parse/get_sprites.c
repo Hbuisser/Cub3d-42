@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 15:03:45 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 15:28:15 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:20:40 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,17 @@ int		malloc_size_sprite(t_index *m)
 	{
 		write(1, "Error\n", 6);
 		write(1, "Can't malloc the sprite", 23);
+		exit_all(m);
 		return (-1);
 	}
 	if (!(m->spr.sprites_y = malloc(sizeof(int *) * m->spr.numsprites + 1)))
 	{
 		write(1, "Error\n", 6);
 		write(1, "Can't malloc the sprite", 23);
+		exit_all(m);
 		return (-1);
 	}
 	return (1);
-}
-
-void	manage_pos_sprites(t_index *m, int i, int j, int k)
-{
-	//if (m->parse.map[i - 1][j] == '1' || m->parse.map[i][j - 1] == '1')
-	/*if (m->parse.map[i - 1][j] == '1')
-	{
-		m->spr.sprites_x[k] = j + 0.5;
-		m->spr.sprites_y[k] = i + 1;
-	}
-	else if (m->parse.map[i - 1][j] == '1' && m->parse.map[i][j - 1] == '1')
-	{
-		m->spr.sprites_x[k] = j + 1;
-		m->spr.sprites_y[k] = i + 1;
-	}
-	//else if (m->parse.map[i + 1][j] == '1' || m->parse.map[i][j + 1] == '1')
-	else if (m->parse.map[i + 1][j] == '1')
-	{
-		m->spr.sprites_x[k] = j + 0.5;
-		m->spr.sprites_y[k] = i;
-	}
-	else
-	{*/
-		m->spr.sprites_x[k] = j - 0.5;
-		m->spr.sprites_y[k] = i + 0.5;
-	//}
 }
 
 void	parse_sprites(t_index *m)
@@ -71,7 +47,8 @@ void	parse_sprites(t_index *m)
 		{
 			if (m->parse.map[i][j] == '2')
 			{
-				manage_pos_sprites(m, i, j, k);
+				m->spr.sprites_x[k] = j + 0.5;
+				m->spr.sprites_y[k] = i + 0.5;
 				k++;
 			}
 			j++;

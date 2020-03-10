@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:52:57 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 14:57:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 10:59:41 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int		write_header(int fd, t_index *m, int tmp, int file_size)
 {

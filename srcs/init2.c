@@ -6,11 +6,11 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 14:47:56 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 19:59:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:21:02 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	data_e_w(t_index *m)
 {
@@ -41,7 +41,7 @@ void	data_n_s(t_index *m)
 	}
 	if (m->parse.dir == 'N')
 	{
-		m->big.planex = 1.4;
+		m->big.planex = 0.66;
 		m->big.planey = 0;
 		m->big.dirx = 0;
 		m->big.diry = -1;

@@ -6,22 +6,22 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/08 17:50:18 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 12:51:02 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	calculate_draw_start_end(t_index *m)
 {
-	m->spr.sprheight = (int)fabs((float)m->el.res_y / m->spr.transformy) / 2;
+	m->spr.sprheight = (int)fabs((float)m->el.res_y / m->spr.transformy);
 	m->spr.drawstarty = -m->spr.sprheight / 2 + m->el.res_y / 2;
 	if (m->spr.drawstarty < 0)
 		m->spr.drawstarty = 0;
 	m->spr.drawendy = m->spr.sprheight / 2 + m->el.res_y / 2;
 	if (m->spr.drawendy >= m->el.res_y)
 		m->spr.drawendy = m->el.res_y - 1;
-	m->spr.sprwidth = (int)fabs((float)m->el.res_y / m->spr.transformy) / 2;
+	m->spr.sprwidth = (int)fabs((float)m->el.res_y / m->spr.transformy);
 	m->spr.drawstartx = -m->spr.sprwidth / 2 + m->spr.spritescreenx;
 	if (m->spr.drawstartx < 0)
 		m->spr.drawstartx = 0;

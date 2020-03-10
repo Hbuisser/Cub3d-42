@@ -6,14 +6,14 @@
 #    By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/25 12:47:05 by hbuisser          #+#    #+#              #
-#    Updated: 2020/03/09 12:47:44 by hbuisser         ###   ########.fr        #
+#    Updated: 2020/03/10 11:08:09 by hbuisser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= cub3D
 LIBFT_PATH 		= ./libft
 MINILIBX_PATH   = ./miniLibX
-SRCS 			= main.c \
+SRCS 			= ./srcs/main.c \
 					./parse/parse.c \
 					./parse/parse2.c \
 					./parse/get_elements.c \
@@ -25,17 +25,16 @@ SRCS 			= main.c \
 					./parse/check_elements_errors.c \
 					./parse/check_map_errors.c \
 					./parse/check_map_errors2.c \
-					split2.c \
-					keycode.c \
-					init.c \
-					init2.c \
-					textures.c \
-					main_algo.c \
-					sprites.c \
-					sprites2.c \
-					free.c \
-					free2.c \
-					bmp.c 
+					./srcs/keycode.c \
+					./srcs/init.c \
+					./srcs/init2.c \
+					./srcs/textures.c \
+					./srcs/main_algo.c \
+					./srcs/sprites.c \
+					./srcs/sprites2.c \
+					./srcs/exit.c \
+					./srcs/exit2.c \
+					./srcs/bmp.c 
 OBJS			= ${SRCS:.c=.o}
 INCLUDE 		= cube3d.h
 LIBFT 			= libft
