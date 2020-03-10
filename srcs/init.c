@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 16:25:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 10:59:54 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:48:26 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	init_4(t_index *m)
 	m->spr.sprheight = 0;
 	m->spr.spritex = 0;
 	m->spr.spritey = 0;
-	m->spr.invdet = 0;
+	m->spr.invdet = 1;
 	m->spr.transformx = 0;
 	m->spr.transformy = 0;
 	m->spr.spritescreenx = 0;

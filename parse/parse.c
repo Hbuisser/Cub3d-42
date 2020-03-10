@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 15:54:45 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:00:22 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ int		return_error(t_index *m)
 	return (-1);
 }
 
-int		write_error_one(void)
+int		write_error_one(t_index *m)
 {
 	write(1, "Error\n", 6);
-	write(1, "Map not surrounded by 1\n", 24);
+	write(1, "Error in parsing\n", 17);
+	exit_all(m);
 	return (-1);
 }
 
@@ -40,7 +41,7 @@ int		parse_map(int fd, t_index *m)
 	while (get_next_line(fd, &line))
 	{
 		if (line[0] == '\0')
-			write_error_one();
+			write_error_one(m);
 		m->parse.map_string = ft_strjoin(m->parse.map_string, line);
 		m->parse.map_string = ft_strjoin(m->parse.map_string, "\n");
 		free(line);

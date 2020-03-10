@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 13:14:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:08:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,10 @@ int	check_resolution(t_index *m)
 		write(1, "--> Wrong resolution details\n", 28);
 		return (exit_all(m));
 	}
+	if (m->el.res_x > 2560)
+		m->el.res_x = 2560;
+	if (m->el.res_y > 1440)
+		m->el.res_y = 1440;
 	return (0);
 }
 

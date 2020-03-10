@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 13:22:24 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:15:25 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		main(int ac, char **av)
 {
 	t_index		m;
 
-	if (ac < 2)
+	if (ft_errors(ac, av) < 0)
 		return (-1);
 	else if (ac == 2)
 	{

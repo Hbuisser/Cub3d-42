@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 19:44:51 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 14:30:20 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:12:14 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		write_error_ceilling(t_index *m, int i)
 		m->el.elem[m->el.c_l][i] != ' ')
 	{
 		write(1, "Error\n", 6);
-		write(1, "Wrong ceilling arguments\n", 16);
+		write(1, "Wrong ceilling arguments\n", 25);
 		exit(0);
 	}
 	return (-1);
@@ -29,7 +29,7 @@ int		write_error_end_ceilling(t_index *m, int i)
 	if (m->el.elem[m->el.c_l][i] != ' ')
 	{
 		write(1, "Error\n", 6);
-		write(1, "Wrong ceilling arguments\n", 16);
+		write(1, "Wrong ceilling arguments\n", 25);
 		exit(0);
 	}
 	return (-1);

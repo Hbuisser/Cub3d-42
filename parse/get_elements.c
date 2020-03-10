@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:08:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 14:36:57 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:53:45 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	create_hex_color(t_index *m)
 		m->el.f_g, m->el.f_b);
 }
 
-void	check_letters(t_index *m, int i, int j)
+int		check_letters(t_index *m, int i, int j)
 {
 	if (m->el.elem[i][j] == 'R')
 		m->el.resolution_line = i;
@@ -41,9 +41,10 @@ void	check_letters(t_index *m, int i, int j)
 		m->el.f_l = i;
 	if (m->el.elem[i][j] == 'C')
 		m->el.c_l = i;
+	return (1);
 }
 
-void	create_elements_lines(t_index *m)
+int		create_elements_lines(t_index *m)
 {
 	int i;
 	int j;
@@ -54,17 +55,20 @@ void	create_elements_lines(t_index *m)
 		j = 0;
 		while (m->el.elem[i][j] != '\0')
 		{
-			check_letters(m, i, j);
+			if (check_letters(m, i, j) < 0)
+				return (-1);
 			j++;
 		}
 		i++;
 	}
+	return (1);
 }
 
 int		get_elements(t_index *m)
 {
 	m->el.elem = ft_strsplit(m->parse.data, '\n');
-	create_elements_lines(m);
+	if (create_elements_lines(m) < 0)
+		return (-1);
 	if (get_resolution(m) < 0)
 		return (-1);
 	if (get_floor_color(m) < 0)

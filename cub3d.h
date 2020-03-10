@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 15:54:55 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:52:11 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,9 @@ void				free_spr(t_index *m);
 int					get_next_line(const int fd, char **line);
 char				**ft_strsplit(const char *s, char c);
 int					screen_shot(t_index *m);
-int					write_error_one(void);
+int					write_error_one(t_index *m);
 int					return_error(t_index *m);
+int					ft_errors(int ac, char **av);
+int					return_error_exit(t_index *m);
 
 #endif

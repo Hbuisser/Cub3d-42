@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 12:51:02 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:43:10 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	calculate_draw_start_end(t_index *m)
 	if (m->spr.drawstartx < 0)
 		m->spr.drawstartx = 0;
 	m->spr.drawendx = m->spr.sprwidth / 2 + m->spr.spritescreenx;
-	if (m->spr.drawendx >= m->el.res_x)
+	if (m->spr.drawendx >= m->el.res_y)
 		m->spr.drawendx = m->el.res_x - 1;
 }
 
@@ -67,13 +67,13 @@ void	sort_sprites(t_index *m)
 	int	i;
 
 	i = 0;
-	while (i < m->spr.numsprites)
+	while (i < m->spr.numsprites - 1)
 	{
-		j = i + 1;
 		m->spr.spritedistance = ((m->big.posx - m->spr.sprites_x[i]) *
 			(m->big.posx - m->spr.sprites_x[i]) +
 			(m->big.posy - m->spr.sprites_y[i]) *
 			(m->big.posy - m->spr.sprites_y[i]));
+		j = i + 1;
 		while (j < m->spr.numsprites)
 		{
 			if (((m->big.posx - m->spr.sprites_x[j]) *

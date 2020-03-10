@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 10:30:11 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/02/02 18:55:33 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:10:13 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 char			**ft_free(char **array, int size);
 char			*ft_strncpy(char *dst, const char *src, size_t len);
+int				ft_strcmp(char *s1, char *s2);
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
