@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:44:05 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 17:25:33 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:09:15 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_strcmp(char *s1, char *s2)
 			return (-1);
 		i++;
 	}
-	if (i < (ft_strlen(s1)))
+	if (i < (ft_strlen(s1) + 1))
 		return (-1);
 	return (1);
 }

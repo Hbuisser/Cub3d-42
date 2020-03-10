@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 14:50:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 11:00:01 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:12:38 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		keys_up_down(t_index *m, int keycode)
 
 int		keys_rot1(t_index *m, int keycode)
 {
-	if (keycode == MLXK_D)
+	if (keycode == MLXK_RIGHT)
 	{
 		m->big.olddirx = m->big.dirx;
 		m->big.dirx = m->big.dirx * cos(m->big.rotspeed) -
@@ -55,7 +55,7 @@ int		keys_rot1(t_index *m, int keycode)
 
 int		keys_rot2(t_index *m, int keycode)
 {
-	if (keycode == MLXK_A)
+	if (keycode == MLXK_LEFT)
 	{
 		m->big.olddirx = m->big.dirx;
 		m->big.dirx = m->big.dirx * cos(-m->big.rotspeed) -
@@ -73,7 +73,7 @@ int		keys_rot2(t_index *m, int keycode)
 
 int		keys_right_left(t_index *m, int keycode)
 {
-	if (keycode == MLXK_LEFT)
+	if (keycode == MLXK_A)
 	{
 		if (m->parse.map[(int)(m->big.posy - m->big.dirx *
 		(m->big.movespeed + 0.1))][(int)m->big.posx] != '1')
@@ -82,7 +82,7 @@ int		keys_right_left(t_index *m, int keycode)
 		m->big.diry * (m->big.movespeed + 0.1))] != '1')
 			m->big.posx += m->big.diry * m->big.movespeed;
 	}
-	if (keycode == MLXK_RIGHT)
+	if (keycode == MLXK_D)
 	{
 		if (m->parse.map[(int)(m->big.posy + m->big.dirx *
 		(m->big.movespeed * 0.1))][(int)m->big.posx] != '1')

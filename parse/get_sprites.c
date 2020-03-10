@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 15:03:45 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 13:44:53 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:48:59 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	parse_sprites(t_index *m)
 		{
 			if (m->parse.map[i][j] == '2')
 			{
-				m->spr.sprites_x[k] = j + 1;
-				m->spr.sprites_y[k] = i + 0.5;
+				m->spr.sprites_x[k] = j + 0.5;
+				m->spr.sprites_y[k] = i + 1;
 				k++;
 			}
 			j++;

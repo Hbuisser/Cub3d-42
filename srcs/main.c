@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:39 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 16:15:25 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:50:07 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	create_algo(t_index *m)
 		calculate_textures(m);
 		calculate_colors(m);
 		verline(i, m);
-		m->spr.zbuffer[i] = m->big.perpwalldist + 1;
+		m->spr.zbuffer[i] = m->big.perpwalldist + 0.5;
 		i++;
 	}
 	sprites_raycasting(m);

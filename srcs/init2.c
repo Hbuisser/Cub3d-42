@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 14:47:56 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 17:48:11 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:56:49 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		create_data(t_index *m)
 	m->spr.sprwidth = 0;
 	m->spr.sprheight = 0;
 	m->big.movespeed = 0.2;
-	m->big.rotspeed = 0.08;
+	m->big.rotspeed = 0.06;
 	if (!(m->spr.zbuffer = malloc(sizeof(float *) * m->el.res_x + 1)))
 		return (-1);
 	return (1);
@@ -83,7 +83,7 @@ int		ft_errors(int ac, char **av)
 		write(1, "Error\nInvalid arguments\n", 24);
 		return (-1);
 	}
-	else if (ac == 3 && (ft_strcmp(av[2], "--save") < 0))
+	else if (ac == 3 && (ft_strncmp(av[2], "--save", 6)))
 	{
 		write(1, "Error\nInvalid option\n", 21);
 		return (-1);
