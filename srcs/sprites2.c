@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 13:38:20 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 20:02:32 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 13:05:23 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	write_sprites(t_index *m)
 	y = m->spr.drawstarty;
 	while (y < m->spr.drawendy)
 	{
-		d = y * 256 - m->el.res_y * 128 + m->spr.sprheight * 128;
+		d = (y - m->spr.vmovescreen) * 256 - m->el.res_y * 128 +
+			m->spr.sprheight * 128;
 		m->spr.texy = ((d * 64) / m->spr.sprheight) / 256;
 		if ((m->spr.color[64 * m->spr.texy + m->spr.texx] & 0x00FFFFFF) != 0)
 			m->img.addr[y * m->el.res_x + m->spr.stripe] =

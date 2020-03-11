@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 17:43:10 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 13:06:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	calculate_draw_start_end(t_index *m)
 {
+	m->spr.vmovescreen = (int)(64.0 / m->spr.transformy);
 	m->spr.sprheight = (int)fabs((float)m->el.res_y / m->spr.transformy);
-	m->spr.drawstarty = -m->spr.sprheight / 2 + m->el.res_y / 2;
+	m->spr.drawstarty = -m->spr.sprheight / 2 + m->el.res_y / 2
+		+ m->spr.vmovescreen;
 	if (m->spr.drawstarty < 0)
 		m->spr.drawstarty = 0;
-	m->spr.drawendy = m->spr.sprheight / 2 + m->el.res_y / 2;
+	m->spr.drawendy = m->spr.sprheight / 2 + m->el.res_y / 2
+		+ m->spr.vmovescreen;
 	if (m->spr.drawendy >= m->el.res_y)
 		m->spr.drawendy = m->el.res_y - 1;
 	m->spr.sprwidth = (int)fabs((float)m->el.res_y / m->spr.transformy);
