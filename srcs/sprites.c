@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:18:53 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/11 13:06:29 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:27:05 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	calculate_draw_start_end(t_index *m)
 {
-	m->spr.vmovescreen = (int)(64.0 / m->spr.transformy);
+	m->spr.vmovescreen = (int)(94.0 / m->spr.transformy);
 	m->spr.sprheight = (int)fabs((float)m->el.res_y / m->spr.transformy);
 	m->spr.drawstarty = -m->spr.sprheight / 2 + m->el.res_y / 2
 		+ m->spr.vmovescreen;
@@ -49,8 +49,8 @@ void	calculate_transform(int i, t_index *m)
 
 void	tmp(t_index *m, int i, int j)
 {
-	int	tmp_x;
-	int	tmp_y;
+	float	tmp_x;
+	float	tmp_y;
 
 	m->spr.spritedistance = ((m->big.posx - m->spr.sprites_x[j]) *
 		(m->big.posx - m->spr.sprites_x[j]) +

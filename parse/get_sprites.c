@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 15:03:45 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 19:48:59 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:40:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ int		malloc_size_sprite(t_index *m)
 
 void	parse_sprites(t_index *m)
 {
-	int i;
-	int j;
-	int k;
+	int		i;
+	int		j;
+	float	k;
 
 	i = 0;
 	j = 0;
 	k = 0;
-	while (m->parse.map[i] != NULL)
+	while (m->parse.map[(int)i] != NULL)
 	{
 		j = 0;
-		while (m->parse.map[i][j] != '\0')
+		while (m->parse.map[(int)i][(int)j] != '\0')
 		{
-			if (m->parse.map[i][j] == '2')
+			if (m->parse.map[(int)i][(int)j] == '2')
 			{
-				m->spr.sprites_x[k] = j + 0.5;
-				m->spr.sprites_y[k] = i + 1;
+				m->spr.sprites_x[(int)k] = j + 0.5;
+				m->spr.sprites_y[(int)k] = i + 0.5;
 				k++;
 			}
 			j++;

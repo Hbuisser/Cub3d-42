@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 11:06:24 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/11 13:06:34 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:41:42 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,33 +95,33 @@ typedef struct		s_elements
 
 typedef struct		s_big
 {
-	float	posx;
-	float	posy;
-	float	dirx;
-	float	diry;
-	float	planex;
-	float	planey;
-	float	camerax;
-	float	raydirx;
-	float	raydiry;
-	int		mapx;
-	int		mapy;
-	float	sidedistx;
-	float	sidedisty;
-	float	deltadistx;
-	float	deltadisty;
-	float	perpwalldist;
-	int		stepx;
-	int		stepy;
-	int		drawstart;
-	int		drawend;
-	int		wallheight;
-	int		lineheight;
-	int		side;
-	float	movespeed;
-	float	olddirx;
-	float	rotspeed;
-	float	oldplanex;
+	float				posx;
+	float				posy;
+	float				dirx;
+	float				diry;
+	float				planex;
+	float				planey;
+	float				camerax;
+	float				raydirx;
+	float				raydiry;
+	unsigned int		mapx;
+	unsigned int		mapy;
+	float				sidedistx;
+	float				sidedisty;
+	float				deltadistx;
+	float				deltadisty;
+	float				perpwalldist;
+	int					stepx;
+	int					stepy;
+	int					drawstart;
+	int					drawend;
+	int					wallheight;
+	int					lineheight;
+	int					side;
+	float				movespeed;
+	float				olddirx;
+	float				rotspeed;
+	float				oldplanex;
 }					t_big;
 
 typedef struct		s_tex
@@ -152,7 +152,6 @@ typedef struct		s_spr
 	float	transformx;
 	float	transformy;
 	int		spritescreenx;
-	int		vmovescreen;
 	int		drawstarty;
 	int		drawendy;
 	int		drawstartx;
@@ -161,9 +160,10 @@ typedef struct		s_spr
 	int		texx;
 	int		texy;
 	float	*zbuffer;
-	int		*sprites_x;
-	int		*sprites_y;
+	float	*sprites_x;
+	float	*sprites_y;
 	float	spritedistance;
+	int		vmovescreen;
 }					t_spr;
 
 typedef struct		s_index
