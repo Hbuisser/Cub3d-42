@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 16:52:57 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 10:59:41 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:11:40 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int		screen_shot(t_index *m)
 	int	file_size;
 
 	if ((fd = open("screenshot.bmp", O_CREAT | O_RDWR | S_IRWXU)) < 0)
-		return (0);
+		return (exit_all(m));
 	tmp = m->el.res_x;
 	file_size = 14 + 40 + (m->el.res_x * m->el.res_y) * 4;
-	if (!write_header(fd, m, tmp, file_size))
-		return (0);
-	if (!write_data(fd, m))
-		return (0);
+	if (write_header(fd, m, tmp, file_size) < 0)
+		return (exit_all(m));
+	if (write_data(fd, m) < 0)
+		return (exit_all(m));
 	close(fd);
 	exit_all(m);
 	return (1);

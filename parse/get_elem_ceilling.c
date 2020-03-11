@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 19:44:51 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 18:12:14 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:31:29 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		write_error_ceilling(t_index *m, int i)
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong ceilling arguments\n", 25);
-		exit(0);
+		exit_all(m);
 	}
 	return (-1);
 }
@@ -30,7 +30,7 @@ int		write_error_end_ceilling(t_index *m, int i)
 	{
 		write(1, "Error\n", 6);
 		write(1, "Wrong ceilling arguments\n", 25);
-		exit(0);
+		exit_all(m);
 	}
 	return (-1);
 }

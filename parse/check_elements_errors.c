@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 19:27:23 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 18:08:08 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:28:41 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_west_and_east(t_index *m)
 		write(1, "Wrong east texture path\n", 24);
 		return (exit_all(m));
 	}
-	return (0);
+	return (1);
 }
 
 int	check_north_and_south(t_index *m)
@@ -65,7 +65,7 @@ int	check_path(char *str)
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	check_resolution(t_index *m)
@@ -87,7 +87,7 @@ int	check_resolution(t_index *m)
 		m->el.res_x = 2560;
 	if (m->el.res_y > 1440)
 		m->el.res_y = 1440;
-	return (0);
+	return (1);
 }
 
 int	check_elements_errors(t_index *m)
@@ -108,5 +108,5 @@ int	check_elements_errors(t_index *m)
 		return (-1);
 	if (check_resolution(m) < 0)
 		return (-1);
-	return (0);
+	return (1);
 }

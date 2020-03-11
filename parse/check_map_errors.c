@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 12:53:31 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 18:52:59 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:29:12 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		check_map_characters(t_index *m)
 		{
 			write(1, "Error\n", 6);
 			write(1, "Map countains wrong things\n", 27);
-			return (-1);
+			return (exit_all(m));
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 19:41:55 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/09 14:34:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:32:08 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		write_error_res(void)
 {
 	write(1, "Error\n", 6);
 	write(1, "Wrong arguments\n", 16);
-	exit(0);
+	exit_all(m);
 	return (-1);
 }
 

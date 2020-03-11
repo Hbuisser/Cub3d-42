@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 14:47:56 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 19:56:49 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:14:07 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		create_data(t_index *m)
 	m->big.movespeed = 0.2;
 	m->big.rotspeed = 0.06;
 	if (!(m->spr.zbuffer = malloc(sizeof(float *) * m->el.res_x + 1)))
-		return (-1);
+		return (exit_all(m));
 	return (1);
 }
 

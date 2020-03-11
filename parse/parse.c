@@ -6,7 +6,7 @@
 /*   By: hbuisser <hbuisser@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 14:15:48 by hbuisser          #+#    #+#             */
-/*   Updated: 2020/03/10 18:00:22 by hbuisser         ###   ########.fr       */
+/*   Updated: 2020/03/11 15:19:40 by hbuisser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ int		return_error(t_index *m)
 {
 	write(1, "Error\n", 6);
 	write(1, "Multiple initial positions\n", 27);
-	exit_all(m);
-	return (-1);
+	return (exit_all(m));
 }
 
 int		write_error_one(t_index *m)
 {
 	write(1, "Error\n", 6);
 	write(1, "Error in parsing\n", 17);
-	exit_all(m);
-	return (-1);
+	return (exit_all(m));
 }
 
 int		parse_map(int fd, t_index *m)
